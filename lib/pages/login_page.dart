@@ -31,7 +31,7 @@ class LoginPage extends StatelessWidget {
                   width: 150,
                   height: 150,
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 25),
                 //welcome back
                 Text('Bienvenido',
                 style: TextStyle(color: Colors.grey[700],
@@ -71,7 +71,7 @@ class LoginPage extends StatelessWidget {
                 MyButton(
                   onTap: abrirSesion,
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 25),
 
                 // o loguear con
                 Padding(
@@ -115,19 +115,19 @@ class LoginPage extends StatelessWidget {
                   ],
                 ),
 
-                const SizedBox(height: 50),
+                const SizedBox(height: 25),
 
                 // not a member? register now
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      'Not a member?',
+                      'No tenes cuenta?',
                       style: TextStyle(color: Colors.grey[700]),
                     ),
                     const SizedBox(width: 4),
                     const Text(
-                      'Register now',
+                      'Registrate',
                       style: TextStyle(
                         color: Colors.blue,
                         fontWeight: FontWeight.bold,
