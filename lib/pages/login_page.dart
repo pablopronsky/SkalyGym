@@ -1,18 +1,78 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/textFieldInput.dart';
 
 import '../assets/mosaico_icono.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
    LoginPage ({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
   // controlador para editar texto
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
+
   final passwordController = TextEditingController();
 
   // metodo para abrir sesion
-   abrirSesion(){}
+   abrirSesion() async {
+
+     // barrita de cargando
+     showDialog(context: context, builder: (context){
+       return const Center(
+         child: CircularProgressIndicator(),
+       );
+     },
+     );
+
+     // logea sesion
+      try{
+        await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: emailController.text,
+            password: passwordController.text
+        );
+            // cierra barrita de cargando
+        Navigator.pop(context);
+      }on FirebaseAuthException catch (loginErrorMessage){
+         Navigator.pop(context);
+        // MAIL INCORRECTO
+        if(loginErrorMessage.code == 'user-not-found'){
+          wrongEmailMessage();
+        }
+        // CONTRASEÑA INCORRECTA
+        else if (loginErrorMessage.code == 'wrong-password'){
+          wrongPasswordMessage();
+        }
+      }
+   }
+
+  // mensajes de error con mail
+  void wrongEmailMessage(){
+    showDialog(
+      context: context,
+      builder: (context){
+        return const AlertDialog(
+          title: Text('Mail incorrecto'),
+        );
+      },
+    );
+  }
+
+  // mensajes de error con contraseña
+  void wrongPasswordMessage(){
+    showDialog(
+      context: context,
+      builder: (context){
+        return const AlertDialog(
+          title: Text('Contraseña incorrecto'),
+        );
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -41,8 +101,8 @@ class LoginPage extends StatelessWidget {
 
                 // usuario
                 TextFieldInput(
-                  controller:usernameController,
-                  hintText: 'Usuario',
+                  controller:emailController,
+                  hintText: 'Email',
                   obscureText: false,
                 ),
                 const SizedBox(height: 10),

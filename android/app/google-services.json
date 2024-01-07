@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "720236048832",
+    "project_id": "skaly-f85ff",
+    "storage_bucket": "skaly-f85ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:720236048832:android:aa1dd29c06b6e0cd841825",
+        "android_client_info": {
+          "package_name": "com.skaly.gym"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAngTdUAUMbpr9zG9wbvyTU6yyfDvJXvhE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
