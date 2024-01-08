@@ -17,12 +17,12 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(actions:[
         IconButton(
             onPressed: signUserOut,
-            icon: Icon(Icons.logout),
+            icon: const Icon(Icons.logout),
         )
       ]
       ),
-      body: Center(child: Text('Bienvenido, ' + usuario.email!,
-      style: TextStyle(fontSize: 20),)),
+      body: Center(child: Text('Bienvenido, ${usuario.email!}',
+      style: const TextStyle(fontSize: 20),)),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gym/pages/login_page.dart';
 
 import 'home_page.dart';
+import 'login_or_register.dart';
 
 class AuthPage extends StatelessWidget {
   const AuthPage({super.key});
@@ -19,7 +20,7 @@ class AuthPage extends StatelessWidget {
           }
           // no loggeado
           else{
-            return LoginPage();
+            return LoginOrRegisterPage();
           }
         }
       ),

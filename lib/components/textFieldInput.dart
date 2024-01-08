@@ -1,5 +1,8 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 class TextFieldInput extends StatelessWidget {
+  // ignore: prefer_typing_uninitialized_variables
   final controller;
   final String hintText;
   final bool obscureText;
