@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/textFieldInput.dart';
+import 'package:gym/services/auth_service.dart';
 import '../assets/mosaico_icono.dart';
 
 class LoginPage extends StatefulWidget {
@@ -153,16 +154,18 @@ class _LoginPageState extends State<LoginPage> {
       
       
                   // google + apple sign in buttons
-                  const Row(
+                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // google button
-                      Mosaico(imagePath: 'lib/assets/google.png'),
-      
+                      Mosaico(
+                        onTap: ()=> AuthService().signInWithGoogle(),
+                        imagePath: 'lib/assets/google.png',),
                       SizedBox(width: 25),
-      
                       // apple button
-                      Mosaico(imagePath: 'lib/assets/apple.png')
+                      Mosaico(
+                        onTap: ()=> AuthService().signInWithGoogle(),
+                        imagePath: 'lib/assets/apple.png',)
                     ],
                   ),
       

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/textFieldInput.dart';
 import '../assets/mosaico_icono.dart';
+import '../services/auth_service.dart';
 
 class RegisterPage extends StatefulWidget {
 
@@ -146,14 +147,18 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 25),
                 // google + apple sign in buttons
-                const Row(
+                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // google button
-                    Mosaico(imagePath: 'lib/assets/google.png'),
+                    Mosaico(
+                        onTap: ()=> AuthService().signInWithGoogle(),
+                        imagePath: 'lib/assets/google.png'),
                     SizedBox(width: 25),
                     // apple button
-                    Mosaico(imagePath: 'lib/assets/apple.png')
+                    Mosaico(
+                        onTap: ()=> AuthService().signInWithGoogle(),
+                        imagePath: 'lib/assets/apple.png')
                   ],
                 ),
                 const SizedBox(height: 25),
