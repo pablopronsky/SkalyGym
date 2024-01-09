@@ -6,6 +6,7 @@ import 'package:gym/components/button.dart';
 import 'package:gym/components/textFieldInput.dart';
 import 'package:gym/services/auth_service.dart';
 import '../assets/mosaico_icono.dart';
+import 'forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
 
@@ -23,32 +24,47 @@ class _LoginPageState extends State<LoginPage> {
   final passwordController = TextEditingController();
 
   // metodo para abrir sesion
-   abrirSesion() async {
-
-     // barrita de cargando
-     showDialog(context: context, builder: (context){
-       return const Center(
-         child: CircularProgressIndicator(),
-       );
-     },
-     );
-
-     // logea sesion
-      try{
-        await FirebaseAuth.instance.signInWithEmailAndPassword(
-            email: emailController.text,
-            password: passwordController.text
+  // metodo para abrir sesion
+  abrirSesion() async {
+    // barrita de cargando
+    showDialog(
+      context: context,
+      builder: (context){
+        return const Center(
+          child: CircularProgressIndicator(),
         );
-            // cierra barrita de cargando
-        Navigator.pop(context);
-      }on FirebaseAuthException catch (loginErrorMessage){
-         Navigator.pop(context);
-        showErrorMessage(loginErrorMessage.message);
-      }
-   }
+      },
+    );
 
-  // mensajes de error al logear
-  void showErrorMessage(message){
+    // logea sesion
+    try{
+      await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text
+      );
+      // cierra barrita de cargando
+      Navigator.pop(context);
+    }on FirebaseAuthException catch (e){
+      Navigator.pop(context);
+      showErrorMessage(e.code);
+    }
+  }
+
+// mensajes de error al logear
+  void showErrorMessage(String code){
+    String message;
+    switch (code) {
+      case 'user-not-found':
+        message = 'No hay ningún usuario con ese correo electrónico.';
+        break;
+      case 'wrong-password':
+        message = 'La contraseña es incorrecta.';
+        break;
+    // Añade aquí más casos según sea necesario
+      default:
+        message = 'Usuario o contraseña incorrectos.';
+    }
+
     showDialog(
       context: context,
       builder: (context){
@@ -64,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -86,11 +103,11 @@ class _LoginPageState extends State<LoginPage> {
                   //welcome back
                   Text('Bienvenido',
                   style: TextStyle(color: Colors.grey[700],
-                  fontSize: 16),
+                  fontSize: 18),
                   ),
                   const SizedBox(height: 25),
       
-                  // usuario
+                  // mail
                   TextFieldInput(
                     controller:emailController,
                     hintText: 'Email',
@@ -108,12 +125,19 @@ class _LoginPageState extends State<LoginPage> {
       
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text('Recuperar contraseña',
-                        style: TextStyle(color: Colors.grey[600]),),
-                      ],
+                    child: GestureDetector(
+                      onTap: (){
+                        Navigator.push(context, MaterialPageRoute(builder: (context){
+                          return const ForgotPasswordPage();
+                        }));
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text('Recuperar contraseña',
+                          style: TextStyle(color: Colors.grey[600]),),
+                        ],
+                      ),
                     ),
                   ),
                   const SizedBox(height: 25),
@@ -161,7 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                       Mosaico(
                         onTap: ()=> AuthService().signInWithGoogle(),
                         imagePath: 'lib/assets/google.png',),
-                      SizedBox(width: 25),
+                      const SizedBox(width: 25),
                       // apple button
                       Mosaico(
                         onTap: ()=> AuthService().signInWithGoogle(),

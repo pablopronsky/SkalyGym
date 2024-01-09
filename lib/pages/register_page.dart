@@ -40,6 +40,7 @@ class _RegisterPageState extends State<RegisterPage> {
         );
 
         // Cerrar el diálogo después de que la operación se haya completado
+        // ignore: use_build_context_synchronously
         Navigator.pop(context);
       } else {
         showErrorMessage('Las contraseñas no coinciden');
@@ -154,7 +155,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     Mosaico(
                         onTap: ()=> AuthService().signInWithGoogle(),
                         imagePath: 'lib/assets/google.png'),
-                    SizedBox(width: 25),
+                    const SizedBox(width: 25),
                     // apple button
                     Mosaico(
                         onTap: ()=> AuthService().signInWithGoogle(),
