@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 
 import '../components/textFieldInput.dart';
 
-class ForgotPasswordPage extends StatefulWidget{
-
+class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
+
   @override
   State<ForgotPasswordPage> createState() => _ForgotPasswordPageState();
 }
@@ -22,7 +22,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Future passwordResetEmail() async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: _emailController.text.trim(), // Trim any leading/trailing whitespace
+        email: _emailController.text
+            .trim(), // Trim any leading/trailing whitespace
       );
 
       // Success message
@@ -30,7 +31,8 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         context: context,
         builder: (context) {
           return const AlertDialog(
-            content: Text("Si existe el usuario, se ha enviado un email de recuperacion."),
+            content: Text(
+                "Si existe el usuario, se ha enviado un email de recuperacion."),
           );
         },
       );
@@ -75,7 +77,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             height: 150,
           ),
           const SizedBox(height: 25),
-           Text(
+          Text(
             'Ingresa el mail para recuperar tu contraseña',
             textAlign: TextAlign.center,
             style: TextStyle(
@@ -83,19 +85,22 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               color: Colors.grey[800],
             ),
           ),
-          const SizedBox(height: 25),// mail
+          const SizedBox(height: 25), // mail
           TextFieldInput(
-            controller:_emailController,
+            controller: _emailController,
             hintText: 'Email',
             obscureText: false,
           ),
           const SizedBox(height: 25),
-          MaterialButton(onPressed: () => passwordResetEmail(),
-            child:  Text('Recuperar contraseña',
-            style: TextStyle(
-              color: Colors.grey[800],
-              fontSize: 18,
-            ),),
+          MaterialButton(
+            onPressed: () => passwordResetEmail(),
+            child: Text(
+              'Recuperar contraseña',
+              style: TextStyle(
+                color: Colors.grey[800],
+                fontSize: 18,
+              ),
+            ),
           )
         ],
       ),
