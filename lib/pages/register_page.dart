@@ -2,8 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/textFieldInput.dart';
-import '../components/mosaico_icono.dart';
-import '../services/auth_service.dart';
 import '../services/user_client_service.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -43,11 +41,10 @@ class _RegisterPageState extends State<RegisterPage> {
           password: passwordController.text,
         );
 
-        User? user = userCredential.user;
+        String? user = userCredential.user?.uid;
         AlumnoServicio().registrarAlumno(
-            user.toString(), emailController.text, nombreController.text,
-            apellidoController.text, celularController.text,);
-        // Cerrar el diálogo después de que la operación se haya completado
+          user!, emailController.text, nombreController.text,
+          apellidoController.text, celularController.text);
         Navigator.pop(context);
       } else {
         showErrorMessage('Las contraseñas no coinciden');
@@ -107,42 +104,42 @@ class _RegisterPageState extends State<RegisterPage> {
                     hintText: 'Nombre',
                     obscureText: false,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   // apellido
                   TextFieldInput(
                     controller: apellidoController,
                     hintText: 'Apellido',
                     obscureText: false,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   // celular
                   TextFieldInput(
                     controller: celularController,
                     hintText: 'Numero de celular',
                     obscureText: false,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   // email
                   TextFieldInput(
                     controller: emailController,
                     hintText: 'Email',
                     obscureText: false,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   // contraseña
                   TextFieldInput(
                     controller: passwordController,
                     hintText: 'Contraseña',
                     obscureText: true,
                   ),
-                  const SizedBox(height: 10),
+                  const SizedBox(height: 15),
                   // repetir contraseña
                   TextFieldInput(
                     controller: confirmPasswordController,
                     hintText: 'Confirmar contraseña',
                     obscureText: true,
                   ),
-                  const SizedBox(height: 25),
+                  const SizedBox(height: 50),
                   // boton de crear sesion
                   MyButton(
                     text: 'Registrarme',
@@ -170,27 +167,9 @@ class _RegisterPageState extends State<RegisterPage> {
                             child: Divider(
                               thickness: 0.5,
                               color: Colors.grey[400],
-                            ))
-                      ],
+                            ))                      ],
                     ),
                   ),
-                  const SizedBox(height: 25),
-                  // google + apple sign in buttons
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      // google button
-                      Mosaico(
-                          onTap: () => AuthService().signInWithGoogle(),
-                          imagePath: 'lib/assets/google.png'),
-                      const SizedBox(width: 25),
-                      // apple button
-                      Mosaico(
-                          onTap: () => AuthService().signInWithGoogle(),
-                          imagePath: 'lib/assets/apple.png')
-                    ],
-                  ),
-                  const SizedBox(height: 25),
                   // not a member? register now
                   SizedBox(
                     child: Row(

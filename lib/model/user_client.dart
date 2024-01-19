@@ -1,8 +1,10 @@
+import 'enum_rol.dart';
 import 'user.dart';
 
 class Alumno extends Usuario {
   int packDeClases;
   DateTime fechaDeNacimiento;
+  Rol rol;
 
   Alumno(
       String uid,
@@ -12,5 +14,6 @@ class Alumno extends Usuario {
       String numeroDeCelular,
       this.packDeClases,
       this.fechaDeNacimiento,
+      this.rol,
       ) : super(uid, nombre, apellido, email, numeroDeCelular);
 }

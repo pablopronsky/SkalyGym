@@ -1,7 +1,15 @@
 import 'package:gym/model/user.dart';
 
+import 'enum_rol.dart';
+
 class Admin extends Usuario {
+  Rol rol;
   Admin(
-      String dni, String nombre, String apellido, String email, numeroDeCelular)
-      : super(dni, nombre, apellido, email, numeroDeCelular);
+      String uid,
+      String nombre,
+      String apellido,
+      String email,
+      String numeroDeCelular,
+      this.rol,
+      ) : super(uid,nombre, apellido, email, numeroDeCelular);
 }

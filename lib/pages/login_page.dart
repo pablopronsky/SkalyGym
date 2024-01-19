@@ -4,9 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/textFieldInput.dart';
-import 'package:gym/services/auth_service.dart';
 
-import '../components/mosaico_icono.dart';
 import 'forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -141,14 +139,12 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 25),
-
                 // boton de abrir sesion
                 MyButton(
                   text: 'Abrir sesion',
                   onTap: abrirSesion,
                 ),
                 const SizedBox(height: 25),
-
                 // o loguear con
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -159,13 +155,6 @@ class _LoginPageState extends State<LoginPage> {
                         thickness: 0.5,
                         color: Colors.grey[400],
                       )),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          'O',
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                      ),
                       Expanded(
                           child: Divider(
                         thickness: 0.5,
@@ -174,29 +163,7 @@ class _LoginPageState extends State<LoginPage> {
                     ],
                   ),
                 ),
-
                 const SizedBox(height: 25),
-
-                // google + apple sign in buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // google button
-                    Mosaico(
-                      onTap: () => AuthService().signInWithGoogle(),
-                      imagePath: 'lib/assets/google.png',
-                    ),
-                    const SizedBox(width: 25),
-                    // apple button
-                    Mosaico(
-                      onTap: () => AuthService().signInWithGoogle(),
-                      imagePath: 'lib/assets/apple.png',
-                    )
-                  ],
-                ),
-
-                const SizedBox(height: 25),
-
                 // not a member? register now
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
