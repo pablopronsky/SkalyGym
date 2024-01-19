@@ -4,8 +4,10 @@ import '../model/enum_rol.dart';
 import '../model/user_client.dart';
 
 class AlumnoServicio {
-  void registrarAlumno(String uid, String email, String nombre, String apellido, String numeroDeCelular) {
-    Alumno alumno = Alumno(uid, nombre, apellido, email, numeroDeCelular,3, DateTime.now(), Rol.Alumno);
+  void registrarAlumno(String uid, String email, String nombre, String apellido,
+      String numeroDeCelular) {
+    Alumno alumno = Alumno(uid, nombre, apellido, email, numeroDeCelular, 3,
+        DateTime.now(), Rol.Alumno);
     FirebaseFirestore.instance.collection('alumnos').add({
       'uid': alumno.uid,
       'nombre': alumno.nombre,
@@ -14,13 +16,14 @@ class AlumnoServicio {
       'numeroDeCelular': alumno.numeroDeCelular,
       'packDeClases': alumno.packDeClases,
       'fechaDeNacimiento': alumno.fechaDeNacimiento,
-      'rol' : alumno.rol.name,
+      'rol': alumno.rol.name,
     });
   }
 
   Future<List<Alumno>> obtenerTodosLosAlumnos() async {
     List<Alumno> listaDeAlumnos = [];
-    QuerySnapshot querySnapshot = await FirebaseFirestore.instance.collection('alumnos').get();
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('alumnos').get();
     for (var doc in querySnapshot.docs) {
       Alumno alumno = Alumno(
         doc['uid'],
@@ -30,7 +33,7 @@ class AlumnoServicio {
         doc['numeroDeCelular'],
         doc['packDeClases'],
         doc['fechaDeNacimiento'].toDate(),
-        doc['rol'],
+        Rol.values.byName(doc['rol']),
       );
       listaDeAlumnos.add(alumno);
     }

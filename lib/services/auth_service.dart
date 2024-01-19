@@ -9,7 +9,8 @@ class AuthService {
     // interaccion
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
     // auth_details del request
-    final GoogleSignInAuthentication googleAuth = await googleUser!.authentication;
+    final GoogleSignInAuthentication googleAuth =
+        await googleUser!.authentication;
     // credencial para el usuario
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,

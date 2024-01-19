@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
@@ -14,7 +13,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   DateTime today = DateTime.now();
 
   DateTime mostRecentSunday(DateTime date) =>
@@ -45,7 +43,6 @@ class _HomePageState extends State<HomePage> {
           icon: const Icon(Icons.logout),
         )
       ]),
-
       body: Column(
         children: [
           Center(
@@ -57,7 +54,8 @@ class _HomePageState extends State<HomePage> {
                   fontWeight: FontWeight.bold),
             ),
           ),
-          const SizedBox(height: 60,
+          const SizedBox(
+            height: 60,
           ),
           TableCalendar(
             locale: 'es_EN',
@@ -74,32 +72,30 @@ class _HomePageState extends State<HomePage> {
             onDaySelected: _onDaySelected,
             calendarFormat: CalendarFormat.week,
           ),
-            const SizedBox(height: 30),
-            Expanded(
-                child: FutureBuilder<List<Alumno>>(
-                  future: AlumnoServicio().obtenerTodosLosAlumnos(),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return SingleChildScrollView(
-                        child: ListView.builder(
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (context, index) {
-                            Alumno alumno = snapshot.data![index];
-                            return ListTile(
-                              title: Text('${alumno.nombre} ${alumno.apellido}'),
-                            );
-                          },
-                        ),
+          const SizedBox(height: 30),
+          Expanded(
+            child: FutureBuilder<List<Alumno>>(
+              future: AlumnoServicio().obtenerTodosLosAlumnos(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(  // Use ListView.builder for efficient scrolling
+                    itemCount: snapshot.data!.length,
+                    itemBuilder: (context, index) {
+                      final alumno = snapshot.data![index];
+                      return ListTile(
+                        title: Text('${alumno.nombre.toUpperCase()} ${alumno.apellido.toUpperCase()}'),
+                        // Consider adding trailing for additional actions
                       );
-                    } else if (snapshot.hasError) {
-                      return Text('Error: ${snapshot.error}');
-                    } else {
-                      return const Center(child: CircularProgressIndicator(
-                      ));
-                    }
-                  },
-                ),
-              ),
+                    },
+                  );
+                } else if (snapshot.hasError) {
+                  return Center(child: Text('Error: ${snapshot.error}', style: TextStyle(color: Colors.red)));
+                } else {
+                  return const Center(child: CircularProgressIndicator());
+                }
+              },
+            ),
+          ),
         ],
       ),
     );

@@ -1,5 +1,3 @@
-import 'enum_rol.dart';
-
 abstract class Usuario {
   String uid;
   String nombre;
@@ -7,5 +5,5 @@ abstract class Usuario {
   String email;
   String numeroDeCelular;
   Usuario(
-      this.uid,this.nombre, this.apellido, this.email, this.numeroDeCelular);
+      this.uid, this.nombre, this.apellido, this.email, this.numeroDeCelular);
 }
