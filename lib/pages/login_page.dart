@@ -1,10 +1,10 @@
-// ignore_for_file: use_build_context_synchronously
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/textFieldInput.dart';
 
+import '../model/enum_rol.dart';
 import 'forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -24,7 +24,7 @@ class _LoginPageState extends State<LoginPage> {
   // metodo para abrir sesion
   // metodo para abrir sesion
   abrirSesion() async {
-    // barrita de cargando
+    // Mostrar barra de cargando
     showDialog(
       context: context,
       builder: (context) {
@@ -34,17 +34,37 @@ class _LoginPageState extends State<LoginPage> {
       },
     );
 
-    // logea sesion
+    // Iniciar sesión
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      final UserCredential userCredential = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
           email: emailController.text, password: passwordController.text);
-      // cierra barrita de cargando
+
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('alumnos')  // Assuming users are primarily in 'alumnos' collection
+          .doc(userCredential.user!.uid)
+          .get();
+
+      // Extract the rol from the user document
+      Rol rol = Rol.values.firstWhere(
+              (e) => e.toString() == 'Rol.${userDoc['rol'].toString()}',
+          orElse: () => Rol.Alumno);
+
+      // Cerrar barra de cargando
       Navigator.pop(context);
+
+      // Redireccionar según el tipo de usuario
+      if (rol == Rol.Alumno) {
+        Navigator.pushReplacementNamed(context, '/home_page');
+      } else {
+        Navigator.pushReplacementNamed(context, '/admin_page');
+      }
     } on FirebaseAuthException catch (e) {
       Navigator.pop(context);
       showErrorMessage(e.code);
     }
   }
+
 
 // mensajes de error al logear
   void showErrorMessage(String code) {
@@ -56,7 +76,6 @@ class _LoginPageState extends State<LoginPage> {
       case 'wrong-password':
         message = 'La contraseña es incorrecta.';
         break;
-      // Añade aquí más casos según sea necesario
       default:
         message = 'Usuario o contraseña incorrectos.';
     }

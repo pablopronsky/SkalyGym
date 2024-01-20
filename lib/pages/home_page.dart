@@ -14,12 +14,18 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   DateTime today = DateTime.now();
-
   DateTime mostRecentSunday(DateTime date) =>
-      DateTime(date.year, date.month, date.day - date.weekday % 7);
+      DateTime(date.year, date.month, date.day - date.weekday % 1);
+
+  DateTime mostRecentMonday(DateTime date) =>
+      DateTime(date.year, date.month, date.day - date.weekday % 2);
 
   DateTime mostRecentSaturday(DateTime date) =>
-      DateTime(date.year, date.month, date.day - (date.weekday - 6));
+      DateTime(date.year, date.month, date.day - (date.weekday - 7));
+
+  DateTime firstSaturdayFromToday(DateTime date) {
+    return date.add(Duration(days: 7 - date.weekday));
+  }
 
   final usuario = FirebaseAuth.instance.currentUser!;
 
@@ -58,19 +64,19 @@ class _HomePageState extends State<HomePage> {
             height: 60,
           ),
           TableCalendar(
-            locale: 'es_EN',
+            locale: 'es_ES',
             rowHeight: 85,
             headerStyle: const HeaderStyle(
                 formatButtonVisible: false, titleCentered: true),
             availableGestures: AvailableGestures.all,
             selectedDayPredicate: (day) => isSameDay(day, today),
             focusedDay: today,
-            // Ajusta el primer día al domingo actual o anterior:
-            firstDay: mostRecentSunday(DateTime.now()),
-            // Ajusta el último día al próximo sábado:
-            lastDay: mostRecentSaturday(DateTime.now()),
+            firstDay: mostRecentMonday(today),
+            lastDay: DateTime.now().add(Duration(days: DateTime.sunday - DateTime.now().weekday)), // Set last day to Sunday
             onDaySelected: _onDaySelected,
             calendarFormat: CalendarFormat.week,
+            rangeStartDay: today,
+            rangeEndDay: today.add(Duration(days: DateTime.sunday - today.weekday)), // Updated calculation for Sunday range end
           ),
           const SizedBox(height: 30),
           Expanded(
