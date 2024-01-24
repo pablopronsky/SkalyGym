@@ -72,11 +72,15 @@ class _HomePageState extends State<HomePage> {
             selectedDayPredicate: (day) => isSameDay(day, today),
             focusedDay: today,
             firstDay: mostRecentMonday(today),
-            lastDay: DateTime.now().add(Duration(days: DateTime.sunday - DateTime.now().weekday)), // Set last day to Sunday
+            lastDay: DateTime.now().add(Duration(
+                days: DateTime.sunday -
+                    DateTime.now().weekday)), // Set last day to Sunday
             onDaySelected: _onDaySelected,
             calendarFormat: CalendarFormat.week,
             rangeStartDay: today,
-            rangeEndDay: today.add(Duration(days: DateTime.sunday - today.weekday)), // Updated calculation for Sunday range end
+            rangeEndDay: today.add(Duration(
+                days: DateTime.sunday -
+                    today.weekday)), // Updated calculation for Sunday range end
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -84,18 +88,22 @@ class _HomePageState extends State<HomePage> {
               future: AlumnoServicio().obtenerTodosLosAlumnos(),
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return ListView.builder(  // Use ListView.builder for efficient scrolling
+                  return ListView.builder(
+                    // Use ListView.builder for efficient scrolling
                     itemCount: snapshot.data!.length,
                     itemBuilder: (context, index) {
                       final alumno = snapshot.data![index];
                       return ListTile(
-                        title: Text('${alumno.nombre.toUpperCase()} ${alumno.apellido.toUpperCase()}'),
+                        title: Text(
+                            '${alumno.nombre.toUpperCase()} ${alumno.apellido.toUpperCase()}'),
                         // Consider adding trailing for additional actions
                       );
                     },
                   );
                 } else if (snapshot.hasError) {
-                  return Center(child: Text('Error: ${snapshot.error}', style: TextStyle(color: Colors.red)));
+                  return Center(
+                      child: Text('Error: ${snapshot.error}',
+                          style: TextStyle(color: Colors.red)));
                 } else {
                   return const Center(child: CircularProgressIndicator());
                 }

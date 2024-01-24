@@ -10,20 +10,54 @@ class Clase {
   List<Reserva> reservas;
   List<String> idAlumno;
   bool claseLlena;
+  bool esRecurrente;
 
-  Clase(this.id, this.fechaEnLaQueTranscurreLaClase, this.horaDeInicio,
-      this.horaDeFinalizacion, this.reservas, this.claseLlena, this.idAlumno);
+  Clase(
+      this.id,
+      this.fechaEnLaQueTranscurreLaClase,
+      this.horaDeInicio,
+      this.horaDeFinalizacion,
+      this.reservas,
+      this.claseLlena,
+      this.idAlumno,
+      this.esRecurrente);
 
   Map<String, dynamic> toJson() {
     return {
       'id': id,
-      'fechaEnLaQueTranscurreLaClase': fechaEnLaQueTranscurreLaClase.toIso8601String(),
-      'horaDeInicio': {'hour': horaDeInicio.hour, 'minute': horaDeInicio.minute},
-      'horaDeFinalizacion': {'hour': horaDeFinalizacion.hour, 'minute': horaDeFinalizacion.minute},
+      'fechaEnLaQueTranscurreLaClase':
+          fechaEnLaQueTranscurreLaClase.toIso8601String(),
+      'horaDeInicio': {
+        'hour': horaDeInicio.hour,
+        'minute': horaDeInicio.minute
+      },
+      'horaDeFinalizacion': {
+        'hour': horaDeFinalizacion.hour,
+        'minute': horaDeFinalizacion.minute
+      },
       'reservas': reservas.map((reserva) => reserva.toJson()).toList(),
       'idAlumno': idAlumno,
       'claseLlena': claseLlena,
+      'esRecurrente': esRecurrente,
     };
   }
-}
 
+  factory Clase.fromJson(Map<String, dynamic> json) {
+    return Clase(
+      json['id'],
+      DateTime.parse(json['fechaEnLaQueTranscurreLaClase']),
+      TimeOfDay(
+          hour: json['horaDeInicio']['hour'],
+          minute: json['horaDeInicio']['minute']),
+      TimeOfDay(
+          hour: json['horaDeFinalizacion']['hour'],
+          minute: json['horaDeFinalizacion']['minute']),
+      (json['reservas'] as List<dynamic>)
+          .map((reservaJson) => Reserva.fromJson(reservaJson))
+          .toList(),
+      json['claseLlena'],
+      (json['idAlumno'] as List<dynamic>).cast<String>(),
+      json['esRecurrente'],
+    );
+  }
+}

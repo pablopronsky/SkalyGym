@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import '../model/class_reservation.dart';
 
-class ReservaServicio{
+class ReservaServicio {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> crearReserva(
@@ -17,9 +17,15 @@ class ReservaServicio{
         'idAlumno': idAlumno,
         'idClase': idClase,
         'fechaEnLaQueTranscurreLaReserva':
-        fechaEnLaQueTranscurreLaReserva.toIso8601String(),
-        'horaDeInicio': {'hour': horaDeInicio.hour, 'minute': horaDeInicio.minute},
-        'horaDeFinalizacion': {'hour': horaDeFinalizacion.hour, 'minute': horaDeFinalizacion.minute},
+            fechaEnLaQueTranscurreLaReserva.toIso8601String(),
+        'horaDeInicio': {
+          'hour': horaDeInicio.hour,
+          'minute': horaDeInicio.minute
+        },
+        'horaDeFinalizacion': {
+          'hour': horaDeFinalizacion.hour,
+          'minute': horaDeFinalizacion.minute
+        },
       });
     } catch (error) {
       print('Error al crear reserva: $error');
@@ -28,7 +34,8 @@ class ReservaServicio{
 
   Future<Reserva?> obtenerReservaPorId(String id) async {
     try {
-      DocumentSnapshot doc = await firestore.collection('reservas').doc(id).get();
+      DocumentSnapshot doc =
+          await firestore.collection('reservas').doc(id).get();
       if (doc.exists) {
         Map<String, dynamic> data = doc.data()! as Map<String, dynamic>;
         return Reserva.fromJson(data);
@@ -49,7 +56,10 @@ class ReservaServicio{
 
   Future<void> actualizarReserva(Reserva reserva) async {
     try {
-      await firestore.collection('reservas').doc(reserva.id).update(reserva.toJson());
+      await firestore
+          .collection('reservas')
+          .doc(reserva.id)
+          .update(reserva.toJson());
     } catch (error) {
       print('Error al actualizar reserva: $error');
       // Manejar el error de forma adecuada

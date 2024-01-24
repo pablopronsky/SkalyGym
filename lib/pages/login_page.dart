@@ -38,16 +38,17 @@ class _LoginPageState extends State<LoginPage> {
     try {
       final UserCredential userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-          email: emailController.text, password: passwordController.text);
+              email: emailController.text, password: passwordController.text);
 
       DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('alumnos')  // Assuming users are primarily in 'alumnos' collection
+          .collection(
+              'alumnos') // Assuming users are primarily in 'alumnos' collection
           .doc(userCredential.user!.uid)
           .get();
 
       // Extract the rol from the user document
       Rol rol = Rol.values.firstWhere(
-              (e) => e.toString() == 'Rol.${userDoc['rol'].toString()}',
+          (e) => e.toString() == 'Rol.${userDoc['rol'].toString()}',
           orElse: () => Rol.Alumno);
 
       // Cerrar barra de cargando
@@ -64,7 +65,6 @@ class _LoginPageState extends State<LoginPage> {
       showErrorMessage(e.code);
     }
   }
-
 
 // mensajes de error al logear
   void showErrorMessage(String code) {

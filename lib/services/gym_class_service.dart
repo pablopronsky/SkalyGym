@@ -1,52 +1,53 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 import '../model/gym_class.dart';
+import 'firebase_firestore_service.dart';
 
-class ClaseServicio{
+class ClaseServicio {
+  final FirebaseService _firebaseService = FirebaseService();
+  final FirebaseFirestore _firestore = FirebaseService().firestore;
 
-  List<Clase> generarClasesSemanal() {
-    List<Clase> clases = [];
-    DateTime now = DateTime.now();
-    DateTime startDate = DateTime(now.year, now.month, now.day);
-    DateTime endDate = DateTime(DateTime.now().year, DateTime.now().month + 1, 0);
+  Future<void> persistirClase(Clase clase) async {
+    CollectionReference clasesRef = _firestore.collection('clases');
+    DocumentReference docRef = clasesRef.doc();
 
-    while (startDate.isBefore(endDate)) {
-      if (startDate.weekday == DateTime.monday ||
-          startDate.weekday == DateTime.wednesday ||
-          startDate.weekday == DateTime.friday) {
-        for (int i = 7; i <= 9; i++) {
-          clases.add(generarClase(startDate, i));
-        }
-        for (int i = 16; i <= 20; i++) {
-          clases.add(generarClase(startDate, i));
-        }
-      } else if (startDate.weekday == DateTime.tuesday ||
-          startDate.weekday == DateTime.thursday) {
-        for (int i = 16; i <= 20; i++) {
-          clases.add(generarClase(startDate, i));
-        }
-      } else if (startDate.weekday == DateTime.saturday) {
-        for (int i = 7; i <= 11; i++) {
-          clases.add(generarClase(startDate, i));
-        }
-      }
+    await docRef.set(clase.toJson());
 
-      startDate = startDate.add(Duration(days: 1));
+    clase.id = docRef.id;
+  }
+
+  Future<void> createClase(Clase clase) async {
+    await _firebaseService.firestore.collection('clases').add(clase.toJson());
+  }
+
+  Future<List<Clase>> getClases() async {
+    QuerySnapshot querySnapshot =
+        await _firebaseService.firestore.collection('clases').get();
+    return querySnapshot.docs
+        .map((doc) => Clase.fromJson(doc.data()! as Map<String, dynamic>))
+        .toList();
+  }
+
+  Future<Clase?> getClaseById(String id) async {
+    DocumentSnapshot doc =
+        await _firebaseService.firestore.collection('clases').doc(id).get();
+    if (doc.exists) {
+      return Clase.fromJson(doc.data()! as Map<String, dynamic>);
+    } else {
+      return null;
     }
-
-    return clases;
   }
 
-  Clase generarClase(DateTime date, int hour) {
-    DateTime claseDate = DateTime(date.year, date.month, date.day, hour);
-    return Clase(
-      claseDate.toString(),
-      claseDate,
-      TimeOfDay(hour: hour, minute: 0),
-      TimeOfDay(hour: hour + 1, minute: 0),
-      [],
-      false,
-      [],
-    );
+  Future<void> updateClase(Clase clase) async {
+    await _firebaseService.firestore
+        .collection('clases')
+        .doc(clase.id)
+        .update(clase.toJson());
   }
+
+  Future<void> deleteClase(String id) async {
+    await _firebaseService.firestore.collection('clases').doc(id).delete();
+  }
+
 }

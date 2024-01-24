@@ -9,11 +9,11 @@ class AdminPage extends StatefulWidget {
 }
 
 class _AdminPageState extends State<AdminPage> {
-
   // cerrar sesion
   void signUserOut() {
     FirebaseAuth.instance.signOut();
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +23,7 @@ class _AdminPageState extends State<AdminPage> {
           icon: const Icon(Icons.logout),
         )
       ]),
-      body: const Text(
-        'Soy Admin'
-      ),
+      body: const Text('Soy Admin'),
     );
   }
 }

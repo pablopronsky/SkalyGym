@@ -42,7 +42,7 @@ class AlumnoServicio {
 
   void modificarAlumno(String uid, Alumno alumnoActualizado) {
     DocumentReference alumnoModificar =
-    FirebaseFirestore.instance.collection('alumnos').doc(uid);
+        FirebaseFirestore.instance.collection('alumnos').doc(uid);
 
     // Actualizar los datos del documento
     alumnoModificar.update({
@@ -58,13 +58,14 @@ class AlumnoServicio {
 
   void borrarAlumno(String uid) {
     DocumentReference alumnoBorrar =
-    FirebaseFirestore.instance.collection('alumnos').doc(uid);
+        FirebaseFirestore.instance.collection('alumnos').doc(uid);
     alumnoBorrar.delete();
   }
 
   Future<List<Alumno>> buscarAlumnosPorApellido(String apellido) async {
-    Query query = FirebaseFirestore.instance.collection('alumnos').where('apellido',
-        isEqualTo: apellido);
+    Query query = FirebaseFirestore.instance
+        .collection('alumnos')
+        .where('apellido', isEqualTo: apellido);
     QuerySnapshot querySnapshot = await query.get();
     List<Alumno> listaDeAlumnos = [];
     for (var doc in querySnapshot.docs) {
