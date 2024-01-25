@@ -3,30 +3,27 @@ import 'package:flutter/material.dart';
 import 'class_reservation.dart';
 
 class Clase {
-  String id;
   DateTime fechaEnLaQueTranscurreLaClase;
   TimeOfDay horaDeInicio;
   TimeOfDay horaDeFinalizacion;
   List<Reserva> reservas;
   List<String> idAlumno;
   bool claseLlena;
-  bool esRecurrente;
+  String? recurrenceRule;
 
   Clase(
-      this.id,
       this.fechaEnLaQueTranscurreLaClase,
       this.horaDeInicio,
       this.horaDeFinalizacion,
       this.reservas,
       this.claseLlena,
       this.idAlumno,
-      this.esRecurrente);
+      this.recurrenceRule);
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'fechaEnLaQueTranscurreLaClase':
-          fechaEnLaQueTranscurreLaClase.toIso8601String(),
+      fechaEnLaQueTranscurreLaClase.toIso8601String(),
       'horaDeInicio': {
         'hour': horaDeInicio.hour,
         'minute': horaDeInicio.minute
@@ -38,13 +35,12 @@ class Clase {
       'reservas': reservas.map((reserva) => reserva.toJson()).toList(),
       'idAlumno': idAlumno,
       'claseLlena': claseLlena,
-      'esRecurrente': esRecurrente,
+      'esRecurrente': recurrenceRule,
     };
   }
 
   factory Clase.fromJson(Map<String, dynamic> json) {
     return Clase(
-      json['id'],
       DateTime.parse(json['fechaEnLaQueTranscurreLaClase']),
       TimeOfDay(
           hour: json['horaDeInicio']['hour'],
@@ -57,7 +53,7 @@ class Clase {
           .toList(),
       json['claseLlena'],
       (json['idAlumno'] as List<dynamic>).cast<String>(),
-      json['esRecurrente'],
+      json['recurrenceRule'],
     );
   }
 }

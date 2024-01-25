@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
+import 'package:gym/model/gym_class.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
+import '../model/class_reservation.dart';
 import '../model/user_client.dart';
 import '../services/user_client_service.dart';
 
@@ -13,6 +15,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late CalendarController _calendarController;
   DateTime today = DateTime.now();
   DateTime mostRecentSunday(DateTime date) =>
       DateTime(date.year, date.month, date.day - date.weekday % 1);
@@ -41,6 +44,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _calendarController = CalendarController();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(actions: [
@@ -63,24 +72,19 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 60,
           ),
-          TableCalendar(
-            locale: 'es_ES',
-            rowHeight: 85,
-            headerStyle: const HeaderStyle(
-                formatButtonVisible: false, titleCentered: true),
-            availableGestures: AvailableGestures.all,
-            selectedDayPredicate: (day) => isSameDay(day, today),
-            focusedDay: today,
-            firstDay: mostRecentMonday(today),
-            lastDay: DateTime.now().add(Duration(
-                days: DateTime.sunday -
-                    DateTime.now().weekday)), // Set last day to Sunday
-            onDaySelected: _onDaySelected,
-            calendarFormat: CalendarFormat.week,
-            rangeStartDay: today,
-            rangeEndDay: today.add(Duration(
-                days: DateTime.sunday -
-                    today.weekday)), // Updated calculation for Sunday range end
+          SfCalendar(
+            view: CalendarView.week,
+            controller: _calendarController,
+            onTap: (CalendarTapDetails details) {
+              // Mostrar un cuadro de diálogo para seleccionar fecha y hora
+            },
+            appointmentTextStyle: const TextStyle(
+              fontSize: 25,
+              color: Color(0xFFd89cf6),
+              letterSpacing: 5,
+              fontWeight: FontWeight.bold
+            ),
+            appointmentTimeTextFormat: 'HH:mm',
           ),
           const SizedBox(height: 30),
           Expanded(
@@ -103,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                 } else if (snapshot.hasError) {
                   return Center(
                       child: Text('Error: ${snapshot.error}',
-                          style: TextStyle(color: Colors.red)));
+                          style: const TextStyle(color: Colors.red)));
                 } else {
                   return const Center(child: CircularProgressIndicator());
                 }

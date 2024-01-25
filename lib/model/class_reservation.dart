@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
 
 class Reserva {
-  String id;
   DateTime fechaReserva;
   TimeOfDay horaDeInicio;
   TimeOfDay horaDeFinalizacion;
   String idAlumno;
   String idClase;
 
-  Reserva(this.id, this.fechaReserva, this.horaDeInicio,
+  Reserva(this.fechaReserva, this.horaDeInicio,
       this.horaDeFinalizacion, this.idAlumno, this.idClase);
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'fechaEnLaQueTranscurreLaReserva': fechaReserva.toIso8601String(),
       'horaDeInicio': {
         'hour': horaDeInicio.hour,
@@ -30,7 +28,6 @@ class Reserva {
 
   factory Reserva.fromJson(Map<String, dynamic> json) {
     return Reserva(
-      json['id'] as String,
       DateTime.parse(json['fechaEnLaQueTranscurreLaReserva']),
       TimeOfDay(
           hour: json['horaDeInicio']['hour'] as int,

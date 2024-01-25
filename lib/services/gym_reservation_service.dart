@@ -54,24 +54,11 @@ class ReservaServicio {
     });
   }
 
-  Future<void> actualizarReserva(Reserva reserva) async {
-    try {
-      await firestore
-          .collection('reservas')
-          .doc(reserva.id)
-          .update(reserva.toJson());
-    } catch (error) {
-      print('Error al actualizar reserva: $error');
-      // Manejar el error de forma adecuada
-    }
-  }
-
   Future<void> eliminarReserva(String id) async {
     try {
       await firestore.collection('reservas').doc(id).delete();
     } catch (error) {
       print('Error al eliminar reserva: $error');
-      // Manejar el error de forma adecuada
     }
   }
 }
