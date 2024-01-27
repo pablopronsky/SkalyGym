@@ -1,9 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gym/model/gym_class.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
-
-import '../model/class_reservation.dart';
+import 'package:syncfusion_localizations/syncfusion_localizations.dart';
+import '../model/appointment_data_source.dart';
 import '../model/user_client.dart';
 import '../services/user_client_service.dart';
 
@@ -49,9 +48,24 @@ class _HomePageState extends State<HomePage> {
     _calendarController = CalendarController();
   }
 
+  AppointmentDataSource _getCalendarDataSource() {
+    List<Appointment> appointments = <Appointment>[];
+    appointments.add(Appointment(
+      startTime: DateTime.now(),
+      endTime: DateTime.now().add(Duration(minutes: 10)),
+      subject: 'Meeting',
+      color: Colors.blue,
+      startTimeZone: '',
+      endTimeZone: '',
+    ));
+
+    return AppointmentDataSource(appointments);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       appBar: AppBar(actions: [
         IconButton(
           onPressed: signUserOut,
@@ -74,15 +88,14 @@ class _HomePageState extends State<HomePage> {
           ),
           SfCalendar(
             view: CalendarView.week,
+            firstDayOfWeek: 1,
             controller: _calendarController,
-            onTap: (CalendarTapDetails details) {
-              // Mostrar un cuadro de diálogo para seleccionar fecha y hora
-            },
+            dataSource: _getCalendarDataSource(),
             appointmentTextStyle: const TextStyle(
-              fontSize: 25,
-              color: Color(0xFFd89cf6),
-              letterSpacing: 5,
-              fontWeight: FontWeight.bold
+                fontSize: 25,
+                color: Color(0xFFd89cf6),
+                letterSpacing: 5,
+                fontWeight: FontWeight.bold
             ),
             appointmentTimeTextFormat: 'HH:mm',
           ),

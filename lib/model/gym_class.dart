@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import 'class_reservation.dart';
 
-class Clase {
+class Clase extends CalendarDataSource{
   DateTime fechaEnLaQueTranscurreLaClase;
   TimeOfDay horaDeInicio;
   TimeOfDay horaDeFinalizacion;
