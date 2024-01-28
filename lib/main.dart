@@ -1,8 +1,11 @@
+// ignore_for_file: unused_import
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/pages/admin_page.dart';
 import 'package:gym/pages/auth_page.dart';
 import 'package:gym/pages/home_page.dart';
+import 'package:gym/services/gym_class_service.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
@@ -24,22 +27,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: [
+      localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
         SfGlobalLocalizations.delegate,
       ],
-      supportedLocales: [
-        const Locale('en'),
-        const Locale('zh'),
-        const Locale('he'),
-        const Locale('ru'),
-        const Locale('fr', 'BE'),
-        const Locale('fr', 'CA'),
-        const Locale('ja'),
-        const Locale('de'),
-        const Locale('hi'),
-        const Locale('es'),
+      supportedLocales: const [
+        Locale('es', 'ES'),
       ],
       locale: const Locale('es'),
       routes: {

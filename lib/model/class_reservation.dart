@@ -2,24 +2,24 @@ import 'package:flutter/material.dart';
 
 class Reserva {
   DateTime fechaReserva;
-  TimeOfDay horaDeInicio;
-  TimeOfDay horaDeFinalizacion;
+  TimeOfDay startTime;
+  TimeOfDay endTime;
   String idAlumno;
   String idClase;
 
-  Reserva(this.fechaReserva, this.horaDeInicio,
-      this.horaDeFinalizacion, this.idAlumno, this.idClase);
+  Reserva(this.fechaReserva, this.startTime,
+      this.endTime, this.idAlumno, this.idClase);
 
   Map<String, dynamic> toJson() {
     return {
       'fechaEnLaQueTranscurreLaReserva': fechaReserva.toIso8601String(),
       'horaDeInicio': {
-        'hour': horaDeInicio.hour,
-        'minute': horaDeInicio.minute
+        'hour': startTime.hour,
+        'minute': startTime.minute
       },
       'horaDeFinalizacion': {
-        'hour': horaDeFinalizacion.hour,
-        'minute': horaDeFinalizacion.minute
+        'hour': endTime.hour,
+        'minute': endTime.minute
       },
       'idAlumno': idAlumno,
       'idClase': idClase,

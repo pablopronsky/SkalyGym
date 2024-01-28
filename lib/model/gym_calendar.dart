@@ -1,9 +1,9 @@
-import 'gym_class.dart';
+import 'gym_meeting.dart';
 
 class Calendario {
   DateTime fechaDeInicio;
   DateTime fechaDeFinalizacion;
-  List<Clase> clases;
+  List<Meeting> clases;
 
   Calendario(this.fechaDeInicio, this.fechaDeFinalizacion, this.clases);
 }

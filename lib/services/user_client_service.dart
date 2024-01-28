@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gym/services/gym_class_service.dart';
 
 import '../model/enum_rol.dart';
 import '../model/user_client.dart';
