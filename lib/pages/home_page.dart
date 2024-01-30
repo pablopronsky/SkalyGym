@@ -2,11 +2,7 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:syncfusion_flutter_calendar/calendar.dart';
-import '../model/gym_meeting.dart';
-import '../model/meeting_data_source.dart';
 import '../model/user_client.dart';
-import '../services/gym_class_service.dart';
 import '../services/user_client_service.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,7 +13,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  late CalendarController _calendarController;
   DateTime today = DateTime.now();
   DateTime mostRecentSunday(DateTime date) =>
       DateTime(date.year, date.month, date.day - date.weekday % 1);
@@ -32,9 +27,9 @@ class _HomePageState extends State<HomePage> {
     return date.add(Duration(days: 7 - date.weekday));
   }
 
-  ClaseServicio claseServicio = ClaseServicio();
+  //ClaseServicio claseServicio = ClaseServicio();
 
-  Stream<List<Meeting>> meetingsStream = ClaseServicio().fetchMeetings();
+  //Stream<List<Meeting>> meetingsStream = ClaseServicio().fetchMeetings();
 
   final usuario = FirebaseAuth.instance.currentUser!;
 
@@ -46,13 +41,11 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _calendarController = CalendarController();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       appBar: AppBar(actions: [
         IconButton(
           onPressed: signUserOut,
@@ -61,6 +54,9 @@ class _HomePageState extends State<HomePage> {
       ]),
       body: Column(
         children: [
+          const SizedBox(
+            height: 10,
+          ),
           Center(
             child: Text(
               usuario.email!,
@@ -73,19 +69,6 @@ class _HomePageState extends State<HomePage> {
           const SizedBox(
             height: 60,
           ),
-          SfCalendar(
-                  view: CalendarView.week,
-                  firstDayOfWeek: 7,
-                  controller: _calendarController,
-                  dataSource: events,
-                  appointmentTextStyle: const TextStyle(
-                    fontSize: 25,
-                    color: Color(0xFFd89cf6),
-                    letterSpacing: 5,
-                    fontWeight: FontWeight.bold,
-                  ),
-          ),
-
           const SizedBox(height: 30),
           Expanded(
             child: FutureBuilder<List<Alumno>>(

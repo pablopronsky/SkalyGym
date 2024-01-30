@@ -1,42 +1,42 @@
-import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:json_annotation/json_annotation.dart';
 
+part 'class_reservation.g.dart';
+
+@JsonSerializable()
 class Reserva {
-  DateTime fechaReserva;
-  TimeOfDay startTime;
-  TimeOfDay endTime;
+  DateTime startTime;
+  DateTime endTime;
   String idAlumno;
   String idClase;
 
-  Reserva(this.fechaReserva, this.startTime,
-      this.endTime, this.idAlumno, this.idClase);
+  Reserva(this.startTime, this.endTime, this.idAlumno, this.idClase);
 
-  Map<String, dynamic> toJson() {
+  factory Reserva.fromMap(Map<String, dynamic> map) {
+    return Reserva(
+      DateTime.parse(map['startTime']),
+      DateTime.parse(map['endTime']),
+      map['idAlumno'],
+      map['idClase'],
+    );
+  }
+
+  static DateTime timeStampToDateTime(Timestamp timestamp) {
+    return DateTime.parse(timestamp.toDate().toString());
+  }
+
+  static Timestamp dateTimeToTimeStamp(DateTime? dateTime) {
+    return Timestamp.fromDate(dateTime ?? DateTime.now());
+  }
+
+  Map<String, dynamic> toMap() {
     return {
-      'fechaEnLaQueTranscurreLaReserva': fechaReserva.toIso8601String(),
-      'horaDeInicio': {
-        'hour': startTime.hour,
-        'minute': startTime.minute
-      },
-      'horaDeFinalizacion': {
-        'hour': endTime.hour,
-        'minute': endTime.minute
-      },
+      'startTime': startTime.toIso8601String(),
+      'endTime': endTime.toIso8601String(),
       'idAlumno': idAlumno,
       'idClase': idClase,
     };
   }
-
-  factory Reserva.fromJson(Map<String, dynamic> json) {
-    return Reserva(
-      DateTime.parse(json['fechaEnLaQueTranscurreLaReserva']),
-      TimeOfDay(
-          hour: json['horaDeInicio']['hour'] as int,
-          minute: json['horaDeInicio']['minute'] as int),
-      TimeOfDay(
-          hour: json['horaDeFinalizacion']['hour'] as int,
-          minute: json['horaDeFinalizacion']['minute'] as int),
-      json['idAlumno'] as String,
-      json['idClase'] as String,
-    );
-  }
+  Map<String, dynamic> toJson() => _$ReservaToJson(this);
+  factory Reserva.fromJson(Map<String, dynamic> json) => _$ReservaFromJson(json);
 }

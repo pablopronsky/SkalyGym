@@ -1,6 +1,10 @@
+import 'package:json_annotation/json_annotation.dart';
+
 import 'enum_rol.dart';
 import 'user.dart';
+part 'user_client.g.dart';
 
+@JsonSerializable()
 class Alumno extends Usuario {
   int packDeClases;
   DateTime fechaDeNacimiento;

@@ -7,10 +7,7 @@ import 'package:gym/pages/auth_page.dart';
 import 'package:gym/pages/home_page.dart';
 import 'package:gym/services/gym_class_service.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:syncfusion_localizations/syncfusion_localizations.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
-
-
 
 import 'firebase_options.dart';
 
@@ -19,6 +16,8 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  ClaseServicio claseServicio = ClaseServicio();
+  claseServicio.createSingleClass();
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 
@@ -27,16 +26,6 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      localizationsDelegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-        SfGlobalLocalizations.delegate,
-      ],
-      supportedLocales: const [
-        Locale('es', 'ES'),
-      ],
-      locale: const Locale('es'),
       routes: {
         '/admin_page': (context) => const AdminPage(),
         '/home_page': (context) => const HomePage(),

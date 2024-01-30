@@ -1,4 +1,4 @@
-import 'gym_meeting.dart';
+import 'meeting.dart';
 
 class Calendario {
   DateTime fechaDeInicio;
