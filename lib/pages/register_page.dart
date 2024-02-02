@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/textFieldInput.dart';
-import '../services/user_client_service.dart';
+import '../services/client_service.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
