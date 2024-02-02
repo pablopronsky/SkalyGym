@@ -26,8 +26,7 @@ class ClaseServicio {
       DateTime classDate = DateTime(2024, 2, 5);
       Meeting meeting = Meeting(
         eventName: 'Clase',
-        from: DateTime(classDate.year, classDate.month, classDate.day, 10,
-            0),
+        from: DateTime(classDate.year, classDate.month, classDate.day, 10, 0),
         to: DateTime(classDate.year, classDate.month, classDate.day, 11, 0),
         reservas: [],
         idAlumno: [],

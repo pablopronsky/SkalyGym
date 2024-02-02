@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   const AppBarComponent({Key? key}) : super(key: key);
 
-  void signOut(){
+  void signOut() {
     FirebaseAuth.instance.signOut();
   }
 
@@ -15,12 +15,13 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       actions: [
         IconButton(
-          onPressed: () => signOut, // Assuming signUserOut is defined elsewhere
+          onPressed: () => signOut,
           icon: const Icon(Icons.logout),
         ),
       ],
     );
   }
+
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

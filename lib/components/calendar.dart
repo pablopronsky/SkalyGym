@@ -3,7 +3,6 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../model/firestore_data_source.dart';
 
-// Crea un nuevo widget llamado CustomCalendar
 class Calendar extends StatefulWidget {
   const Calendar({
     Key? key,
@@ -14,6 +13,8 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
+
+  double _height= 0.0;
   @override
   Widget build(BuildContext context) {
     return SfCalendar(
@@ -24,6 +25,8 @@ class _CalendarState extends State<Calendar> {
         textAlign: TextAlign.center,
         textStyle: TextStyle(color: Colors.white),
       ),
+      monthViewSettings:
+      MonthViewSettings(showAgenda: true, agendaViewHeight: _height),
       timeZone: 'Argentina Standard Time',
       appointmentTextStyle: const TextStyle(
         fontSize: 12,
@@ -31,7 +34,7 @@ class _CalendarState extends State<Calendar> {
         fontWeight: FontWeight.bold,
       ),
       scheduleViewSettings: const ScheduleViewSettings(
-
+          appointmentItemHeight: 50,
         // SECTOR MENSUAL
         monthHeaderSettings: MonthHeaderSettings(
             monthFormat: 'MMMM, yyyy',
@@ -41,8 +44,7 @@ class _CalendarState extends State<Calendar> {
             monthTextStyle: TextStyle(
                 color: Colors.black,
                 fontSize: 20,
-                fontWeight: FontWeight.w400)
-        ),
+                fontWeight: FontWeight.w400)),
 
         // SECTOR SEMANAL
         weekHeaderSettings: WeekHeaderSettings(
@@ -75,3 +77,4 @@ class _CalendarState extends State<Calendar> {
     );
   }
 }
+

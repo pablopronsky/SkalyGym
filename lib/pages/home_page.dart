@@ -1,13 +1,10 @@
-// ignore_for_file: avoid_print
-
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gym/components/user_name.dart';
 import '../components/appbar.dart';
 import '../components/calendar.dart';
-import '../model/user_client.dart';
-import '../services/client_service.dart';
+import '../components/users_list.dart';
 
-class HomePage extends StatefulWidget  {
+class HomePage extends StatefulWidget {
   const HomePage({super.key});
 
   @override
@@ -15,8 +12,6 @@ class HomePage extends StatefulWidget  {
 }
 
 class _HomePageState extends State<HomePage> {
-  final usuario = FirebaseAuth.instance.currentUser!;
-
   @override
   void initState() {
     super.initState();
@@ -24,53 +19,22 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: const AppBarComponent(),
+    return const Scaffold(
+      appBar: AppBarComponent(),
       body: Column(
         children: [
-          const SizedBox(
+          SizedBox(
             height: 10,
           ),
-          Center(
-            // centrar texto verticalmente y tartar que muestre nombre+apellido
-            child: Text(
-              usuario.email!,
-              style: const TextStyle(
-                  fontSize: 18,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-              ),
-            ),
+          UserName(),
+          SizedBox(
+            height: 10,
           ),
-          const SizedBox(
-            height: 60,
-          ),
-          const Calendar(),
           Expanded(
-            child: FutureBuilder<List<Alumno>>(
-              future: AlumnoServicio().obtenerTodosLosAlumnos(),
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (context, index) {
-                      final alumno = snapshot.data![index];
-                      return ListTile(
-                        title: Text(
-                            '${alumno.nombre.toUpperCase()} ${alumno.apellido.toUpperCase()}'),
-                      );
-                    },
-                  );
-                } else if (snapshot.hasError) {
-                  return Center(
-                      child: Text('Error: ${snapshot.error}',
-                          style: const TextStyle(color: Colors.red)));
-                } else {
-                  return const Center(child: CircularProgressIndicator());
-                }
-              },
-            ),
+              child:
+              Calendar()
           ),
+          ListaAlumnos(),
         ],
       ),
     );
