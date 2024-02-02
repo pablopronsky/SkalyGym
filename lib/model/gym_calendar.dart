@@ -1,9 +1,9 @@
 import 'meeting.dart';
 
 class Calendario {
-  DateTime fechaDeInicio;
-  DateTime fechaDeFinalizacion;
+  DateTime from;
+  DateTime to;
   List<Meeting> clases;
 
-  Calendario(this.fechaDeInicio, this.fechaDeFinalizacion, this.clases);
+  Calendario(this.from, this.to, this.clases);
 }

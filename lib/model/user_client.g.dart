@@ -13,7 +13,6 @@ Alumno _$AlumnoFromJson(Map<String, dynamic> json) => Alumno(
       json['email'] as String,
       json['numeroDeCelular'] as String,
       json['packDeClases'] as int,
-      DateTime.parse(json['fechaDeNacimiento'] as String),
       $enumDecode(_$RolEnumMap, json['rol']),
     );
 
@@ -24,7 +23,6 @@ Map<String, dynamic> _$AlumnoToJson(Alumno instance) => <String, dynamic>{
       'email': instance.email,
       'numeroDeCelular': instance.numeroDeCelular,
       'packDeClases': instance.packDeClases,
-      'fechaDeNacimiento': instance.fechaDeNacimiento.toIso8601String(),
       'rol': _$RolEnumMap[instance.rol]!,
     };
 

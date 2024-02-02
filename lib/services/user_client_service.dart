@@ -6,18 +6,15 @@ import '../model/user_client.dart';
 class AlumnoServicio {
   void registrarAlumno(String uid, String email, String nombre, String apellido,
       String numeroDeCelular) {
-    Alumno alumno = Alumno(uid, nombre, apellido, email, numeroDeCelular, 3,
-        DateTime.now(), Rol.Alumno);
-    FirebaseFirestore.instance.collection('alumnos').add({
-      'uid': alumno.uid,
-      'nombre': alumno.nombre,
-      'apellido': alumno.apellido,
-      'email': alumno.email,
-      'numeroDeCelular': alumno.numeroDeCelular,
-      'packDeClases': alumno.packDeClases,
-      'fechaDeNacimiento': alumno.fechaDeNacimiento,
-      'rol': alumno.rol.name,
-    });
+    final alumno =
+        Alumno(uid, nombre, apellido, email, numeroDeCelular, 3, Rol.Alumno);
+    final documentId = '${alumno.nombre} ${alumno.apellido}';
+    final json = alumno.toJson();
+
+    final documentRef =
+        FirebaseFirestore.instance.collection('alumnos').doc(documentId);
+
+    documentRef.set(json);
   }
 
   Future<List<Alumno>> obtenerTodosLosAlumnos() async {
@@ -32,7 +29,6 @@ class AlumnoServicio {
         doc['email'],
         doc['numeroDeCelular'],
         doc['packDeClases'],
-        doc['fechaDeNacimiento'].toDate(),
         Rol.values.byName(doc['rol']),
       );
       listaDeAlumnos.add(alumno);
@@ -45,12 +41,12 @@ class AlumnoServicio {
         FirebaseFirestore.instance.collection('alumnos').doc(uid);
 
     alumnoModificar.update({
+      'uid': alumnoActualizado.uid,
       'nombre': alumnoActualizado.nombre,
       'apellido': alumnoActualizado.apellido,
       'email': alumnoActualizado.email,
       'numeroDeCelular': alumnoActualizado.numeroDeCelular,
       'packDeClases': alumnoActualizado.packDeClases,
-      'fechaDeNacimiento': alumnoActualizado.fechaDeNacimiento,
       'rol': alumnoActualizado.rol.name,
     });
   }
@@ -75,7 +71,6 @@ class AlumnoServicio {
         doc['email'],
         doc['numeroDeCelular'],
         doc['packDeClases'],
-        doc['fechaDeNacimiento'].toDate(),
         Rol.values.byName(doc['rol']),
       );
       listaDeAlumnos.add(alumno);

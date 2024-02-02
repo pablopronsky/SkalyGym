@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gym/pages/admin_page.dart';
 import 'package:gym/pages/auth_page.dart';
 import 'package:gym/pages/home_page.dart';
-import 'package:gym/services/gym_class_service.dart';
+import 'package:gym/services/meeting.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 
@@ -17,7 +17,7 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   ClaseServicio claseServicio = ClaseServicio();
-  claseServicio.createSingleClass();
+ // claseServicio.createSingleClass();
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
 

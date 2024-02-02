@@ -62,6 +62,7 @@ class Meeting {
     };
   }
 
-  factory Meeting.fromJson(Map<String, dynamic> json) => _$MeetingFromJson(json);
+  factory Meeting.fromJson(Map<String, dynamic> json) =>
+      _$MeetingFromJson(json);
   Map<String, dynamic> toJson() => _$MeetingToJson(this);
 }

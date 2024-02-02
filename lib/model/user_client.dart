@@ -7,7 +7,6 @@ part 'user_client.g.dart';
 @JsonSerializable()
 class Alumno extends Usuario {
   int packDeClases;
-  DateTime fechaDeNacimiento;
   Rol rol;
 
   Alumno(
@@ -17,12 +16,10 @@ class Alumno extends Usuario {
     String email,
     String numeroDeCelular,
     this.packDeClases,
-    this.fechaDeNacimiento,
     this.rol,
   ) : super(uid, nombre, apellido, email, numeroDeCelular);
 
-  @override
-  String toString() {
-    return 'Alumno{packDeClases: $packDeClases, fechaDeNacimiento: $fechaDeNacimiento, rol: $rol}';
-  }
+  factory Alumno.fromJson(Map<String, dynamic> json) => _$AlumnoFromJson(json);
+
+  Map<String, dynamic> toJson() => _$AlumnoToJson(this);
 }

@@ -37,6 +37,8 @@ class Reserva {
       'idClase': idClase,
     };
   }
+
   Map<String, dynamic> toJson() => _$ReservaToJson(this);
-  factory Reserva.fromJson(Map<String, dynamic> json) => _$ReservaFromJson(json);
+  factory Reserva.fromJson(Map<String, dynamic> json) =>
+      _$ReservaFromJson(json);
 }
