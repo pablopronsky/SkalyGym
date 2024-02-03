@@ -34,7 +34,7 @@ class _HomePageState extends State<HomePage> {
               child:
               Calendar()
           ),
-          ListaAlumnos(),
+          //ListaAlumnos(),
         ],
       ),
     );

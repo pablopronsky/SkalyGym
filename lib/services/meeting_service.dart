@@ -23,7 +23,7 @@ class ClaseServicio {
 
   Future<void> createSingleClass() async {
     try {
-      DateTime classDate = DateTime(2024, 2, 5);
+      DateTime classDate = DateTime(2024, 2, 15);
       Meeting meeting = Meeting(
         eventName: 'Clase',
         from: DateTime(classDate.year, classDate.month, classDate.day, 10, 0),

@@ -15,7 +15,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       actions: [
         IconButton(
-          onPressed: () => signOut,
+          onPressed: () => FirebaseAuth.instance.signOut(),
           icon: const Icon(Icons.logout),
         ),
       ],
