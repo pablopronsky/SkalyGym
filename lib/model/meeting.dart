@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gym/model/class_reservation.dart';
+import 'package:gym/model/appointment.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'meeting.g.dart';

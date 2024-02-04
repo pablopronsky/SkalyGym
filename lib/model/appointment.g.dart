@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'class_reservation.dart';
+part of 'appointment.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator

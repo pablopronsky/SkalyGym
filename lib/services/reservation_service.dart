@@ -3,7 +3,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import '../model/class_reservation.dart';
+import '../model/appointment.dart';
 
 class ReservaServicio {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;

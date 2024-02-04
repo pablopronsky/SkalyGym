@@ -13,20 +13,49 @@ class Calendar extends StatefulWidget {
 }
 
 class _CalendarState extends State<Calendar> {
+  void calendarTapped(CalendarTapDetails calendarTapDetails) {
+    if (calendarTapDetails.targetElement == CalendarElement.appointment) {
+      _showDialog(calendarTapDetails);
+    }
+  }
 
-  double _height= 0.0;
+  _showDialog(CalendarTapDetails details) async {
+    Appointment appointment = details.appointments![0];
+    await showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("Appointment Details"),
+          contentPadding: const EdgeInsets.all(16.0),
+          content: Text(
+              "${appointment.subject}\nidClase: ${appointment.id}\nInicio: ${appointment.startTime}\nFin: ${appointment.endTime}\nAlumnos: $appointment"),
+          actions: <Widget>[
+            TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.pop(context);
+                })
+          ],
+        );
+      },
+    );
+  }
+
+  final double _height = 0.0;
+
   @override
   Widget build(BuildContext context) {
     return SfCalendar(
       view: CalendarView.schedule,
       dataSource: FirestoreStreamDataSource(),
+      onTap: calendarTapped,
       headerStyle: const CalendarHeaderStyle(
         backgroundColor: Colors.white30,
         textAlign: TextAlign.center,
         textStyle: TextStyle(color: Colors.white),
       ),
       monthViewSettings:
-      MonthViewSettings(showAgenda: true, agendaViewHeight: _height),
+          MonthViewSettings(showAgenda: true, agendaViewHeight: _height),
       timeZone: 'Argentina Standard Time',
       appointmentTextStyle: const TextStyle(
         fontSize: 12,
@@ -34,7 +63,7 @@ class _CalendarState extends State<Calendar> {
         fontWeight: FontWeight.bold,
       ),
       scheduleViewSettings: const ScheduleViewSettings(
-          appointmentItemHeight: 50,
+        appointmentItemHeight: 50,
         // SECTOR MENSUAL
         monthHeaderSettings: MonthHeaderSettings(
             monthFormat: 'MMMM, yyyy',
@@ -77,4 +106,3 @@ class _CalendarState extends State<Calendar> {
     );
   }
 }
-

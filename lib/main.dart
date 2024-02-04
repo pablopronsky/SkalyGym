@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:gym/pages/admin_page.dart';
 import 'package:gym/pages/auth_page.dart';
 import 'package:gym/pages/home_page.dart';
+import 'package:gym/pages/profile.dart';
 import 'package:gym/services/meeting_service.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
@@ -16,7 +17,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  ClaseServicio claseServicio = ClaseServicio();
+  //ClaseServicio claseServicio = ClaseServicio();
   //claseServicio.createSingleClass();
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }
@@ -38,6 +39,7 @@ class MyApp extends StatelessWidget {
       routes: {
         '/admin_page': (context) => const AdminPage(),
         '/home_page': (context) => const HomePage(),
+        '/profile': (context) => const Perfil(),
       },
       debugShowCheckedModeBanner: false,
       home: const AuthPage(),

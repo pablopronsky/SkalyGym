@@ -31,8 +31,7 @@ class _UserNameState extends State<UserName> {
 
         if (snapshot.connectionState == ConnectionState.active) {
           final doc = snapshot.data!.docs.first;
-          final data = doc.data()
-              as Map<String, dynamic>;
+          final data = doc.data() as Map<String, dynamic>;
           final nombre = data['nombre'];
           final apellido = data['apellido'];
 
