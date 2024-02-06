@@ -10,21 +10,17 @@ class ReservaServicio {
 
   Future<void> crearReserva(BuildContext context, DateTime startTime,
       DateTime endTime, String idAlumno, String idClase) async {
-    // Obtener la referencia de la clase
     DocumentReference claseRef = _firestore.collection('clases').doc(idClase);
 
-    // Obtener la lista de reservas
     QuerySnapshot reservasSnapshot =
         await claseRef.collection('reservas').get();
+
     List<Object?> reservas =
         reservasSnapshot.docs.map((doc) => doc.data()).toList();
 
-    // Obtener el tamaño de la lista de reservas
     int reservasCount = reservas.length;
 
-    // Validar si el tamaño de la lista de reservas es menor a 6
     if (reservasCount < 6) {
-      // Crear la reserva
       Reserva reserva = Reserva(startTime, endTime, idAlumno, idClase);
       await claseRef.collection('reservas').add(reserva.toJson());
     } else {

@@ -62,6 +62,19 @@ class Meeting {
     };
   }
 
+  factory Meeting.fromFirestore(DocumentSnapshot doc) {
+    Map data = doc.data() as Map;
+    return Meeting(
+      eventName: data['eventName'],
+      from: (data['from'] as Timestamp).toDate(),
+      to: (data['to'] as Timestamp).toDate(),
+      reservas:
+          (data['reservas'] as List).map((i) => Reserva.fromMap(i)).toList(),
+      idAlumno: List<String>.from(data['idAlumno']),
+      claseLlena: data['claseLlena'],
+    );
+  }
+
   factory Meeting.fromJson(Map<String, dynamic> json) =>
       _$MeetingFromJson(json);
   Map<String, dynamic> toJson() => _$MeetingToJson(this);

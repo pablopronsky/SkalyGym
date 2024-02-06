@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import '../error/firebase_error.dart';
 import '../model/meeting.dart';
 
-class ClaseServicio {
+class MeetingService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   Stream<List<Meeting>> fetchMeetings() {
@@ -19,6 +19,12 @@ class ClaseServicio {
               'reservas': [].length,
             }))
         .toList());
+  }
+
+  Future<List<Meeting>> getMeetings() async {
+    QuerySnapshot querySnapshot =
+        await FirebaseFirestore.instance.collection('clases').get();
+    return querySnapshot.docs.map((doc) => Meeting.fromFirestore(doc)).toList();
   }
 
   Future<void> createSingleClass() async {

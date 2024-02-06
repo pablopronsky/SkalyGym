@@ -4,10 +4,6 @@ import 'package:flutter/material.dart';
 class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   const AppBarComponent({Key? key}) : super(key: key);
 
-  void signOut() {
-    FirebaseAuth.instance.signOut();
-  }
-
   @override
   Widget build(BuildContext context) {
     final currentRoute = ModalRoute.of(context)!.settings.name;
@@ -29,7 +25,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
           : null,
       actions: [
         IconButton(
-          onPressed: () => signOut(),
+          onPressed: () => FirebaseAuth.instance.signOut(),
           icon: const Icon(Icons.logout),
         ),
       ],

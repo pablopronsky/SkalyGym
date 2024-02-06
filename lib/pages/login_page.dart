@@ -25,46 +25,45 @@ class _LoginPageState extends State<LoginPage> {
   // metodo para abrir sesion
 
   abrirSesion() async {
-    try {
-      // Show loading dialog (await to ensure it displays first)
-      await showDialog(
-        context: context,
-        builder: (context) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
-      );
+    // Show loading dialog (await to ensure it displays first)
 
-      // Sign in with FirebaseAuth
-      final UserCredential userCredential = await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: emailController.text, password: passwordController.text);
+    // Wrap your asynchronous operations in a Future
+    Future(() async {
+      try {
+        // Sign in with FirebaseAuth
+        final UserCredential userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+                email: emailController.text, password: passwordController.text);
 
-      // Fetch user document from Firestore
-      DocumentSnapshot userDoc = await FirebaseFirestore.instance
-          .collection('alumnos')
-          .doc(userCredential.user!.uid)
-          .get();
+        // Fetch user document from Firestore
+        DocumentSnapshot userDoc = await FirebaseFirestore.instance
+            .collection('alumnos')
+            .doc(userCredential.user!.uid)
+            .get();
 
-      // Navigate to home page
-      Navigator.pushReplacementNamed(context, '/home_page');
-    } catch (error) {
-      // Handle errors gracefully
-      if (error is FirebaseAuthException) {
-        // Handle FirebaseAuth-specific errors
-        showErrorMessage(error.code);
-      } else if (error is FirebaseException) {
-        // Handle other Firebase-related errors
-        showErrorMessage("general-error"); // Show a generic error message
-      } else {
-        // Handle other errors
-        showErrorMessage("general-error"); // Show a generic error message
+        // Navigate to home page
+        if (mounted) {
+          Navigator.pushReplacementNamed(context, '/home_page');
+        }
+      } catch (error) {
+        // Handle errors gracefully
+        if (error is FirebaseAuthException) {
+          // Handle FirebaseAuth-specific errors
+          showErrorMessage(error.code);
+        } else if (error is FirebaseException) {
+          // Handle other Firebase-related errors
+          showErrorMessage("general-error"); // Show a generic error message
+        } else {
+          // Handle other errors
+          showErrorMessage("general-error"); // Show a generic error message
+        }
       }
-    } finally {
-      // Dismiss the loading dialog (if still displayed)
-      Navigator.pop(context);
-    }
+    }).whenComplete(() {
+      // Dismiss the loading dialog when the Future completes
+      if (mounted) {
+        Navigator.pop(context);
+      }
+    });
   }
 
 // mensajes de error al logear
@@ -80,21 +79,6 @@ class _LoginPageState extends State<LoginPage> {
       default:
         message = 'Usuario o contraseña incorrectos.';
     }
-
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.deepPurple,
-          title: Center(
-            child: Text(
-              message,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-        );
-      },
-    );
   }
 
   @override

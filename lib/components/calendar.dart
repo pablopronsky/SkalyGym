@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import '../model/firestore_data_source.dart';
@@ -24,14 +26,55 @@ class _CalendarState extends State<Calendar> {
     await showDialog(
       context: context,
       builder: (BuildContext context) {
+        final String fecha =
+            '${appointment.startTime.year}-${appointment.startTime.month.toString().padLeft(2, '0')}-${appointment.startTime.day.toString().padLeft(2, '0')}';
+        final String horaInicio =
+            DateFormat('hh:mm a').format(appointment.startTime);
+        final String horaFin =
+            DateFormat('hh:mm a').format(appointment.endTime);
+
         return AlertDialog(
-          title: const Text("Appointment Details"),
+          backgroundColor: Colors.grey[800],
+          title: const Text(
+            "Clase seleccionada",
+            textAlign: TextAlign.center,
+            style: TextStyle(color: Colors.white),
+          ),
           contentPadding: const EdgeInsets.all(16.0),
-          content: Text(
-              "${appointment.subject}\nidClase: ${appointment.id}\nInicio: ${appointment.startTime}\nFin: ${appointment.endTime}\nAlumnos: $appointment"),
+          content: RichText(
+            textAlign: TextAlign.left,
+            text: TextSpan(
+              children: [
+                const TextSpan(
+                    text: 'FECHA: ', style: TextStyle(color: Colors.white)),
+                TextSpan(
+                    text: "$fecha\n",
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                WidgetSpan(
+                    child: SizedBox(height: 10)), // Increase vertical space
+                const TextSpan(
+                    text: 'HORA DE INICIO: ',
+                    style: TextStyle(color: Colors.white)),
+                TextSpan(
+                    text: "$horaInicio\n",
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                WidgetSpan(
+                    child: SizedBox(height: 10)), // Increase vertical space
+                const TextSpan(
+                    text: 'HORA DE FIN: ',
+                    style: TextStyle(color: Colors.white)),
+                TextSpan(
+                    text: "$horaFin\n",
+                    style: const TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
           actions: <Widget>[
             TextButton(
-                child: const Text('OK'),
+                child: const Text('OK', style: TextStyle(color: Colors.white)),
                 onPressed: () {
                   Navigator.pop(context);
                 })
@@ -42,6 +85,16 @@ class _CalendarState extends State<Calendar> {
   }
 
   final double _height = 0.0;
+
+  Future<int> getStudentCount(String claseId) async {
+    final studentCount = await FirebaseFirestore.instance
+        .collection('clases')
+        .doc(claseId)
+        .collection('reservas')
+        .get()
+        .then((snapshot) => snapshot.size);
+    return studentCount;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -64,6 +117,7 @@ class _CalendarState extends State<Calendar> {
       ),
       scheduleViewSettings: const ScheduleViewSettings(
         appointmentItemHeight: 50,
+
         // SECTOR MENSUAL
         monthHeaderSettings: MonthHeaderSettings(
             monthFormat: 'MMMM, yyyy',
