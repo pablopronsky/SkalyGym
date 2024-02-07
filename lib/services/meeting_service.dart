@@ -48,4 +48,88 @@ class MeetingService {
       print('Unexpected error: $e');
     }
   }
+
+  Future<void> createMultipleClasses() async {
+    try {
+      // Define los horarios
+      Map<String, List<List<int>>> horarios = {
+        'Lunes': [
+          [7, 8],
+          [8, 9],
+          [9, 10],
+          [16, 17],
+          [17, 18],
+          [18, 19],
+          [19, 20],
+          [20, 21]
+        ],
+        'Martes': [
+          [16, 17],
+          [17, 18],
+          [18, 19],
+          [19, 20],
+          [20, 21]
+        ],
+        'Miercoles': [
+          [7, 8],
+          [8, 9],
+          [9, 10],
+          [16, 17],
+          [17, 18],
+          [18, 19],
+          [19, 20],
+          [20, 21]
+        ],
+        'Jueves': [
+          [16, 17],
+          [17, 18],
+          [18, 19],
+          [19, 20],
+          [20, 21]
+        ],
+        'Viernes': [
+          [7, 8],
+          [8, 9],
+          [9, 10],
+          [16, 17],
+          [17, 18],
+          [18, 19],
+          [19, 20],
+          [20, 21]
+        ],
+        'Sabado': [
+          [7, 8],
+          [8, 9],
+          [9, 10],
+          [10, 11]
+        ],
+      };
+
+      // Itera sobre los días de la semana
+      for (String dia in horarios.keys) {
+        // Itera sobre los horarios del día
+        for (List<int> horario in horarios[dia]!) {
+          // Crea la reunión
+          Meeting meeting = Meeting(
+            eventName: 'Clase',
+            from: DateTime.now().add(Duration(hours: horario[0])),
+            to: DateTime.now().add(Duration(hours: horario[1])),
+            reservas: [],
+            idAlumno: [],
+            claseLlena: false,
+            recurrenceRule: 'FREQ=WEEKLY;INTERVAL=1;COUNT=10',
+          );
+
+          // Agrega la reunión a Firestore
+          CollectionReference classesCollection =
+              _firestore.collection('clases');
+          await classesCollection.add(meeting.toMap()).catchError((error) {
+            throw FirestoreError('Error adding class to Firestore: $error');
+          });
+        }
+      }
+    } catch (e) {
+      print('Unexpected error: $e');
+    }
+  }
 }

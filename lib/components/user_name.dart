@@ -34,21 +34,22 @@ class _UserNameState extends State<UserName> {
           final data = doc.data() as Map<String, dynamic>;
           final nombre = data['nombre'];
           final apellido = data['apellido'];
-
-          return Center(
-            child: Text(
-              '$nombre $apellido',
-              style: const TextStyle(
-                fontSize: 18,
-                color: Colors.black,
-                fontWeight: FontWeight.bold,
+          return Container(
+            color: Colors.grey[900],
+            child: Center(
+              child: Text(
+                '$nombre $apellido',
+                style: const TextStyle(
+                  fontSize: 24,
+                  color: Colors.black,
+                ),
               ),
             ),
           );
         }
-
         return const Center(child: CircularProgressIndicator());
       },
     );
   }
+
 }

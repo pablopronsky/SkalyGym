@@ -34,7 +34,7 @@ class _CalendarState extends State<Calendar> {
             DateFormat('hh:mm a').format(appointment.endTime);
 
         return AlertDialog(
-          backgroundColor: Colors.grey[800],
+          backgroundColor: Colors.grey[300],
           title: const Text(
             "Clase seleccionada",
             textAlign: TextAlign.center,
@@ -85,6 +85,7 @@ class _CalendarState extends State<Calendar> {
   }
 
   final double _height = 0.0;
+  var myTimezone = 'America/Buenos_Aires';
 
   Future<int> getStudentCount(String claseId) async {
     final studentCount = await FirebaseFirestore.instance
@@ -99,9 +100,11 @@ class _CalendarState extends State<Calendar> {
   @override
   Widget build(BuildContext context) {
     return SfCalendar(
+      backgroundColor: Colors.grey[300],
       view: CalendarView.schedule,
       dataSource: FirestoreStreamDataSource(),
       onTap: calendarTapped,
+      timeZone: 'Argentina Standard Time',
       headerStyle: const CalendarHeaderStyle(
         backgroundColor: Colors.white30,
         textAlign: TextAlign.center,
@@ -109,7 +112,6 @@ class _CalendarState extends State<Calendar> {
       ),
       monthViewSettings:
           MonthViewSettings(showAgenda: true, agendaViewHeight: _height),
-      timeZone: 'Argentina Standard Time',
       appointmentTextStyle: const TextStyle(
         fontSize: 12,
         color: Colors.black,
