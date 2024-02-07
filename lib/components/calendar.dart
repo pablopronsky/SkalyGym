@@ -51,7 +51,7 @@ class _CalendarState extends State<Calendar> {
                     text: "$fecha\n",
                     style: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold)),
-                WidgetSpan(
+                const WidgetSpan(
                     child: SizedBox(height: 10)), // Increase vertical space
                 const TextSpan(
                     text: 'HORA DE INICIO: ',
@@ -60,7 +60,7 @@ class _CalendarState extends State<Calendar> {
                     text: "$horaInicio\n",
                     style: const TextStyle(
                         color: Colors.white, fontWeight: FontWeight.bold)),
-                WidgetSpan(
+                const WidgetSpan(
                     child: SizedBox(height: 10)), // Increase vertical space
                 const TextSpan(
                     text: 'HORA DE FIN: ',

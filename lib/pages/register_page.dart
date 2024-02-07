@@ -1,10 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
-import 'package:gym/components/textFieldInput.dart';
-import '../services/client_service.dart';
+import 'package:gym/components/text_field_input.dart';
+import '../model/enum_rol.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -36,19 +37,25 @@ class _RegisterPageState extends State<RegisterPage> {
             );
           },
         );
+        // registra usuario
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
 
-        String? user = userCredential.user?.uid;
-        AlumnoServicio().registrarAlumno(
-            user!,
-            emailController.text,
-            nombreController.text,
-            apellidoController.text,
-            celularController.text);
+        FirebaseFirestore.instance
+            .collection('Users')
+            .doc(userCredential.user!.email)
+            .set({
+          'username': emailController.text.split('@')[0],
+          'nombre': nombreController.text,
+          'apellido': apellidoController.text,
+          'numero de celular': celularController.text,
+          'pack de clases': '3',
+          'rol': Rol.Alumno.name,
+        });
+
         Navigator.pop(context);
       } else {
         showErrorMessage('Las contraseñas no coinciden');
@@ -119,7 +126,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 // celular
                 TextFieldInput(
                   controller: celularController,
-                  hintText: 'Numero de celular',
+                  hintText: 'Celular',
                   obscureText: false,
                 ),
                 const SizedBox(height: 15),
@@ -195,6 +202,7 @@ class _RegisterPageState extends State<RegisterPage> {
                           ),
                         ),
                       ),
+                      const SizedBox(height: 50),
                     ],
                   ),
                 )

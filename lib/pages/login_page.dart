@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
-import 'package:gym/components/textFieldInput.dart';
+import 'package:gym/components/text_field_input.dart';
 
 import 'forgot_password_page.dart';
 

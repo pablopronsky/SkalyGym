@@ -17,7 +17,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  MeetingService meetingService = MeetingService();
+  //MeetingService meetingService = MeetingService();
   //meetingService.createMultipleClasses();
   initializeDateFormatting().then((_) => runApp(const MyApp()));
 }

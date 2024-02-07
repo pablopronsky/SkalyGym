@@ -1,7 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/drawer.dart';
-import 'package:gym/components/user_name.dart';
 import 'package:gym/pages/profile.dart';
 import '../components/appbar.dart';
 import '../components/calendar.dart';

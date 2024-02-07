@@ -1,9 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../model/enum_rol.dart';
 import '../model/user_client.dart';
 
 class AlumnoServicio {
+  final Stream<QuerySnapshot<Map<String, dynamic>>> userStream =
+      FirebaseFirestore.instance
+          .collection('alumnos')
+          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .snapshots();
+
+  String nombre = '';
+  String apellido = '';
+  int packDeClases = 0;
+
   void registrarAlumno(String uid, String email, String nombre, String apellido,
       String numeroDeCelular) {
     final alumno =
@@ -15,25 +26,6 @@ class AlumnoServicio {
         FirebaseFirestore.instance.collection('alumnos').doc(documentId);
 
     documentRef.set(json);
-  }
-
-  Future<List<Alumno>> obtenerTodosLosAlumnos() async {
-    List<Alumno> listaDeAlumnos = [];
-    QuerySnapshot querySnapshot =
-        await FirebaseFirestore.instance.collection('alumnos').get();
-    for (var doc in querySnapshot.docs) {
-      Alumno alumno = Alumno(
-        doc['uid'],
-        doc['nombre'],
-        doc['apellido'],
-        doc['email'],
-        doc['numeroDeCelular'],
-        doc['packDeClases'],
-        Rol.values.byName(doc['rol']),
-      );
-      listaDeAlumnos.add(alumno);
-    }
-    return listaDeAlumnos;
   }
 
   void modificarAlumno(String uid, Alumno alumnoActualizado) {
@@ -49,33 +41,5 @@ class AlumnoServicio {
       'packDeClases': alumnoActualizado.packDeClases,
       'rol': alumnoActualizado.rol.name,
     });
-  }
-
-  void borrarAlumno(String uid) {
-    DocumentReference alumnoBorrar =
-        FirebaseFirestore.instance.collection('alumnos').doc(uid);
-    alumnoBorrar.delete();
-  }
-
-  Future<List<Alumno>> buscarAlumnosPorApellido(String apellido) async {
-    Query query = FirebaseFirestore.instance
-        .collection('alumnos')
-        .where('apellido', isEqualTo: apellido);
-    QuerySnapshot querySnapshot = await query.get();
-    List<Alumno> listaDeAlumnos = [];
-    for (var doc in querySnapshot.docs) {
-      Alumno alumno = Alumno(
-        doc['uid'],
-        doc['nombre'],
-        doc['apellido'],
-        doc['email'],
-        doc['numeroDeCelular'],
-        doc['packDeClases'],
-        Rol.values.byName(doc['rol']),
-      );
-      listaDeAlumnos.add(alumno);
-    }
-
-    return listaDeAlumnos;
   }
 }

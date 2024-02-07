@@ -51,5 +51,4 @@ class _UserNameState extends State<UserName> {
       },
     );
   }
-
 }
