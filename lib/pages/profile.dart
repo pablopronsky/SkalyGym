@@ -22,32 +22,42 @@ class _PerfilState extends State<Perfil> {
     super.initState();
   }
 
-  // editar campo
   Future<void> editField(String field) async {
     String newValue = "";
     await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              backgroundColor: Colors.grey[900],
-              title: Text(
-                "Editar $field",
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
+          backgroundColor: Colors.grey[900],
+          title: Text(
+            textAlign: TextAlign.center,
+            "Editar $field",
+            style: const TextStyle(
+              color: Colors.white,
+            ),
+          ),
+          content: TextField(
+            cursorHeight: 0,
+            textCapitalization: TextCapitalization.words,
+            autofocus: true,
+            textAlign: TextAlign.center,
+            style: const TextStyle(color: Colors.white),
+            decoration: InputDecoration(
+              hintText: "Ingresa nuevo $field",
+              hintStyle: const TextStyle(color: Colors.grey),
+              focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: Colors.grey), // Cambia el color aquí
               ),
-              content: TextField(
-                autofocus: true,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: "Ingresa nuevo $field",
-                  hintStyle: const TextStyle(color: Colors.grey),
-                ),
-                onChanged: (value) {
-                  newValue = value;
-                },
-              ),
-              actions: [
-                //cancelar
+            ),
+            onChanged: (value) {
+              newValue = value;
+            },
+          ),
+          actions: [
+            // Distribuye los botones con espacio entre ellos
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // Cancelar
                 TextButton(
                   child: const Text(
                     'Cancelar',
@@ -55,20 +65,23 @@ class _PerfilState extends State<Perfil> {
                   ),
                   onPressed: () => Navigator.pop(context),
                 ),
-                // guardar
+                // Guardar
                 TextButton(
-                  child:  const Text(
+                  child: const Text(
                     'Guardar',
                     style: TextStyle(color: Colors.white),
                   ),
                   onPressed: () => Navigator.of(context).pop(newValue),
                 ),
               ],
-            ));
+            ),
+          ],
+        ));
     if (newValue.trim().isNotEmpty){
       await usersCollection.doc(currentUser.email).update({field: newValue});
     }
   }
+
 
   @override
   Widget build(BuildContext context) {

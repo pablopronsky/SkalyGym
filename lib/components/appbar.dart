@@ -7,7 +7,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       title: const Text(
-        'Skaly',
+        'Skaly Fitness',
         style: TextStyle(
           color: Colors.white,
           fontSize: 26,

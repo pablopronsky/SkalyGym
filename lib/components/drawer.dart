@@ -37,6 +37,12 @@ class MyDrawer extends StatelessWidget {
                   text: 'P E R F I L',
                   onTap: onProfileTap,
                 ),
+                // mis horarios
+                MyListTile(
+                  icon: Icons.schedule,
+                  text: 'M I S  H O R A R I O S',
+                  onTap: onProfileTap,
+                ),
               ],
             ),
             // logout
