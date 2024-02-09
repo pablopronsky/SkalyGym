@@ -43,7 +43,6 @@ class _RegisterPageState extends State<RegisterPage> {
           email: emailController.text,
           password: passwordController.text,
         );
-
         FirebaseFirestore.instance
             .collection('Users')
             .doc(userCredential.user!.email)
@@ -52,10 +51,10 @@ class _RegisterPageState extends State<RegisterPage> {
           'nombre': nombreController.text,
           'apellido': apellidoController.text,
           'numero de celular': celularController.text,
+          'clasesReservadas': [],
           'pack de clases': '3',
           'rol': Rol.Alumno.name,
         });
-
         Navigator.pop(context);
       } else {
         showErrorMessage('Las contraseñas no coinciden');

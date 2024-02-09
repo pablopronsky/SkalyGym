@@ -36,8 +36,9 @@ class MyHomePageState extends State<MyHomePage> {
         onProfileTap: goToProfilePage,
         onSignOut: signOut,
       ),
-      body: Column(
-        children: <Widget>[
+      body: SingleChildScrollView(
+    child: Column(
+    children: <Widget>[
           Container(
             height: 150.0,
             decoration: const BoxDecoration(
@@ -118,6 +119,6 @@ class MyHomePageState extends State<MyHomePage> {
           const Text('Clases disponibles para reservar:'),
         ],
       ),
-    );
+    ));
   }
 }
