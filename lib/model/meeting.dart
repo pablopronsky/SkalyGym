@@ -14,7 +14,6 @@ class Meeting {
   List<Reserva>? reservas;
   @JsonKey(name: 'idAlumno')
   List<String>? idAlumno;
-  bool claseLlena;
   String? recurrenceRule;
 
   Meeting({
@@ -24,7 +23,6 @@ class Meeting {
     required this.subject,
     this.reservas,
     this.idAlumno,
-    this.claseLlena = false,
     this.recurrenceRule,
   });
 
@@ -48,7 +46,6 @@ class Meeting {
       idAlumno: map['idAlumno'] != null
           ? List<String>.from(map['idAlumno'] as List)
           : null,
-      claseLlena: map['claseLlena'] as bool,
       recurrenceRule: map['recurrenceRule'] as String?,
     );
   }
@@ -61,7 +58,6 @@ class Meeting {
       'subject': subject,
       'reservas': reservas?.map((reserva) => reserva.toMap()).toList(),
       'idAlumno': idAlumno,
-      'claseLlena': claseLlena,
       'recurrenceRule': recurrenceRule,
     };
   }
@@ -76,7 +72,6 @@ class Meeting {
       reservas:
           (data['reservas'] as List).map((i) => Reserva.fromMap(i)).toList(),
       idAlumno: List<String>.from(data['idAlumno']),
-      claseLlena: data['claseLlena'],
     );
   }
 

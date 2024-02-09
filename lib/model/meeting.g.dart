@@ -17,7 +17,6 @@ Meeting _$MeetingFromJson(Map<String, dynamic> json) => Meeting(
       idAlumno: (json['idAlumno'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      claseLlena: json['claseLlena'] as bool? ?? false,
       recurrenceRule: json['recurrenceRule'] as String?,
     );
 
@@ -28,6 +27,5 @@ Map<String, dynamic> _$MeetingToJson(Meeting instance) => <String, dynamic>{
       'subject': instance.subject,
       'reservas': instance.reservas,
       'idAlumno': instance.idAlumno,
-      'claseLlena': instance.claseLlena,
       'recurrenceRule': instance.recurrenceRule,
     };

@@ -7,7 +7,6 @@ import 'package:syncfusion_flutter_calendar/calendar.dart';
 import '../model/appointment.dart';
 import '../model/firestore_data_source.dart';
 import '../model/meeting.dart';
-import '../model/user_client.dart';
 
 class CalendarComponent extends StatefulWidget {
   const CalendarComponent({
@@ -19,42 +18,35 @@ class CalendarComponent extends StatefulWidget {
 }
 
 class _CalendarComponentState extends State<CalendarComponent> {
+
   Future<bool> _isClassFull(Meeting meeting) async {
     const maxCapacity = 6;
-    // Retrieve 'reservas' count from Firestore (if not directly in the Meeting object)
-    if (meeting.reservas == null) {
+
       final reservasCount = await FirebaseFirestore.instance
-          .collection('meetings')
-          .doc(meeting.id) // Use the Meeting object's document ID
+          .collection('clases')
+          .doc(meeting.id)
           .collection('reservas')
           .get()
           .then((snapshot) => snapshot.size);
 
       return reservasCount >= maxCapacity;
-    } else {
-      return meeting.reservas!.length >= maxCapacity;
-    }
   }
 
   Future<void> _makeAppointment(Meeting meeting, Reserva reserva) async {
-    final currentStudentEmail = FirebaseAuth.instance.currentUser!.email; // Assumes email exists
 
-    // Fetch corresponding Alumno data using email as document ID
+    // consigue el alumno que tiene la sesion iniciada
+    final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
     final alumnoDoc = await FirebaseFirestore.instance
         .collection('Users')
         .doc(currentStudentEmail)
         .get();
-    final Alumno alumno = Alumno.fromMap(alumnoDoc.data()!);
 
-    List<String> reservedClassIds = alumno.clasesReservadas;
-
+    // consigue la clasa seleccionada por el alumno que llega por parametro
     final meetingRef =
-        FirebaseFirestore.instance.collection('clases').doc(meeting.id);
-
-    // Transaction for consistency (Optional, but safer)
+    FirebaseFirestore.instance.collection('clases').doc(meeting.id);
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       final currentMeetingData =
-          (await transaction.get(meetingRef)).data() as Map<String, dynamic>;
+      (await transaction.get(meetingRef)).data() as Map<String, dynamic>;
       // ... (Check claseLlena using currentMeetingData if needed) ...
 
       transaction.update(meetingRef, {
@@ -65,7 +57,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
 
       transaction.update(alumnoDoc.reference, {
         'clasesReservadas': FieldValue.arrayUnion(
-            [meeting.id]) // Track reservations in Alumno document
+            [meeting.startTime])
       });
     });
   }
@@ -82,7 +74,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
     Reserva newReserva = Reserva(
       meeting.startTime,
       meeting.endTime,
-      FirebaseAuth.instance.currentUser!.uid,
+      FirebaseAuth.instance.currentUser!.email.toString(),
       meeting.id,
     );
 
@@ -122,16 +114,6 @@ class _CalendarComponentState extends State<CalendarComponent> {
 
   final double _height = 0.0;
   var myTimezone = 'America/Buenos_Aires';
-
-  Future<int> getStudentCount(String claseId) async {
-    final studentCount = await FirebaseFirestore.instance
-        .collection('clases')
-        .doc(claseId)
-        .collection('reservas')
-        .get()
-        .then((snapshot) => snapshot.size);
-    return studentCount;
-  }
 
   @override
   Widget build(BuildContext context) {

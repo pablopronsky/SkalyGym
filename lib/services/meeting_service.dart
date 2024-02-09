@@ -96,7 +96,6 @@ class MeetingService {
             endTime: DateTime.now().add(Duration(hours: horario[1])),
             reservas: [],
             idAlumno: [],
-            claseLlena: false,
             recurrenceRule: 'FREQ=WEEKLY;INTERVAL=1;COUNT=10',
           );
 

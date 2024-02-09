@@ -50,7 +50,7 @@ class _RegisterPageState extends State<RegisterPage> {
           'username': emailController.text.split('@')[0],
           'nombre': nombreController.text,
           'apellido': apellidoController.text,
-          'numero de celular': celularController.text,
+          'celular': celularController.text,
           'clasesReservadas': [],
           'pack de clases': '3',
           'rol': Rol.Alumno.name,
