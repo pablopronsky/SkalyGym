@@ -7,9 +7,10 @@ part of 'meeting.dart';
 // **************************************************************************
 
 Meeting _$MeetingFromJson(Map<String, dynamic> json) => Meeting(
-      eventName: json['eventName'] as String,
-      from: DateTime.parse(json['from'] as String),
-      to: DateTime.parse(json['to'] as String),
+      id: json['id'] as String,
+      startTime: DateTime.parse(json['startTime'] as String),
+      endTime: DateTime.parse(json['endTime'] as String),
+      subject: json['subject'] as String,
       reservas: (json['reservas'] as List<dynamic>?)
           ?.map((e) => Reserva.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -21,9 +22,10 @@ Meeting _$MeetingFromJson(Map<String, dynamic> json) => Meeting(
     );
 
 Map<String, dynamic> _$MeetingToJson(Meeting instance) => <String, dynamic>{
-      'eventName': instance.eventName,
-      'from': instance.from.toIso8601String(),
-      'to': instance.to.toIso8601String(),
+      'id': instance.id,
+      'startTime': instance.startTime.toIso8601String(),
+      'endTime': instance.endTime.toIso8601String(),
+      'subject': instance.subject,
       'reservas': instance.reservas,
       'idAlumno': instance.idAlumno,
       'claseLlena': instance.claseLlena,

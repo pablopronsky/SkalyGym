@@ -43,13 +43,13 @@ class MyTextBox extends StatelessWidget {
               // Marcador de posición para mantener la altura
               showSettingsIcon
                   ? IconButton(
-                onPressed: onPressed,
-                icon: const Icon(Icons.settings),
-              )
+                      onPressed: onPressed,
+                      icon: const Icon(Icons.settings),
+                    )
                   : const SizedBox(
-                width: 48,
-                height: 48,
-              ),
+                      width: 48,
+                      height: 48,
+                    ),
             ],
           ),
           // detalle de la seccion

@@ -13,6 +13,7 @@ class MeetingService {
 
     return collection.snapshots().map((snapshot) => snapshot.docs
         .map((doc) => Meeting.fromMap({
+              'id': doc.get('id'),
               'eventName': doc.get('eventName'),
               'from': doc.get('from'),
               'to': doc.get('to'),
@@ -25,28 +26,6 @@ class MeetingService {
     QuerySnapshot querySnapshot =
         await FirebaseFirestore.instance.collection('clases').get();
     return querySnapshot.docs.map((doc) => Meeting.fromFirestore(doc)).toList();
-  }
-
-  Future<void> createSingleClass() async {
-    try {
-      DateTime classDate = DateTime(2024, 2, 15);
-      Meeting meeting = Meeting(
-        eventName: 'Clase',
-        from: DateTime(classDate.year, classDate.month, classDate.day, 10, 0),
-        to: DateTime(classDate.year, classDate.month, classDate.day, 11, 0),
-        reservas: [],
-        idAlumno: [],
-        claseLlena: false,
-        recurrenceRule: 'FREQ=DAILY;INTERVAL=1',
-      );
-
-      CollectionReference classesCollection = _firestore.collection('clases');
-      await classesCollection.add(meeting.toMap()).catchError((error) {
-        throw FirestoreError('Error adding class to Firestore: $error');
-      });
-    } catch (e) {
-      print('Unexpected error: $e');
-    }
   }
 
   Future<void> createMultipleClasses() async {
@@ -111,9 +90,10 @@ class MeetingService {
         for (List<int> horario in horarios[dia]!) {
           // Crea la reunión
           Meeting meeting = Meeting(
-            eventName: 'Clase',
-            from: DateTime.now().add(Duration(hours: horario[0])),
-            to: DateTime.now().add(Duration(hours: horario[1])),
+            id: '',
+            subject: 'Clase',
+            startTime: DateTime.now().add(Duration(hours: horario[0])),
+            endTime: DateTime.now().add(Duration(hours: horario[1])),
             reservas: [],
             idAlumno: [],
             claseLlena: false,

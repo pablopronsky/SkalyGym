@@ -1,9 +1,6 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import 'meeting.dart';
+import 'meeting.dart'; // Assuming 'meeting.dart' has your Meeting class
 
 class FirestoreStreamDataSource extends CalendarDataSource<Meeting> {
   FirebaseFirestore firestore = FirebaseFirestore.instance;
@@ -15,14 +12,17 @@ class FirestoreStreamDataSource extends CalendarDataSource<Meeting> {
   FirestoreStreamDataSource() {
     firestore.collection('clases').snapshots().listen((eventsSnapshot) {
       final events = eventsSnapshot.docs.map((doc) {
-        return Appointment(
-          startTime: doc['from'].toDate(),
-          endTime: doc['to'].toDate(),
-          subject: doc['eventName'],
+        // Create a Meeting object
+        return Meeting(
+          id: doc.id, // Assuming your meetings have an 'id' field in Firestore
+          subject: doc['subject'], // Use correct Firestore field names
+          startTime: doc['startTime'].toDate(),
+          endTime: doc['endTime'].toDate(),
+          // ... other Meeting properties required by your app
         );
       }).toList();
 
-      // Update the appointments list
+      // Update the appointments list with Meetings
       appointments = events;
       notifyListeners(CalendarDataSourceAction.reset, appointments!);
     });

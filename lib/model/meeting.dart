@@ -6,9 +6,10 @@ part 'meeting.g.dart';
 
 @JsonSerializable()
 class Meeting {
-  String eventName;
-  DateTime from;
-  DateTime to;
+  String id;
+  DateTime startTime;
+  DateTime endTime;
+  String subject;
   @JsonKey(name: 'reservas')
   List<Reserva>? reservas;
   @JsonKey(name: 'idAlumno')
@@ -17,9 +18,10 @@ class Meeting {
   String? recurrenceRule;
 
   Meeting({
-    required this.eventName,
-    required this.from,
-    required this.to,
+    required this.id,
+    required this.startTime,
+    required this.endTime,
+    required this.subject,
     this.reservas,
     this.idAlumno,
     this.claseLlena = false,
@@ -36,9 +38,10 @@ class Meeting {
 
   factory Meeting.fromMap(Map<String, dynamic> map) {
     return Meeting(
-      eventName: map['eventName'] as String,
-      from: timeStampToDateTime(map['from'] as Timestamp),
-      to: timeStampToDateTime(map['to'] as Timestamp),
+      id: map['id'] as String,
+      startTime: timeStampToDateTime(map['startTime'] as Timestamp),
+      endTime: timeStampToDateTime(map['endTime'] as Timestamp),
+      subject: map['subject'] as String,
       reservas: map['reservas'] != null
           ? List<Reserva>.from(map['reservas'] as List)
           : null,
@@ -52,9 +55,10 @@ class Meeting {
 
   Map<String, dynamic> toMap() {
     return {
-      'eventName': eventName,
-      'from': dateTimeToTimeStamp(from),
-      'to': dateTimeToTimeStamp(to),
+      'id': id,
+      'startTime': dateTimeToTimeStamp(startTime),
+      'endTime': dateTimeToTimeStamp(endTime),
+      'subject': subject,
       'reservas': reservas?.map((reserva) => reserva.toMap()).toList(),
       'idAlumno': idAlumno,
       'claseLlena': claseLlena,
@@ -65,9 +69,10 @@ class Meeting {
   factory Meeting.fromFirestore(DocumentSnapshot doc) {
     Map data = doc.data() as Map;
     return Meeting(
-      eventName: data['eventName'],
-      from: (data['from'] as Timestamp).toDate(),
-      to: (data['to'] as Timestamp).toDate(),
+      id: data['id'],
+      startTime: (data['startTime'] as Timestamp).toDate(),
+      endTime: (data['endTime'] as Timestamp).toDate(),
+      subject: data['subject'],
       reservas:
           (data['reservas'] as List).map((i) => Reserva.fromMap(i)).toList(),
       idAlumno: List<String>.from(data['idAlumno']),

@@ -7,21 +7,23 @@ part of 'user_client.dart';
 // **************************************************************************
 
 Alumno _$AlumnoFromJson(Map<String, dynamic> json) => Alumno(
-      json['uid'] as String,
       json['nombre'] as String,
       json['apellido'] as String,
       json['email'] as String,
       json['numeroDeCelular'] as String,
+      (json['clasesReservadas'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
       json['packDeClases'] as int,
       $enumDecode(_$RolEnumMap, json['rol']),
     );
 
 Map<String, dynamic> _$AlumnoToJson(Alumno instance) => <String, dynamic>{
-      'uid': instance.uid,
       'nombre': instance.nombre,
       'apellido': instance.apellido,
       'email': instance.email,
       'numeroDeCelular': instance.numeroDeCelular,
+      'clasesReservadas': instance.clasesReservadas,
       'packDeClases': instance.packDeClases,
       'rol': _$RolEnumMap[instance.rol]!,
     };

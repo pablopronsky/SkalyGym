@@ -4,7 +4,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/pages/admin_page.dart';
 import 'package:gym/pages/auth_page.dart';
-import 'package:gym/pages/home_page.dart';
+import 'package:gym/pages/calendar_page.dart';
+import 'package:gym/pages/my_home_page.dart';
 import 'package:gym/pages/profile.dart';
 import 'package:gym/services/meeting_service.dart';
 import 'package:intl/date_symbol_data_local.dart';
@@ -37,9 +38,9 @@ class MyApp extends StatelessWidget {
       ],
       locale: const Locale('es'),
       routes: {
-        '/admin_page': (context) => const AdminPage(),
-        '/home_page': (context) => const HomePage(),
+        '/home_page': (context) => const MyHomePage(),
         '/profile': (context) => const Perfil(),
+        '/calendar': (context) => const Calendar(),
       },
       debugShowCheckedModeBanner: false,
       home: const AuthPage(),

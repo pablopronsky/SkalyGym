@@ -27,61 +27,61 @@ class _PerfilState extends State<Perfil> {
     await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          backgroundColor: Colors.grey[900],
-          title: Text(
-            textAlign: TextAlign.center,
-            "Editar $field",
-            style: const TextStyle(
-              color: Colors.white,
-            ),
-          ),
-          content: TextField(
-            cursorHeight: 0,
-            textCapitalization: TextCapitalization.words,
-            autofocus: true,
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white),
-            decoration: InputDecoration(
-              hintText: "Ingresa nuevo $field",
-              hintStyle: const TextStyle(color: Colors.grey),
-              focusedBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: Colors.grey), // Cambia el color aquí
-              ),
-            ),
-            onChanged: (value) {
-              newValue = value;
-            },
-          ),
-          actions: [
-            // Distribuye los botones con espacio entre ellos
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                // Cancelar
-                TextButton(
-                  child: const Text(
-                    'Cancelar',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                  onPressed: () => Navigator.pop(context),
+              backgroundColor: Colors.grey[900],
+              title: Text(
+                textAlign: TextAlign.center,
+                "Editar $field",
+                style: const TextStyle(
+                  color: Colors.white,
                 ),
-                // Guardar
-                TextButton(
-                  child: const Text(
-                    'Guardar',
-                    style: TextStyle(color: Colors.white),
+              ),
+              content: TextField(
+                cursorHeight: 0,
+                textCapitalization: TextCapitalization.words,
+                autofocus: true,
+                textAlign: TextAlign.center,
+                style: const TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: "Ingresa nuevo $field",
+                  hintStyle: const TextStyle(color: Colors.grey),
+                  focusedBorder: const UnderlineInputBorder(
+                    borderSide:
+                        BorderSide(color: Colors.grey), // Cambia el color aquí
                   ),
-                  onPressed: () => Navigator.of(context).pop(newValue),
+                ),
+                onChanged: (value) {
+                  newValue = value;
+                },
+              ),
+              actions: [
+                // Distribuye los botones con espacio entre ellos
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    // Cancelar
+                    TextButton(
+                      child: const Text(
+                        'Cancelar',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                    // Guardar
+                    TextButton(
+                      child: const Text(
+                        'Guardar',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      onPressed: () => Navigator.of(context).pop(newValue),
+                    ),
+                  ],
                 ),
               ],
-            ),
-          ],
-        ));
-    if (newValue.trim().isNotEmpty){
+            ));
+    if (newValue.trim().isNotEmpty) {
       await usersCollection.doc(currentUser.email).update({field: newValue});
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
