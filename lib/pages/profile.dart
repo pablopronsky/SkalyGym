@@ -12,9 +12,9 @@ class Perfil extends StatefulWidget {
 }
 
 class _PerfilState extends State<Perfil> {
-  //usuario
+  //usuario logeado con firebase
   final currentUser = FirebaseAuth.instance.currentUser!;
-  // todos los usuarios
+  // todos los usuarios dentro de la collection 'Users' de firestore
   final usersCollection = FirebaseFirestore.instance.collection('Users');
 
   @override
@@ -130,12 +130,14 @@ class _PerfilState extends State<Perfil> {
                       text: userData['nombre'],
                       sectionName: 'Nombre',
                       onPressed: () => editField('nombre'),
+                      showSettingsIcon: false,
                     ),
                     //Apellido
                     MyTextBox(
                       text: userData['apellido'],
                       sectionName: 'Apellido',
                       onPressed: () => editField('apellido'),
+                      showSettingsIcon: false,
                     ),
                     //Email
                     MyTextBox(

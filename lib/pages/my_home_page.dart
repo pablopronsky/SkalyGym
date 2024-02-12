@@ -4,6 +4,7 @@ import 'package:gym/components/appbar.dart';
 import 'package:gym/pages/profile.dart';
 
 import '../components/drawer.dart';
+import '../components/my_reservations.dart';
 import 'calendar_page.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -14,6 +15,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+
   void goToProfilePage() {
     Navigator.pop(context);
     Navigator.push(
@@ -31,94 +33,68 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const AppBarComponent(),
-      drawer: MyDrawer(
-        onProfileTap: goToProfilePage,
-        onSignOut: signOut,
-      ),
-      body: SingleChildScrollView(
-    child: Column(
-    children: <Widget>[
-          Container(
-            height: 150.0,
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage('assets/bg.jpg'),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        appBar: const AppBarComponent(),
+        drawer: MyDrawer(
+          onProfileTap: goToProfilePage,
+          onSignOut: signOut,
+        ),
+        body: SingleChildScrollView(
+          child: Column(
             children: <Widget>[
-              Expanded(
-                child: TextButton(
-                  onPressed: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Calendar(),
+              Container(
+                height: 150.0,
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/bg.jpg'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: <Widget>[
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const Calendar(),
+                          ),
+                        );
+                      },
+                      child: Container(
+                        height: 50,
+                        decoration: BoxDecoration(
+                          color: Colors.grey[300], // Initial color
+                          borderRadius: BorderRadius.zero,
+                        ),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: const Center(  // Wrap the Text in a Center widget
+                          child: Text('Calendario',
+                              style: TextStyle(color: Colors.black)),
+                        ),
                       ),
-                    );
-                  },
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.grey[300],
-                    foregroundColor: Colors.grey[900],
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero),
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    ),
                   ),
-                  child: const Text('Calendario',
-                      style: TextStyle(color: Colors.black)),
-                ),
+
+                ],
               ),
-              const VerticalDivider(
-                // Línea divisoria vertical
-                color: Colors.grey, // Color de la línea
-                width: 1, // Grosor de la línea
-              ),
-              Expanded(
-                child: TextButton(
-                  onPressed: () {},
-                  style: TextButton.styleFrom(
-                    backgroundColor: Colors.grey[300],
-                    foregroundColor: Colors.grey[300],
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.zero),
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
+              const SizedBox(height: 100,),
+              const SizedBox(
+                height: 300,
+                child: Column( // Column is the direct parent of MyReservationsWidget
+                    children: [
+                      Text('Mis clases esta semana', // Existing text widget as the title
+                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                      MyReservationsWidget(),
+                    ],
                   ),
-                  child: const Text('Mis clases',
-                      style: TextStyle(color: Colors.black)),
-                ),
               ),
+              const Text('Clases disponibles para reservar:'),
             ],
           ),
-          const SizedBox(
-            height: 50,
-          ),
-          const SizedBox(
-            height: 200.0,
-            child: Column(
-              children: <Widget>[
-                Text('Esta semana'),
-                ListTile(
-                  title: Text('Mar, 7:30 AM'),
-                  trailing: Text('Reservado'),
-                ),
-                ListTile(
-                  title: Text('Mié, 9:00 AM'),
-                  trailing: Text('Unirse'),
-                ),
-                ListTile(
-                  title: Text('Jue, 6:00 PM'),
-                  trailing: Text('Unirse'),
-                ),
-              ],
-            ),
-          ),
-          const Text('Clases disponibles para reservar:'),
-        ],
-      ),
-    ));
+        ));
   }
 }

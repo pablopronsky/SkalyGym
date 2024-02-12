@@ -18,36 +18,42 @@ class CalendarComponent extends StatefulWidget {
 }
 
 class _CalendarComponentState extends State<CalendarComponent> {
-
+  /// Determina si la clase está llena o no, devuelve bool
   Future<bool> _isClassFull(Meeting meeting) async {
     const maxCapacity = 6;
 
-      final reservasCount = await FirebaseFirestore.instance
-          .collection('clases')
-          .doc(meeting.id)
-          .collection('reservas')
-          .get()
-          .then((snapshot) => snapshot.size);
+    final reservasCount = await FirebaseFirestore.instance
+        .collection('clases')
+        .doc(meeting.id)
+        .collection('reservas')
+        .get()
+        .then((snapshot) => snapshot.size);
 
-      return reservasCount >= maxCapacity;
+    return reservasCount >= maxCapacity;
   }
 
+  /// Handles the appointment booking process, including class capacity checks and student data updates
   Future<void> _makeAppointment(Meeting meeting, Reserva reserva) async {
-
-    // consigue el alumno que tiene la sesion iniciada
+    /// consigue el alumno que tiene la sesion iniciada
     final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
     final alumnoDoc = await FirebaseFirestore.instance
         .collection('Users')
         .doc(currentStudentEmail)
         .get();
 
-    // consigue la clasa seleccionada por el alumno que llega por parametro
+    /// consigue la clasa seleccionada por el alumno que llega por parametro
     final meetingRef =
-    FirebaseFirestore.instance.collection('clases').doc(meeting.id);
+        FirebaseFirestore.instance.collection('clases').doc(meeting.id);
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       final currentMeetingData =
-      (await transaction.get(meetingRef)).data() as Map<String, dynamic>;
-      // ... (Check claseLlena using currentMeetingData if needed) ...
+          (await transaction.get(meetingRef)).data() as Map<String, dynamic>;
+      if (await _isClassFull(meeting)) {
+        if (!context.mounted) return;
+        showDialog(context: context, builder: (context) => const AlertDialog(
+          title: Text('Error'),
+          content: Text('Clase llena'),
+        ));
+      }
 
       transaction.update(meetingRef, {
         'reservas': FieldValue.arrayUnion([reserva.toMap()]),
@@ -56,8 +62,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
       });
 
       transaction.update(alumnoDoc.reference, {
-        'clasesReservadas': FieldValue.arrayUnion(
-            [meeting.startTime])
+        'clasesReservadas': FieldValue.arrayUnion([meeting.startTime])
       });
     });
   }
@@ -70,7 +75,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
   }
 
   void _showAppointmentDialog(BuildContext context, Meeting meeting) async {
-    // Build Reserva object
+    /// Instancia la reserva que pasará a _makeAppointment
     Reserva newReserva = Reserva(
       meeting.startTime,
       meeting.endTime,
@@ -78,12 +83,12 @@ class _CalendarComponentState extends State<CalendarComponent> {
       meeting.id,
     );
 
-    // Call _isClassFull here and store the result
     bool isClassFull = await _isClassFull(meeting);
+    if (!context.mounted) return;
     showDialog(
       context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: Colors.grey[300], // Background color
+      builder: (BuildContext buildContext) => AlertDialog(
+        backgroundColor: Colors.grey[300],
         contentTextStyle: const TextStyle(color: Colors.black),
         title: Text(
             'Reservar clase: ${DateFormat('HH:mm').format(meeting.startTime)}'),
@@ -106,7 +111,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 _makeAppointment(meeting, newReserva);
                 Navigator.pop(context);
               },
-            )
+            ),
         ],
       ),
     );
@@ -130,12 +135,12 @@ class _CalendarComponentState extends State<CalendarComponent> {
       ),
       monthViewSettings:
           MonthViewSettings(showAgenda: true, agendaViewHeight: _height),
-      appointmentTextStyle: const TextStyle(
+      appointmentTextStyle:  const TextStyle(
         fontSize: 12,
         color: Colors.black,
         fontWeight: FontWeight.bold,
       ),
-      scheduleViewSettings: const ScheduleViewSettings(
+      scheduleViewSettings:  const ScheduleViewSettings(
         appointmentItemHeight: 50,
 
         // SECTOR MENSUAL
@@ -148,34 +153,6 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 color: Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.w400)),
-
-        // SECTOR SEMANAL
-        weekHeaderSettings: WeekHeaderSettings(
-            startDateFormat: 'dd MMM ',
-            endDateFormat: 'dd MMM, yy',
-            height: 50,
-            textAlign: TextAlign.center,
-            backgroundColor: Colors.grey,
-            weekTextStyle: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.w400,
-              fontSize: 15,
-            )),
-
-        // SECTOR DIARIO
-        dayHeaderSettings: DayHeaderSettings(
-            dayFormat: 'EEEE',
-            width: 70,
-            dayTextStyle: TextStyle(
-              fontSize: 10,
-              fontWeight: FontWeight.w300,
-              color: Colors.black,
-            ),
-            dateTextStyle: TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.w300,
-              color: Colors.black,
-            )),
       ),
     );
   }

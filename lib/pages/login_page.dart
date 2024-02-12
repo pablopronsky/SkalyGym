@@ -1,6 +1,3 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
@@ -31,15 +28,9 @@ class _LoginPageState extends State<LoginPage> {
     Future(() async {
       try {
         // Sign in with FirebaseAuth
-        final UserCredential userCredential = await FirebaseAuth.instance
+        await FirebaseAuth.instance
             .signInWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text);
-
-        // Fetch user document from Firestore
-        DocumentSnapshot userDoc = await FirebaseFirestore.instance
-            .collection('alumnos')
-            .doc(userCredential.user!.uid)
-            .get();
+                email: emailController.text, password: passwordController.text);
 
         // Navigate to home page
         if (mounted) {
@@ -128,8 +119,8 @@ class _LoginPageState extends State<LoginPage> {
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                            return const ForgotPasswordPage();
-                          }));
+                        return const ForgotPasswordPage();
+                      }));
                     },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
@@ -156,14 +147,14 @@ class _LoginPageState extends State<LoginPage> {
                     children: [
                       Expanded(
                           child: Divider(
-                            thickness: 0.5,
-                            color: Colors.grey[400],
-                          )),
+                        thickness: 0.5,
+                        color: Colors.grey[400],
+                      )),
                       Expanded(
                           child: Divider(
-                            thickness: 0.5,
-                            color: Colors.grey[400],
-                          ))
+                        thickness: 0.5,
+                        color: Colors.grey[400],
+                      ))
                     ],
                   ),
                 ),

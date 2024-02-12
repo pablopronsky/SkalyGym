@@ -6,7 +6,7 @@ part 'user_client.g.dart';
 
 @JsonSerializable()
 class Alumno extends Usuario {
-  List <String> clasesReservadas = [];
+  List<String> clasesReservadas = [];
   int packDeClases;
   Rol rol;
 
@@ -15,7 +15,7 @@ class Alumno extends Usuario {
     String apellido,
     String email,
     String numeroDeCelular,
-    List <String> clasesReservadas,
+    List<String> clasesReservadas,
     this.packDeClases,
     this.rol,
   ) : super(nombre, apellido, email, numeroDeCelular);
