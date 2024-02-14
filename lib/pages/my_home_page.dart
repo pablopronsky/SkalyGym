@@ -15,7 +15,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-
   void goToProfilePage() {
     Navigator.pop(context);
     Navigator.push(
@@ -70,29 +69,37 @@ class MyHomePageState extends State<MyHomePage> {
                           borderRadius: BorderRadius.zero,
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 20),
-                        child: const Center(  // Wrap the Text in a Center widget
+                        child: const Center(
+                          // Wrap the Text in a Center widget
                           child: Text('Calendario',
-                              style: TextStyle(color: Colors.black)),
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                                letterSpacing: 1,
+                              )),
                         ),
                       ),
                     ),
                   ),
-
                 ],
-              ),
-              const SizedBox(height: 100,),
+              ),const SizedBox(height: 50,)
+              ,
               const SizedBox(
                 height: 300,
-                child: Column( // Column is the direct parent of MyReservationsWidget
-                    children: [
-                      Text('Mis clases esta semana', // Existing text widget as the title
-                        style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                      ),
-                      MyReservationsWidget(),
-                    ],
-                  ),
+                child: Column(
+                  // Column is the direct parent of MyReservationsWidget
+                  children: [
+                    Text(
+                      'Mis clases esta semana', // Existing text widget as the title
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    MyReservationsWidget(),
+                  ],
+                ),
               ),
-              const Text('Clases disponibles para reservar:'),
+              const Text('Clases disponibles para reservar: 1'),
             ],
           ),
         ));

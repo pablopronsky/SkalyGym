@@ -32,7 +32,6 @@ class _CalendarComponentState extends State<CalendarComponent> {
     return reservasCount >= maxCapacity;
   }
 
-  /// Handles the appointment booking process, including class capacity checks and student data updates
   Future<void> _makeAppointment(Meeting meeting, Reserva reserva) async {
     /// consigue el alumno que tiene la sesion iniciada
     final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
@@ -43,29 +42,40 @@ class _CalendarComponentState extends State<CalendarComponent> {
 
     /// consigue la clasa seleccionada por el alumno que llega por parametro
     final meetingRef =
-        FirebaseFirestore.instance.collection('clases').doc(meeting.id);
+    FirebaseFirestore.instance.collection('clases').doc(meeting.id);
+
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       final currentMeetingData =
-          (await transaction.get(meetingRef)).data() as Map<String, dynamic>;
+      (await transaction.get(meetingRef)).data() as Map<String, dynamic>;
+
       if (await _isClassFull(meeting)) {
         if (!context.mounted) return;
-        showDialog(context: context, builder: (context) => const AlertDialog(
-          title: Text('Error'),
-          content: Text('Clase llena'),
-        ));
+        showDialog(
+            context: context,
+            builder: (context) => const AlertDialog(
+              title: Text('Error'),
+              content: Text('Clase llena'),
+            ));
+        return; // Stop the transaction if the class is full
       }
 
+      // Update available spaces (assuming you add spaces field in 'clases')
       transaction.update(meetingRef, {
         'reservas': FieldValue.arrayUnion([reserva.toMap()]),
         'idAlumno': FieldValue.arrayUnion([currentStudentEmail]),
-        // ... Add field to track class fullness  and update based on currentMeetingData, if needed
+        'spaces': FieldValue.increment(-1) // Decrement available spaces
       });
 
-      transaction.update(alumnoDoc.reference, {
-        'clasesReservadas': FieldValue.arrayUnion([meeting.startTime])
+      // Create the reservation document in the user's subcollection
+      transaction.set(alumnoDoc.reference.collection('reservas').doc(), {
+        'classId': meeting.id,
+        'date': Meeting.dateTimeToTimeStamp(meeting.startTime), // Convert to Timestamp
+        'startTime': meeting.startTime,
+        'status': 'active',
       });
     });
   }
+
 
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
     if (calendarTapDetails.targetElement == CalendarElement.appointment) {
@@ -135,12 +145,12 @@ class _CalendarComponentState extends State<CalendarComponent> {
       ),
       monthViewSettings:
           MonthViewSettings(showAgenda: true, agendaViewHeight: _height),
-      appointmentTextStyle:  const TextStyle(
+      appointmentTextStyle: const TextStyle(
         fontSize: 12,
         color: Colors.black,
         fontWeight: FontWeight.bold,
       ),
-      scheduleViewSettings:  const ScheduleViewSettings(
+      scheduleViewSettings: const ScheduleViewSettings(
         appointmentItemHeight: 50,
 
         // SECTOR MENSUAL
