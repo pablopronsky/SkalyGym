@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/text_field_input.dart';
 
+import '../components/snackbar.dart';
 import 'forgot_password_page.dart';
 
 class LoginPage extends StatefulWidget {
@@ -31,7 +32,7 @@ class _LoginPageState extends State<LoginPage> {
         // Sign in with FirebaseAuth
         final UserCredential userCredential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
-            email: emailController.text, password: passwordController.text);
+                email: emailController.text, password: passwordController.text);
 
         // Fetch user document from Firestore
         DocumentSnapshot userDoc = await FirebaseFirestore.instance
@@ -40,20 +41,26 @@ class _LoginPageState extends State<LoginPage> {
             .get();
         // Navigate to home page
         if (mounted) {
-          Navigator.pushReplacementNamed(context, '/home_page');
+          Navigator.pushReplacementNamed(context, '/auth_page');
         }
+      } on FirebaseAuthException catch (error) {
+        if (mounted) {
+          Navigator.pop(context);
+        }
+        showCustomSnackBar(
+          context: context,
+          message: getErrorMessage(error.code), // Handle error messages
+          backgroundColor: Colors.red,
+        );
       } catch (error) {
-        // Handle errors gracefully
-        if (error is FirebaseAuthException) {
-          // Handle FirebaseAuth-specific errors
-          showErrorMessage(error.code);
-        } else if (error is FirebaseException) {
-          // Handle other Firebase-related errors
-          showErrorMessage("general-error"); // Show a generic error message
-        } else {
-          // Handle other errors
-          showErrorMessage("general-error"); // Show a generic error message
+        if (mounted) {
+          Navigator.pop(context);
         }
+        showCustomSnackBar(
+          context: context,
+          message: 'An error occurred',
+          backgroundColor: Colors.red,
+        );
       }
     }).whenComplete(() {
       // Dismiss the loading dialog when the Future completes
@@ -63,18 +70,14 @@ class _LoginPageState extends State<LoginPage> {
     });
   }
 
-// mensajes de error al logear
-  void showErrorMessage(String code) {
-    String message;
+  String getErrorMessage(String code) {
     switch (code) {
       case 'user-not-found':
-        message = 'No hay ningún usuario con ese correo electrónico.';
-        break;
+        return 'No hay ningún usuario con ese correo electrónico.';
       case 'wrong-password':
-        message = 'La contraseña es incorrecta.';
-        break;
+        return 'La contraseña es incorrecta.';
       default:
-        message = 'Usuario o contraseña incorrectos.';
+        return 'Ocurrió un error. Inténtalo nuevamente.';
     }
   }
 

@@ -83,8 +83,10 @@ class MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ],
-              ),const SizedBox(height: 50,)
-              ,
+              ),
+              const SizedBox(
+                height: 50,
+              ),
               const SizedBox(
                 height: 300,
                 child: Column(
@@ -95,7 +97,7 @@ class MyHomePageState extends State<MyHomePage> {
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    MyReservationsWidget(),
+                    MyReservationsComponent(),
                   ],
                 ),
               ),

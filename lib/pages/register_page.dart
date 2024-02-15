@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/text_field_input.dart';
+import '../components/snackbar.dart';
 import '../model/enum_rol.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -56,13 +57,36 @@ class _RegisterPageState extends State<RegisterPage> {
           'rol': Rol.Alumno.name,
         });
         Navigator.pop(context);
+        showCustomSnackBar(
+          context: context,
+          message: 'Registration Successful!',
+          backgroundColor: Colors.green[400],
+        );
       } else {
-        showErrorMessage('Las contraseñas no coinciden');
+        // Error Snackbar
+        showCustomSnackBar(
+          context: context,
+          message: 'Passwords do not match',
+          backgroundColor: Colors.red,
+        );
       }
     } on FirebaseAuthException catch (error) {
-      showErrorMessage(error.message);
+      Navigator.pop(context); // Dismiss dialog on error
+      showCustomSnackBar(
+        context: context,
+        message: error.message ?? 'Registration Error', // Handle error message
+        backgroundColor: Colors.red[400],
+      );
     } catch (error) {
-      showErrorMessage('Ocurrió un error');
+      if (mounted) {
+        // Check if the widget is still mounted
+        Navigator.pop(context); // Dismiss dialog if mounted
+      }
+      showCustomSnackBar(
+        context: context,
+        message: 'An error occurred',
+        backgroundColor: Colors.red[400],
+      );
     }
   }
 

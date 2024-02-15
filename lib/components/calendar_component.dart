@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gym/components/snackbar.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -42,21 +43,20 @@ class _CalendarComponentState extends State<CalendarComponent> {
 
     /// consigue la clasa seleccionada por el alumno que llega por parametro
     final meetingRef =
-    FirebaseFirestore.instance.collection('clases').doc(meeting.id);
+        FirebaseFirestore.instance.collection('clases').doc(meeting.id);
 
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       final currentMeetingData =
-      (await transaction.get(meetingRef)).data() as Map<String, dynamic>;
+          (await transaction.get(meetingRef)).data() as Map<String, dynamic>;
 
       if (await _isClassFull(meeting)) {
         if (!context.mounted) return;
-        showDialog(
-            context: context,
-            builder: (context) => const AlertDialog(
-              title: Text('Error'),
-              content: Text('Clase llena'),
-            ));
-        return; // Stop the transaction if the class is full
+        showCustomSnackBar(
+          context: context,
+          message: 'Clase llena',
+          backgroundColor: Colors.red[400],
+        );
+        return;
       }
 
       // Update available spaces (assuming you add spaces field in 'clases')
@@ -69,13 +69,18 @@ class _CalendarComponentState extends State<CalendarComponent> {
       // Create the reservation document in the user's subcollection
       transaction.set(alumnoDoc.reference.collection('reservas').doc(), {
         'classId': meeting.id,
-        'date': Meeting.dateTimeToTimeStamp(meeting.startTime), // Convert to Timestamp
+        'date': Meeting.dateTimeToTimeStamp(
+            meeting.startTime), // Convert to Timestamp
         'startTime': meeting.startTime,
         'status': 'active',
       });
+      showCustomSnackBar(
+        context: context,
+        message: 'Reserva creada con éxito!',
+        backgroundColor: Colors.green[400],
+      );
     });
   }
-
 
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
     if (calendarTapDetails.targetElement == CalendarElement.appointment) {
@@ -98,7 +103,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
     showDialog(
       context: context,
       builder: (BuildContext buildContext) => AlertDialog(
-        backgroundColor: Colors.grey[300],
+        backgroundColor: Colors.grey[100],
         contentTextStyle: const TextStyle(color: Colors.black),
         title: Text(
             'Reservar clase: ${DateFormat('HH:mm').format(meeting.startTime)}'),

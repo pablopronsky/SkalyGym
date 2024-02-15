@@ -1,19 +1,20 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gym/components/snackbar.dart';
 import 'package:gym/utils/capitalize.dart';
 import 'package:intl/intl.dart';
 
 import '../model/meeting.dart';
 
-class MyReservationsWidget extends StatefulWidget {
-  const MyReservationsWidget({Key? key}) : super(key: key);
+class MyReservationsComponent extends StatefulWidget {
+  const MyReservationsComponent({Key? key}) : super(key: key);
 
   @override
-  MyReservationsWidgetState createState() => MyReservationsWidgetState();
+  MyReservationsComponentState createState() => MyReservationsComponentState();
 }
 
-class MyReservationsWidgetState extends State<MyReservationsWidget> {
+class MyReservationsComponentState extends State<MyReservationsComponent> {
   final _firestore = FirebaseFirestore.instance;
   final userId = FirebaseAuth.instance.currentUser?.email;
 
@@ -29,13 +30,83 @@ class MyReservationsWidgetState extends State<MyReservationsWidget> {
     }
 
     Future<void> cancelarReserva(String reservasId) async {
-      final reservasDoc = FirebaseFirestore.instance
-          .collection('Users')
-          .doc(userId)
-          .collection('reservas')
-          .doc(reservasId);
+      bool confirmDeletion = await showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return AlertDialog(
+                  title: const Center(
+                      child: Text(
+                    'Confirmar',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  )),
+                  content: const Column(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Cancelar clase',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 16,
+                        ),
+                      ),
+                    ],
+                  ),
+                  actions: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton(
+                          child: const Text('No',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                              )),
+                          onPressed: () => Navigator.of(context).pop(false),
+                        ),
+                        TextButton(
+                          child: const Text('Si',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 15,
+                              )),
+                          onPressed: () => Navigator.of(context).pop(true),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              }) ??
+          false;
 
-      await reservasDoc.update({'status': 'canceled'});
+      if (!confirmDeletion) return;
+
+      try {
+        final reservasDoc = FirebaseFirestore.instance
+            .collection('Users')
+            .doc(userId)
+            .collection('reservas')
+            .doc(reservasId);
+
+        await reservasDoc.delete();
+
+        showCustomSnackBar(
+          context: context,
+          message: 'Reserva eliminada correctamente',
+          backgroundColor: Colors.green[400],
+        );
+      } catch (error) {
+        showCustomSnackBar(
+          context: context,
+          message: 'Error al eliminar la reserva',
+          backgroundColor: Colors.red[400],
+        );
+      }
     }
 
     return StreamBuilder<QuerySnapshot>(
@@ -57,30 +128,33 @@ class MyReservationsWidgetState extends State<MyReservationsWidget> {
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
                   final reservasData =
-                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
+                      snapshot.data!.docs[index].data() as Map<String, dynamic>;
                   final reservasDate =
-                  Meeting.timeStampToDateTime(reservasData['date']);
+                      Meeting.timeStampToDateTime(reservasData['date']);
 
-                  return Column( // Wrap ListTile and Divider in a Column
+                  return Column(
+                    // Wrap ListTile and Divider in a Column
                     children: [
                       ListTile(
-                        title: Text('Clase: ${Capitalize.capitalizeFirstLetter(DateFormat('EEEE', 'es_AR').format(reservasDate))}'),
+                        title: Text(
+                            'Clase: ${Capitalize.capitalizeFirstLetter(DateFormat('EEEE', 'es_AR').format(reservasDate))}'),
                         subtitle: Text(
-                  'Dia: ${DateFormat('dd-MM-yyyy – hh:mm a').format(reservasDate)}'),// Format if needed
+                            'Dia: ${DateFormat('dd-MM-yyyy – hh:mm a').format(reservasDate)}'), // Format if needed
                         trailing: IconButton(
-                          icon: const Icon(Icons.free_cancellation_rounded,color: Colors.red),
+                          icon: const Icon(Icons.free_cancellation_rounded,
+                              color: Colors.red),
                           onPressed: () =>
                               cancelarReserva(snapshot.data!.docs[index].id),
                         ),
                       ),
-                      if (index < snapshot.data!.docs.length - 1) // Add divider only if it's not the last item
+                      if (index <
+                          snapshot.data!.docs.length -
+                              1) // Add divider only if it's not the last item
                         const Divider() // Add the Divider widget
                     ],
                   );
                 },
-              )
-          );
-
+              ));
         } else {
           return const Text('No se encontraron reservas');
         }

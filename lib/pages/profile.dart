@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/components/my_text_box.dart';
 
+import '../components/snackbar.dart';
+
 class Perfil extends StatefulWidget {
   const Perfil({super.key});
 
@@ -77,10 +79,36 @@ class _PerfilState extends State<Perfil> {
                   ],
                 ),
               ],
-            ));
-    if (newValue.trim().isNotEmpty) {
-      await usersCollection.doc(currentUser.email).update({field: newValue});
-    }
+            )).then((value) {
+      if (value != null && value.toString().trim().isNotEmpty) {
+        newValue = value.toString();
+        usersCollection
+            .doc(currentUser.email)
+            .update({field: newValue}).then((_) {
+          // Success
+          showCustomSnackBar(
+              context: context,
+              message: '$field actualizado correctamente',
+              backgroundColor: Colors.green[400]);
+        }).catchError((error) {
+          // Error
+          showCustomSnackBar(
+            context: context,
+            message: 'Error al actualizar $field',
+            backgroundColor: Colors.red[400],
+          );
+        });
+      } else {
+        if (value != null) {
+          // User canceled with value (usually if they pressed back button)
+          showCustomSnackBar(
+            context: context,
+            message: 'Edición de $field cancelada',
+            backgroundColor: Colors.grey[700], // Neutral color for canceling
+          );
+        }
+      }
+    });
   }
 
   @override

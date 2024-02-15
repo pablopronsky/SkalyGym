@@ -41,6 +41,7 @@ class MyApp extends StatelessWidget {
         '/home_page': (context) => const MyHomePage(),
         '/profile': (context) => const Perfil(),
         '/calendar': (context) => const Calendar(),
+        '/auth_page': (context) => const AuthPage(),
       },
       debugShowCheckedModeBanner: false,
       home: const AuthPage(),
