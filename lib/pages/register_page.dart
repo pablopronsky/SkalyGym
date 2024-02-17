@@ -52,7 +52,6 @@ class _RegisterPageState extends State<RegisterPage> {
           'nombre': nombreController.text,
           'apellido': apellidoController.text,
           'celular': celularController.text,
-          'clasesReservadas': [],
           'pack de clases': '3',
           'rol': Rol.Alumno.name,
         });

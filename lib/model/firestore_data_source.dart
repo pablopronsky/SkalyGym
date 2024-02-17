@@ -18,7 +18,6 @@ class FirestoreStreamDataSource extends CalendarDataSource<Meeting> {
           subject: doc['subject'], // Use correct Firestore field names
           startTime: doc['startTime'].toDate(),
           endTime: doc['endTime'].toDate(),
-          // ... other Meeting properties required by your app
         );
       }).toList();
 

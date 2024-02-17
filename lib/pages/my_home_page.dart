@@ -65,13 +65,12 @@ class MyHomePageState extends State<MyHomePage> {
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
-                          color: Colors.grey[300], // Initial color
+                          color: Colors.grey[300],
                           borderRadius: BorderRadius.zero,
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: const Center(
-                          // Wrap the Text in a Center widget
-                          child: Text('Calendario',
+                          child: Text('Ver clases disponibles',
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 16,
@@ -90,10 +89,9 @@ class MyHomePageState extends State<MyHomePage> {
               const SizedBox(
                 height: 300,
                 child: Column(
-                  // Column is the direct parent of MyReservationsWidget
                   children: [
                     Text(
-                      'Mis clases esta semana', // Existing text widget as the title
+                      'Mis clases esta semana',
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
@@ -101,6 +99,7 @@ class MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
+              const SizedBox(height: 50,),
               const Text('Clases disponibles para reservar: 1'),
             ],
           ),

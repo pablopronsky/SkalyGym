@@ -25,7 +25,6 @@ class MyReservationsComponentState extends State<MyReservationsComponent> {
           .collection('Users')
           .doc(userId)
           .collection('reservas')
-          .where('status', isEqualTo: 'active')
           .snapshots();
     }
 
@@ -36,27 +35,13 @@ class MyReservationsComponentState extends State<MyReservationsComponent> {
                 return AlertDialog(
                   title: const Center(
                       child: Text(
-                    'Confirmar',
+                    'Cancelar clase',
                     style: TextStyle(
                       color: Colors.black,
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
                     ),
                   )),
-                  content: const Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Cancelar clase',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
                   actions: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -66,14 +51,14 @@ class MyReservationsComponentState extends State<MyReservationsComponent> {
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
-                              )),
+                              ),),
                           onPressed: () => Navigator.of(context).pop(false),
                         ),
                         TextButton(
                           child: const Text('Si',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 15,
+                                fontSize: 18,
                               )),
                           onPressed: () => Navigator.of(context).pop(true),
                         ),
@@ -87,13 +72,34 @@ class MyReservationsComponentState extends State<MyReservationsComponent> {
       if (!confirmDeletion) return;
 
       try {
-        final reservasDoc = FirebaseFirestore.instance
+        // RESERVAS DEL USUARIO COLLECTION
+        final reservasUserDoc = FirebaseFirestore.instance
             .collection('Users')
             .doc(userId)
             .collection('reservas')
             .doc(reservasId);
+        final reservaUserData = (await reservasUserDoc.get()).data();
+        final classId = reservaUserData?['classId'];
 
-        await reservasDoc.delete();
+        // RESERVAS EN LA CLASE COLLECTION
+        final reservasClaseDoc = FirebaseFirestore.instance
+            .collection('clases')
+            .doc(classId)
+            .collection('reservas')
+            .doc(reservasId);
+
+        await FirebaseFirestore.instance.runTransaction((transaction) async {
+          // Delete reservation from user
+          transaction.delete(reservasUserDoc);
+          transaction.delete(reservasClaseDoc);
+
+          // Update the class document
+          final classDocRef = FirebaseFirestore.instance.collection('clases').doc(classId);
+          transaction.update(classDocRef, {
+            'idAlumno': FieldValue.arrayRemove([userId]),
+          });
+        await reservasClaseDoc.delete();
+        });
 
         showCustomSnackBar(
           context: context,
@@ -101,6 +107,7 @@ class MyReservationsComponentState extends State<MyReservationsComponent> {
           backgroundColor: Colors.green[400],
         );
       } catch (error) {
+        print(error);
         showCustomSnackBar(
           context: context,
           message: 'Error al eliminar la reserva',
@@ -114,7 +121,7 @@ class MyReservationsComponentState extends State<MyReservationsComponent> {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(
-              child: Text('Error fetching reservations: ${snapshot.error}'));
+              child: Text('Error al cargar reservas: ${snapshot.error}'));
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -123,23 +130,22 @@ class MyReservationsComponentState extends State<MyReservationsComponent> {
 
         if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
           return SizedBox(
-              height: 250, // Adjust the height as needed
+              height: 250,
               child: ListView.builder(
                 itemCount: snapshot.data!.docs.length,
                 itemBuilder: (context, index) {
-                  final reservasData =
+                  final reservaClaseData =
                       snapshot.data!.docs[index].data() as Map<String, dynamic>;
                   final reservasDate =
-                      Meeting.timeStampToDateTime(reservasData['date']);
+                      Meeting.timeStampToDateTime(reservaClaseData['date']);
 
                   return Column(
-                    // Wrap ListTile and Divider in a Column
                     children: [
                       ListTile(
                         title: Text(
                             'Clase: ${Capitalize.capitalizeFirstLetter(DateFormat('EEEE', 'es_AR').format(reservasDate))}'),
                         subtitle: Text(
-                            'Dia: ${DateFormat('dd-MM-yyyy – hh:mm a').format(reservasDate)}'), // Format if needed
+                            'Dia: ${DateFormat('dd-MM-yyyy – hh:mm a').format(reservasDate)}'),
                         trailing: IconButton(
                           icon: const Icon(Icons.free_cancellation_rounded,
                               color: Colors.red),
@@ -149,8 +155,8 @@ class MyReservationsComponentState extends State<MyReservationsComponent> {
                       ),
                       if (index <
                           snapshot.data!.docs.length -
-                              1) // Add divider only if it's not the last item
-                        const Divider() // Add the Divider widget
+                              1)
+                        const Divider(),
                     ],
                   );
                 },

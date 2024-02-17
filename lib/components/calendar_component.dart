@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/snackbar.dart';
+import 'package:gym/pages/my_home_page.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
@@ -34,6 +35,10 @@ class _CalendarComponentState extends State<CalendarComponent> {
   }
 
   Future<void> _makeAppointment(Meeting meeting, Reserva reserva) async {
+    DateFormat formatter = DateFormat('yyyy-MM-dd');
+    String formattedStartTime = formatter.format(meeting.startTime);
+    String formattedNow = formatter.format(DateTime.now());
+
     /// consigue el alumno que tiene la sesion iniciada
     final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
     final alumnoDoc = await FirebaseFirestore.instance
@@ -46,8 +51,6 @@ class _CalendarComponentState extends State<CalendarComponent> {
         FirebaseFirestore.instance.collection('clases').doc(meeting.id);
 
     await FirebaseFirestore.instance.runTransaction((transaction) async {
-      final currentMeetingData =
-          (await transaction.get(meetingRef)).data() as Map<String, dynamic>;
 
       if (await _isClassFull(meeting)) {
         if (!context.mounted) return;
@@ -59,21 +62,32 @@ class _CalendarComponentState extends State<CalendarComponent> {
         return;
       }
 
-      // Update available spaces (assuming you add spaces field in 'clases')
-      transaction.update(meetingRef, {
-        'reservas': FieldValue.arrayUnion([reserva.toMap()]),
-        'idAlumno': FieldValue.arrayUnion([currentStudentEmail]),
-        'spaces': FieldValue.increment(-1) // Decrement available spaces
+      /// idReserva = fecha de la clase + fecha en que se hace la reserva + mail del usuario
+      final String reservaId = "Reserva: $formattedStartTime, Usuario: ${alumnoDoc.id}, Hecha: $formattedNow";
+      /// Crea subcollection
+      transaction.set(meetingRef.collection('reservas').doc(reservaId), {
+        'classId': meeting.id,
+        'date': Meeting.dateTimeToTimeStamp(meeting.startTime),
+        'startTime': meeting.startTime,
+        'studentEmail': currentStudentEmail,
+        'bookedWhen': DateTime.now(),
       });
 
-      // Create the reservation document in the user's subcollection
-      transaction.set(alumnoDoc.reference.collection('reservas').doc(), {
+      transaction.update(meetingRef, {
+        'idAlumno': FieldValue.arrayUnion([currentStudentEmail]),
+      });
+
+      transaction.set(alumnoDoc.reference.collection('reservas').doc(reservaId), {
         'classId': meeting.id,
         'date': Meeting.dateTimeToTimeStamp(
-            meeting.startTime), // Convert to Timestamp
+            meeting.startTime),
         'startTime': meeting.startTime,
-        'status': 'active',
       });
+
+      if (mounted) Navigator.pop(context);
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => const MyHomePage(),
+      ));
       showCustomSnackBar(
         context: context,
         message: 'Reserva creada con éxito!',
@@ -105,8 +119,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
       builder: (BuildContext buildContext) => AlertDialog(
         backgroundColor: Colors.grey[100],
         contentTextStyle: const TextStyle(color: Colors.black),
-        title: Text(
-            'Reservar clase: ${DateFormat('HH:mm').format(meeting.startTime)}'),
+        title: const Text(
+            'Reservar clase'),
         content: isClassFull
             ? const Text('La clase esta llena')
             : Text(
