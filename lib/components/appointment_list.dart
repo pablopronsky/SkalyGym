@@ -1,24 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gym/components/snackbar.dart';
 import 'package:gym/services/reservation_service.dart';
 import 'package:gym/utils/capitalize.dart';
 import 'package:intl/intl.dart';
 
 import '../model/meeting.dart';
 
-class MyReservationsComponent extends StatefulWidget {
-  const MyReservationsComponent({Key? key}) : super(key: key);
+class AppointmentsListComponent extends StatefulWidget {
+  const AppointmentsListComponent({Key? key}) : super(key: key);
 
   @override
-  MyReservationsComponentState createState() => MyReservationsComponentState();
+  AppointmentsListComponentState createState() => AppointmentsListComponentState();
 }
 
-class MyReservationsComponentState extends State<MyReservationsComponent> {
-  final _firestore = FirebaseFirestore.instance;
+class AppointmentsListComponentState extends State<AppointmentsListComponent> {
   final userId = FirebaseAuth.instance.currentUser?.email;
-  ReservaServicio reservaServicio = ReservaServicio();
+  BookingService reservaServicio = BookingService();
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +41,7 @@ class MyReservationsComponentState extends State<MyReservationsComponent> {
                   final reservaClaseData =
                       snapshot.data!.docs[index].data() as Map<String, dynamic>;
                   final reservasDate =
-                      Meeting.timeStampToDateTime(reservaClaseData['date']);
+                      Meeting.timeStampToDateTime(reservaClaseData['meetingDate']);
 
                   return Column(
                     children: [

@@ -11,10 +11,9 @@ class LoginOrRegisterPage extends StatefulWidget {
 }
 
 class _LoginOrRegisterPageState extends State<LoginOrRegisterPage> {
-  // pagina de login empieza en true
   bool showLoginPage = true;
 
-  // cambia entre login y register segun el estado negativo del boolean
+  /// Toggles between login / register page
   void togglePages() {
     setState(() {
       showLoginPage = !showLoginPage;

@@ -3,37 +3,33 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../components/snackbar.dart';
-import '../model/appointment.dart';
+import '../model/reservation.dart';
 import '../model/meeting.dart';
 import '../pages/my_home_page.dart';
 
-class ReservaServicio {
+class BookingService {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  /// Determina si la clase está llena o no, devuelve bool
-  Future<bool> isClassFull(Meeting meeting) async {
-    const maxCapacity = 6;
-
-    final reservasCount = await FirebaseFirestore.instance
-        .collection('reservas')
-        .where('classId', isEqualTo: meeting.id) // Filter by classId
-        .get()
-        .then((snapshot) => snapshot.size);
-
-    return reservasCount >= maxCapacity;
+  /// This method fetches all reservations with matching userId
+  Stream<QuerySnapshot> fetchReservations(String userId) {
+    return _firestore
+        .collection('reservations')
+        .where('userEmail', isEqualTo: userId) // Filter by userId
+        .snapshots();
   }
 
+  /// This method creates an appointment (reserva) document, that includes one User and one Meeting.
   Future<void> makeAppointment(
-      BuildContext context, Meeting meeting, Reserva reserva) async {
+      BuildContext context, Meeting meeting, Booking reserva) async {
     final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
-    final alumnoDocRef =
-        FirebaseFirestore.instance.collection('Users').doc(currentStudentEmail);
+    final userDocRef =
+        FirebaseFirestore.instance.collection('users').doc(currentStudentEmail);
     final meetingRef =
-        FirebaseFirestore.instance.collection('clases').doc(meeting.id);
+        FirebaseFirestore.instance.collection('meetings').doc(meeting.id);
 
     await FirebaseFirestore.instance.runTransaction((transaction) async {
       // 1. Retrieve User Data (including credits)
-      final alumnoDoc = await transaction.get(alumnoDocRef);
+      final userDoc = await transaction.get(userDocRef);
 
       if (await isClassFull(meeting)) {
         if (!context.mounted) return;
@@ -57,7 +53,7 @@ class ReservaServicio {
         return;
       }
 
-      if (alumnoDoc.get('weeklyCredits') <= 0) {
+      if (userDoc.get('weeklyCredits') <= 0) {
         if (!context.mounted) return;
         showCustomSnackBar(
           context: context,
@@ -68,21 +64,21 @@ class ReservaServicio {
       }
 
       // 4. Create Reservation in 'reservas' Collection
-      transaction.set(FirebaseFirestore.instance.collection('reservas').doc(), {
-        'classId': meeting.id,
-        'date': Meeting.dateTimeToTimeStamp(meeting.startTime),
-        'studentEmail': currentStudentEmail,
-        'bookedWhen': DateTime.now(),
+      transaction.set(FirebaseFirestore.instance.collection('reservations').doc(), {
+        'meetingId': meeting.id,
+        'meetingDate': Meeting.dateTimeToTimeStamp(meeting.startTime),
+        'userEmail': currentStudentEmail,
+        'bookingTimestamp': DateTime.now(),
       });
 
       // 5. Update Class Document
       transaction.update(meetingRef, {
-        'idAlumno': FieldValue.arrayUnion([currentStudentEmail]),
+        'userId': FieldValue.arrayUnion([currentStudentEmail]),
       });
 
       // 6. Decrement Credits
       transaction
-          .update(alumnoDocRef, {'weeklyCredits': FieldValue.increment(-1)});
+          .update(userDocRef, {'weeklyCredits': FieldValue.increment(-1)});
 
       if (context.mounted) {
         Navigator.pop(context);
@@ -98,27 +94,35 @@ class ReservaServicio {
     });
   }
 
-  // Helper Function
+  /// Validate if the class can or cannot have more reservations
+  Future<bool> isClassFull(Meeting meeting) async {
+    const maxCapacity = 6;
+
+    final reservasCount = await FirebaseFirestore.instance
+        .collection('reservations')
+        .where('meetingId', isEqualTo: meeting.id) // Filter by classId
+        .get()
+        .then((snapshot) => snapshot.size);
+
+    return reservasCount >= maxCapacity;
+  }
+
+
+  /// Helper function that returns whether the user has or has not a previous reservation into the selected meeting.
   Future<bool> _hasExistingReservationInClass(
       String classId, String studentEmail) async {
     final queryResult = await FirebaseFirestore.instance
-        .collection('reservas')
-        .where('classId', isEqualTo: classId)
+        .collection('reservations')
+        .where('meetingId', isEqualTo: classId)
         .where('studentEmail', isEqualTo: studentEmail)
         .get();
 
     return queryResult.size > 0; // True if a reservation already exists
   }
 
-  Stream<QuerySnapshot> fetchReservations(String userId) {
-    return _firestore
-        .collection('reservas')
-        .where('studentEmail', isEqualTo: userId) // Filter by userId
-        .snapshots();
-  }
-
+  /// This method takes a reservaId to delete it, a userId to delete from the Meeting and a context. It literally does what it says.
   Future<void> cancelarReserva(
-      String reservasId, String userId, BuildContext context) async {
+      String reservationId, String userId, BuildContext context) async {
     bool confirmDeletion = await showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -166,11 +170,11 @@ class ReservaServicio {
     try {
       // Retrieve reservation details (for updating the class)
       final reservaDoc = await FirebaseFirestore.instance
-          .collection('reservas')
-          .doc(reservasId)
+          .collection('reservations')
+          .doc(reservationId)
           .get();
       final reservaData = reservaDoc.data();
-      final classId = reservaData?['classId'];
+      final classId = reservaData?['meetingId'];
 
       await FirebaseFirestore.instance.runTransaction((transaction) async {
         // Delete reservation from 'reservas'
@@ -180,14 +184,14 @@ class ReservaServicio {
         if (classId != null) {
           // Ensure classId exists
           final classDocRef =
-              FirebaseFirestore.instance.collection('clases').doc(classId);
+              FirebaseFirestore.instance.collection('meetings').doc(classId);
           transaction.update(classDocRef, {
-            'idAlumno': FieldValue.arrayRemove(
+            'userId': FieldValue.arrayRemove(
                 [userId]), // Assuming userId is accessible
           });
         }
         final userDocRef = FirebaseFirestore.instance
-            .collection('Users')
+            .collection('users')
             .doc(userId); // Ensure userId is accessible
         transaction
             .update(userDocRef, {'weeklyCredits': FieldValue.increment(1)});

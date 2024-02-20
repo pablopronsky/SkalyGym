@@ -12,8 +12,8 @@ class UserName extends StatefulWidget {
 class _UserNameState extends State<UserName> {
   final Stream<QuerySnapshot<Map<String, dynamic>>> _userStream =
       FirebaseFirestore.instance
-          .collection('alumnos')
-          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .collection('users')
+          .where('uid', isEqualTo: FirebaseAuth.instance.currentUser!.email)
           .snapshots();
 
   @override
@@ -32,8 +32,8 @@ class _UserNameState extends State<UserName> {
         if (snapshot.connectionState == ConnectionState.active) {
           final doc = snapshot.data!.docs.first;
           final data = doc.data() as Map<String, dynamic>;
-          final nombre = data['nombre'];
-          final apellido = data['apellido'];
+          final nombre = data['name'];
+          final apellido = data['lastName'];
           return Container(
             color: Colors.grey[900],
             child: Center(

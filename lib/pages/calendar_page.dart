@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:gym/components/calendar_component.dart';
 import '../components/appbar.dart';
 
+/// This page renders and appBar along with the CalendarComponent.
 class Calendar extends StatelessWidget {
   const Calendar({super.key});
 

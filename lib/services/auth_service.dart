@@ -2,21 +2,22 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
+
   String email = "pronskypablo@gmail.com";
 
-  //Google Sign In
+  ///Google Sign In method. not being used yet.
   signInWithGoogle() async {
-    // interaccion
+    // Interact
     final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-    // auth_details del request
+    // Auth_details
     final GoogleSignInAuthentication googleAuth =
         await googleUser!.authentication;
-    // credencial para el usuario
+    // User credential
     final credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    // logea
+    // Log in
     return await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

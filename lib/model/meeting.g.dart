@@ -11,13 +11,12 @@ Meeting _$MeetingFromJson(Map<String, dynamic> json) => Meeting(
       startTime: DateTime.parse(json['startTime'] as String),
       endTime: DateTime.parse(json['endTime'] as String),
       subject: json['subject'] as String,
-      reservas: (json['reservas'] as List<dynamic>?)
-          ?.map((e) => Reserva.fromJson(e as Map<String, dynamic>))
+      reservations: (json['reservations'] as List<dynamic>?)
+          ?.map((e) => Booking.fromJson(e as Map<String, dynamic>))
           .toList(),
-      idAlumno: (json['idAlumno'] as List<dynamic>?)
+      usersId: (json['usersId'] as List<dynamic>?)
           ?.map((e) => e as String)
           .toList(),
-      recurrenceRule: json['recurrenceRule'] as String?,
     );
 
 Map<String, dynamic> _$MeetingToJson(Meeting instance) => <String, dynamic>{
@@ -25,7 +24,6 @@ Map<String, dynamic> _$MeetingToJson(Meeting instance) => <String, dynamic>{
       'startTime': instance.startTime.toIso8601String(),
       'endTime': instance.endTime.toIso8601String(),
       'subject': instance.subject,
-      'reservas': instance.reservas,
-      'idAlumno': instance.idAlumno,
-      'recurrenceRule': instance.recurrenceRule,
+      'reservations': instance.reservations,
+      'usersId': instance.usersId,
     };

@@ -25,7 +25,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(
         email: _emailController.text
-            .trim(), // Trim any leading/trailing whitespace
+            .trim(),
       );
 
       // Success message
@@ -50,7 +50,6 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     }
   }
 
-  // Helper function to handle FirebaseAuthException messages
   String _handleAuthExceptionMessage(FirebaseAuthException error) {
     switch (error.code) {
       case "invalid-email":

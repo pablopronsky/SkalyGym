@@ -14,10 +14,8 @@ class Perfil extends StatefulWidget {
 }
 
 class _PerfilState extends State<Perfil> {
-  //usuario logeado con firebase
   final currentUser = FirebaseAuth.instance.currentUser!;
-  // todos los usuarios dentro de la collection 'Users' de firestore
-  final usersCollection = FirebaseFirestore.instance.collection('Users');
+  final usersCollection = FirebaseFirestore.instance.collection('users');
 
   @override
   void initState() {
@@ -48,7 +46,7 @@ class _PerfilState extends State<Perfil> {
                   hintStyle: const TextStyle(color: Colors.grey),
                   focusedBorder: const UnderlineInputBorder(
                     borderSide:
-                        BorderSide(color: Colors.grey), // Cambia el color aquí
+                        BorderSide(color: Colors.grey),
                   ),
                 ),
                 onChanged: (value) {
@@ -56,7 +54,6 @@ class _PerfilState extends State<Perfil> {
                 },
               ),
               actions: [
-                // Distribuye los botones con espacio entre ellos
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -100,11 +97,10 @@ class _PerfilState extends State<Perfil> {
         });
       } else {
         if (value != null) {
-          // User canceled with value (usually if they pressed back button)
           showCustomSnackBar(
             context: context,
             message: 'Edición de $field cancelada',
-            backgroundColor: Colors.grey[700], // Neutral color for canceling
+            backgroundColor: Colors.grey[700],
           );
         }
       }
@@ -117,7 +113,7 @@ class _PerfilState extends State<Perfil> {
         appBar: const AppBarComponent(),
         body: StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance
-                .collection("Users")
+                .collection("users")
                 .doc(currentUser.email)
                 .snapshots(),
             builder: (context, snapshot) {
@@ -128,12 +124,12 @@ class _PerfilState extends State<Perfil> {
                     const SizedBox(
                       height: 50,
                     ),
-                    // foto de perfil
+                    // Person Icon
                     const Icon(
                       Icons.person,
                       size: 72,
                     ),
-                    // email
+                    // Email
                     Text(
                       currentUser.email!,
                       textAlign: TextAlign.center,
@@ -153,32 +149,25 @@ class _PerfilState extends State<Perfil> {
                         ),
                       ),
                     ),
-                    //Nombre
+                    // Name
                     MyTextBox(
-                      text: userData['nombre'],
+                      text: userData['name'],
                       sectionName: 'Nombre',
                       onPressed: () => editField('nombre'),
                       showSettingsIcon: false,
                     ),
-                    //Apellido
+                    // Last Name
                     MyTextBox(
-                      text: userData['apellido'],
+                      text: userData['lastName'],
                       sectionName: 'Apellido',
                       onPressed: () => editField('apellido'),
                       showSettingsIcon: false,
                     ),
-                    //Email
+                    // Email
                     MyTextBox(
-                      text: userData['celular'],
+                      text: userData['phoneNumber'],
                       sectionName: 'Celular',
                       onPressed: () => editField('celular'),
-                    ),
-                    //Cantidad de clases semanales
-                    MyTextBox(
-                      text: userData['pack de clases'],
-                      sectionName: 'Clases semanales',
-                      onPressed: () => editField('clases semanales'),
-                      showSettingsIcon: false,
                     ),
                     const SizedBox(
                       height: 50,

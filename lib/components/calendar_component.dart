@@ -1,12 +1,9 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gym/components/snackbar.dart';
-import 'package:gym/pages/my_home_page.dart';
 import 'package:intl/intl.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
-import '../model/appointment.dart';
+import '../model/reservation.dart';
 import '../model/firestore_data_source.dart';
 import '../model/meeting.dart';
 import '../services/reservation_service.dart';
@@ -21,7 +18,7 @@ class CalendarComponent extends StatefulWidget {
 }
 
 class _CalendarComponentState extends State<CalendarComponent> {
-  ReservaServicio reservaServicio = ReservaServicio();
+  BookingService bookingService = BookingService();
 
   void calendarTapped(CalendarTapDetails calendarTapDetails) {
     if (calendarTapDetails.targetElement == CalendarElement.appointment) {
@@ -31,15 +28,15 @@ class _CalendarComponentState extends State<CalendarComponent> {
   }
 
   void _showAppointmentDialog(BuildContext context, Meeting meeting) async {
-    /// Instancia la reserva que pasará a reservaServicio.makeAppointment
-    Reserva newReserva = Reserva(
+    /// This is the appointment that is sent to appointmentService.createAppointment
+    Booking newAppointment = Booking(
       meeting.startTime,
       meeting.endTime,
       FirebaseAuth.instance.currentUser!.email.toString(),
       meeting.id,
     );
 
-    bool isClassFull = await reservaServicio.isClassFull(meeting);
+    bool isClassFull = await bookingService.isClassFull(meeting);
     if (!context.mounted) return;
     showDialog(
       context: context,
@@ -63,7 +60,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
               child:
                   const Text('Reservar', style: TextStyle(color: Colors.black)),
               onPressed: () async {
-                reservaServicio.makeAppointment(context, meeting, newReserva);
+                bookingService.makeAppointment(context, meeting, newAppointment);
                 Navigator.pop(context);
               },
             ),

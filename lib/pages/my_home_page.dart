@@ -4,7 +4,7 @@ import 'package:gym/components/appbar.dart';
 import 'package:gym/pages/profile.dart';
 
 import '../components/drawer.dart';
-import '../components/my_reservations.dart';
+import '../components/appointment_list.dart';
 import '../services/user_service.dart';
 import 'calendar_page.dart';
 
@@ -16,7 +16,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
-  // Assuming you have the current user's email
   final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
 
   void goToProfilePage() {
@@ -99,7 +98,7 @@ class MyHomePageState extends State<MyHomePage> {
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    MyReservationsComponent(),
+                    AppointmentsListComponent(),
                   ],
                 ),
               ),

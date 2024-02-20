@@ -1,16 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'appointment.g.dart';
+part 'reservation.g.dart';
 
 @JsonSerializable()
-class Reserva {
+class Booking {
   DateTime startTime;
   DateTime endTime;
-  String idAlumno;
-  String idClase;
+  String userId;
+  String meetingId;
 
-  Reserva(this.startTime, this.endTime, this.idAlumno, this.idClase);
+  Booking(this.startTime, this.endTime, this.userId, this.meetingId);
 
   static DateTime timeStampToDateTime(Timestamp timestamp) {
     return DateTime.parse(timestamp.toDate().toString());
@@ -24,22 +24,22 @@ class Reserva {
     return {
       'startTime': Timestamp.fromDate(startTime), // Store as Timestamp
       'endTime': Timestamp.fromDate(endTime), // Store as Timestamp
-      'idAlumno': idAlumno,
-      'idClase': idClase,
+      'userId': userId,
+      'meetingId': meetingId,
     };
   }
 
-  factory Reserva.fromMap(Map<String, dynamic> map) {
-    return Reserva(
+  factory Booking.fromMap(Map<String, dynamic> map) {
+    return Booking(
       (map['startTime'] as Timestamp)
           .toDate(), // Retrieve startTime as Timestamp
       (map['endTime'] as Timestamp).toDate(), // Retrieve endTime as Timestamp
-      map['idAlumno'],
-      map['idClase'],
+      map['userId'],
+      map['meetingId'],
     );
   }
   Map<String, dynamic> toJson() => _$ReservaToJson(this);
 
-  factory Reserva.fromJson(Map<String, dynamic> json) =>
+  factory Booking.fromJson(Map<String, dynamic> json) =>
       _$ReservaFromJson(json);
 }

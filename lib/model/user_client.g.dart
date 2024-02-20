@@ -7,28 +7,24 @@ part of 'user_client.dart';
 // **************************************************************************
 
 Alumno _$AlumnoFromJson(Map<String, dynamic> json) => Alumno(
-      json['nombre'] as String,
-      json['apellido'] as String,
+      json['name'] as String,
+      json['lastName'] as String,
       json['email'] as String,
-      json['numeroDeCelular'] as String,
-      (json['clasesReservadas'] as List<dynamic>)
-          .map((e) => e as String)
-          .toList(),
-      json['packDeClases'] as int,
-      $enumDecode(_$RolEnumMap, json['rol']),
+      json['phoneNumber'] as String,
+      json['weeklyCredits'] as int,
+      $enumDecode(_$RoleEnumMap, json['role']),
     );
 
 Map<String, dynamic> _$AlumnoToJson(Alumno instance) => <String, dynamic>{
-      'nombre': instance.nombre,
-      'apellido': instance.apellido,
+      'name': instance.nombre,
+      'lastName': instance.apellido,
       'email': instance.email,
-      'numeroDeCelular': instance.numeroDeCelular,
-      'clasesReservadas': instance.clasesReservadas,
-      'packDeClases': instance.packDeClases,
-      'rol': _$RolEnumMap[instance.rol]!,
+      'phoneNumber': instance.numeroDeCelular,
+      'weeklyCredits': instance.weeklyCredits,
+      'role': _$RoleEnumMap[instance.role]!,
     };
 
-const _$RolEnumMap = {
-  Rol.Admin: 'Admin',
-  Rol.Alumno: 'Alumno',
+const _$RoleEnumMap = {
+  Role.Admin: 'Admin',
+  Role.User: 'User',
 };

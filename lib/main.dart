@@ -1,8 +1,5 @@
-// ignore_for_file: unused_import
-
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:gym/pages/admin_page.dart';
 import 'package:gym/pages/auth_page.dart';
 import 'package:gym/pages/calendar_page.dart';
 import 'package:gym/pages/my_home_page.dart';

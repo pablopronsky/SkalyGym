@@ -18,7 +18,7 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPageState extends State<RegisterPage> {
-  // controlador para editar texto
+  // Text controllers from the registration form
   final nombreController = TextEditingController();
   final apellidoController = TextEditingController();
   final emailController = TextEditingController();
@@ -26,8 +26,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final confirmPasswordController = TextEditingController();
   final celularController = TextEditingController();
 
-  // método para registrarse
-  Future<void> registrarse() async {
+  /// Sign up method. Uses Email and Password.
+  Future<void> emailSignUp() async {
     try {
       if (passwordController.text == confirmPasswordController.text) {
         showDialog(
@@ -38,22 +38,21 @@ class _RegisterPageState extends State<RegisterPage> {
             );
           },
         );
-        // registra usuario
         UserCredential userCredential =
             await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
         );
         FirebaseFirestore.instance
-            .collection('Users')
+            .collection('users')
             .doc(userCredential.user!.email)
             .set({
           'username': emailController.text.split('@')[0],
-          'nombre': nombreController.text,
-          'apellido': apellidoController.text,
-          'celular': celularController.text,
-          'pack de clases': '3',
-          'rol': Rol.Alumno.name,
+          'name': nombreController.text,
+          'lastName': apellidoController.text,
+          'phoneNumber': celularController.text,
+          'weeklyCredits': 3,
+          'role': Role.User.name,
         });
         Navigator.pop(context);
         showCustomSnackBar(
@@ -70,16 +69,15 @@ class _RegisterPageState extends State<RegisterPage> {
         );
       }
     } on FirebaseAuthException catch (error) {
-      Navigator.pop(context); // Dismiss dialog on error
+      Navigator.pop(context);
       showCustomSnackBar(
         context: context,
-        message: error.message ?? 'Registration Error', // Handle error message
+        message: error.message ?? 'Registration Error',
         backgroundColor: Colors.red[400],
       );
     } catch (error) {
       if (mounted) {
-        // Check if the widget is still mounted
-        Navigator.pop(context); // Dismiss dialog if mounted
+        Navigator.pop(context);
       }
       showCustomSnackBar(
         context: context,
@@ -89,7 +87,7 @@ class _RegisterPageState extends State<RegisterPage> {
     }
   }
 
-  // mensajes de error al logear
+  // Error message while logging in
   void showErrorMessage(message) {
     showDialog(
       context: context,
@@ -125,61 +123,59 @@ class _RegisterPageState extends State<RegisterPage> {
                   height: 150,
                 ),
                 const SizedBox(height: 15),
-                //welcome back
+                // Welcome back
                 Text(
                   'Crea tu cuenta',
                   style: TextStyle(color: Colors.grey[700], fontSize: 16),
                 ),
                 const SizedBox(height: 25),
-                // nombre
+                // Name
                 TextFieldInput(
                   controller: nombreController,
                   hintText: 'Nombre',
                   obscureText: false,
                 ),
                 const SizedBox(height: 15),
-                // apellido
+                // Last name
                 TextFieldInput(
                   controller: apellidoController,
                   hintText: 'Apellido',
                   obscureText: false,
                 ),
                 const SizedBox(height: 15),
-                // celular
+                // Phone number
                 TextFieldInput(
                   controller: celularController,
                   hintText: 'Celular',
                   obscureText: false,
                 ),
                 const SizedBox(height: 15),
-                // email
+                // Email
                 TextFieldInput(
                   controller: emailController,
                   hintText: 'Email',
                   obscureText: false,
                 ),
                 const SizedBox(height: 15),
-                // contraseña
+                // Password
                 TextFieldInput(
                   controller: passwordController,
                   hintText: 'Contraseña',
                   obscureText: true,
                 ),
                 const SizedBox(height: 15),
-                // repetir contraseña
+                // Repeat password
                 TextFieldInput(
                   controller: confirmPasswordController,
                   hintText: 'Confirmar contraseña',
                   obscureText: true,
                 ),
                 const SizedBox(height: 50),
-                // boton de crear sesion
                 MyButton(
                   text: 'Registrarme',
-                  onTap: registrarse,
+                  onTap: emailSignUp,
                 ),
                 const SizedBox(height: 25),
-                // o registrate con
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
@@ -204,7 +200,6 @@ class _RegisterPageState extends State<RegisterPage> {
                     ],
                   ),
                 ),
-                // not a member? register now
                 SizedBox(
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,

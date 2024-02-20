@@ -30,7 +30,7 @@ class MyTextBox extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // nombre de la seccion
+          // Section name
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -40,7 +40,6 @@ class MyTextBox extends StatelessWidget {
                   color: Colors.grey[500],
                 ),
               ),
-              // Marcador de posición para mantener la altura
               showSettingsIcon
                   ? IconButton(
                       onPressed: onPressed,
@@ -52,7 +51,7 @@ class MyTextBox extends StatelessWidget {
                     ),
             ],
           ),
-          // detalle de la seccion
+          // Section details
           Text(text),
         ],
       ),

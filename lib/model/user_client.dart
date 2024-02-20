@@ -6,19 +6,17 @@ part 'user_client.g.dart';
 
 @JsonSerializable()
 class Alumno extends Usuario {
-  List<String> clasesReservadas = [];
-  int packDeClases;
-  Rol rol;
+  int weeklyCredits;
+  Role role;
 
   Alumno(
-    String nombre,
-    String apellido,
+    String name,
+    String lastName,
     String email,
-    String numeroDeCelular,
-    List<String> clasesReservadas,
-    this.packDeClases,
-    this.rol,
-  ) : super(nombre, apellido, email, numeroDeCelular);
+    String phoneNumber,
+    this.weeklyCredits,
+    this.role,
+  ) : super(name, lastName, email, phoneNumber);
 
   factory Alumno.fromJson(Map<String, dynamic> json) => _$AlumnoFromJson(json);
 
@@ -26,13 +24,12 @@ class Alumno extends Usuario {
 
   factory Alumno.fromMap(Map<String, dynamic> data) {
     return Alumno(
-      data['nombre'] as String,
-      data['apellido'] as String,
+      data['name'] as String,
+      data['lastName'] as String,
       data['email'] as String,
-      data['numeroDeCelular'] as String,
-      List<String>.from(data['clasesReservadas'] ?? []),
-      data['packDeClases'] as int,
-      Rol.values.byName(data['rol']),
+      data['phoneNumber'] as String,
+      data['weeklyCredits'] as int,
+      Role.values.byName(data['rol']),
     );
   }
 }

@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
@@ -17,29 +16,18 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  // controlador para editar texto
+
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  // metodo para abrir sesion
-
-  abrirSesion() async {
-    // Show loading dialog (await to ensure it displays first)
-
-    // Wrap your asynchronous operations in a Future
+  /// This method takes the input from the controllers and tries to sing in into Firebase signInWithEmailAndPassword
+  logInWithEmail() async {
     Future(() async {
       try {
-        // Sign in with FirebaseAuth
-        final UserCredential userCredential = await FirebaseAuth.instance
+        await FirebaseAuth.instance
             .signInWithEmailAndPassword(
                 email: emailController.text, password: passwordController.text);
 
-        // Fetch user document from Firestore
-        DocumentSnapshot userDoc = await FirebaseFirestore.instance
-            .collection('alumnos')
-            .doc(userCredential.user!.uid)
-            .get();
-        // Navigate to home page
         if (mounted) {
           Navigator.pushReplacementNamed(context, '/auth_page');
         }
@@ -49,7 +37,7 @@ class _LoginPageState extends State<LoginPage> {
         }
         showCustomSnackBar(
           context: context,
-          message: getErrorMessage(error.code), // Handle error messages
+          message: getErrorMessage(error.code),
           backgroundColor: Colors.red,
         );
       } catch (error) {
@@ -58,12 +46,11 @@ class _LoginPageState extends State<LoginPage> {
         }
         showCustomSnackBar(
           context: context,
-          message: 'An error occurred',
+          message: 'Ocurrió un error',
           backgroundColor: Colors.red,
         );
       }
     }).whenComplete(() {
-      // Dismiss the loading dialog when the Future completes
       if (mounted) {
         Navigator.pop(context);
       }
@@ -146,10 +133,9 @@ class _LoginPageState extends State<LoginPage> {
                 // boton de abrir sesion
                 MyButton(
                   text: 'Abrir sesion',
-                  onTap: abrirSesion,
+                  onTap: logInWithEmail,
                 ),
                 const SizedBox(height: 25),
-                // o loguear con
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
@@ -168,7 +154,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
                 const SizedBox(height: 25),
-                // not a member? register now
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

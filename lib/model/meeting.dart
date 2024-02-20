@@ -1,5 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gym/model/appointment.dart';
+import 'package:gym/model/reservation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'meeting.g.dart';
@@ -10,20 +10,18 @@ class Meeting {
   DateTime startTime;
   DateTime endTime;
   String subject;
-  @JsonKey(name: 'reservas')
-  List<Reserva>? reservas;
-  @JsonKey(name: 'idAlumno')
-  List<String>? idAlumno;
-  String? recurrenceRule;
+  @JsonKey(name: 'reservations')
+  List<Booking>? reservations;
+  @JsonKey(name: 'usersId')
+  List<String>? usersId;
 
   Meeting({
     required this.id,
     required this.startTime,
     required this.endTime,
     required this.subject,
-    this.reservas,
-    this.idAlumno,
-    this.recurrenceRule,
+    this.reservations,
+    this.usersId,
   });
 
   static DateTime timeStampToDateTime(Timestamp timestamp) {
@@ -40,13 +38,12 @@ class Meeting {
       startTime: timeStampToDateTime(map['startTime'] as Timestamp),
       endTime: timeStampToDateTime(map['endTime'] as Timestamp),
       subject: map['subject'] as String,
-      reservas: map['reservas'] != null
-          ? List<Reserva>.from(map['reservas'] as List)
+      reservations: map['reservations'] != null
+          ? List<Booking>.from(map['reservations'] as List)
           : null,
-      idAlumno: map['idAlumno'] != null
-          ? List<String>.from(map['idAlumno'] as List)
+      usersId: map['usersId'] != null
+          ? List<String>.from(map['usersId'] as List)
           : null,
-      recurrenceRule: map['recurrenceRule'] as String?,
     );
   }
 
@@ -56,9 +53,8 @@ class Meeting {
       'startTime': dateTimeToTimeStamp(startTime),
       'endTime': dateTimeToTimeStamp(endTime),
       'subject': subject,
-      'reservas': reservas?.map((reserva) => reserva.toMap()).toList(),
-      'idAlumno': idAlumno,
-      'recurrenceRule': recurrenceRule,
+      'reservations': reservations?.map((reserva) => reserva.toMap()).toList(),
+      'usersId': usersId,
     };
   }
 
@@ -69,9 +65,9 @@ class Meeting {
       startTime: (data['startTime'] as Timestamp).toDate(),
       endTime: (data['endTime'] as Timestamp).toDate(),
       subject: data['subject'],
-      reservas:
-          (data['reservas'] as List).map((i) => Reserva.fromMap(i)).toList(),
-      idAlumno: List<String>.from(data['idAlumno']),
+      reservations:
+          (data['reservations'] as List).map((i) => Booking.fromMap(i)).toList(),
+      usersId: List<String>.from(data['usersId']),
     );
   }
 
