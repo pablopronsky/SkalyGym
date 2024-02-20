@@ -5,6 +5,7 @@ import 'package:gym/pages/profile.dart';
 
 import '../components/drawer.dart';
 import '../components/my_reservations.dart';
+import '../services/user_service.dart';
 import 'calendar_page.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -15,6 +16,9 @@ class MyHomePage extends StatefulWidget {
 }
 
 class MyHomePageState extends State<MyHomePage> {
+  // Assuming you have the current user's email
+  final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
+
   void goToProfilePage() {
     Navigator.pop(context);
     Navigator.push(
@@ -99,8 +103,22 @@ class MyHomePageState extends State<MyHomePage> {
                   ],
                 ),
               ),
-              const SizedBox(height: 50,),
-              const Text('Clases disponibles para reservar: 1'),
+              const SizedBox(
+                height: 50,
+              ),
+              StreamBuilder<int>(
+                  stream:
+                      UserService.getUserCreditsStream(currentStudentEmail!),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      return const Text('Error');
+                    } else if (!snapshot.hasData) {
+                      return const CircularProgressIndicator();
+                    } else {
+                      return Text(
+                          'Clases disponibles para reservar: ${snapshot.data}');
+                    }
+                  })
             ],
           ),
         ));

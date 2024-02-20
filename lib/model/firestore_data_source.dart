@@ -12,15 +12,17 @@ class FirestoreStreamDataSource extends CalendarDataSource<Meeting> {
   FirestoreStreamDataSource() {
     firestore.collection('clases').snapshots().listen((eventsSnapshot) {
       final events = eventsSnapshot.docs.map((doc) {
-        // Create a Meeting object
+        DateTime startTime = doc['startTime'].toDate();
+
+        // Print the start time (You can customize the format below)
+        print('Start Time: ${startTime.toString()}');
         return Meeting(
-          id: doc.id, // Assuming your meetings have an 'id' field in Firestore
-          subject: doc['subject'], // Use correct Firestore field names
+          id: doc.id,
+          subject: doc['subject'],
           startTime: doc['startTime'].toDate(),
           endTime: doc['endTime'].toDate(),
         );
       }).toList();
-
       // Update the appointments list with Meetings
       appointments = events;
       notifyListeners(CalendarDataSourceAction.reset, appointments!);

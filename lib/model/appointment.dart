@@ -12,7 +12,6 @@ class Reserva {
 
   Reserva(this.startTime, this.endTime, this.idAlumno, this.idClase);
 
-
   static DateTime timeStampToDateTime(Timestamp timestamp) {
     return DateTime.parse(timestamp.toDate().toString());
   }
@@ -23,8 +22,8 @@ class Reserva {
 
   Map<String, dynamic> toMap() {
     return {
-      'startTime': Timestamp.fromDate(startTime),  // Store as Timestamp
-      'endTime': Timestamp.fromDate(endTime),    // Store as Timestamp
+      'startTime': Timestamp.fromDate(startTime), // Store as Timestamp
+      'endTime': Timestamp.fromDate(endTime), // Store as Timestamp
       'idAlumno': idAlumno,
       'idClase': idClase,
     };
@@ -32,8 +31,9 @@ class Reserva {
 
   factory Reserva.fromMap(Map<String, dynamic> map) {
     return Reserva(
-      (map['startTime'] as Timestamp).toDate(), // Retrieve startTime as Timestamp
-      (map['endTime'] as Timestamp).toDate(),   // Retrieve endTime as Timestamp
+      (map['startTime'] as Timestamp)
+          .toDate(), // Retrieve startTime as Timestamp
+      (map['endTime'] as Timestamp).toDate(), // Retrieve endTime as Timestamp
       map['idAlumno'],
       map['idClase'],
     );
