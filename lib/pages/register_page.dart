@@ -7,11 +7,11 @@ import 'package:gym/components/button.dart';
 import 'package:gym/components/text_field_input.dart';
 import '../components/snackbar.dart';
 import '../model/enum_rol.dart';
+import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
-  final Function()? onTap;
 
-  const RegisterPage({super.key, required this.onTap});
+  const RegisterPage({super.key});
 
   @override
   State<RegisterPage> createState() => _RegisterPageState();
@@ -52,7 +52,7 @@ class _RegisterPageState extends State<RegisterPage> {
           'lastName': apellidoController.text,
           'phoneNumber': celularController.text,
           'weeklyCredits': 3,
-          'role': Role.User.name,
+          'role': Role.user.name,
         });
         Navigator.pop(context);
         showCustomSnackBar(
@@ -210,9 +210,12 @@ class _RegisterPageState extends State<RegisterPage> {
                       ),
                       const SizedBox(width: 4),
                       GestureDetector(
-                        onTap: widget.onTap,
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const LoginPage()),
+                        ),
                         child: const Text(
-                          'Abri sesión',
+                          'Registrate',
                           style: TextStyle(
                             color: Colors.blue,
                             fontWeight: FontWeight.bold,

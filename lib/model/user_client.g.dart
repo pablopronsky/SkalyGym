@@ -6,7 +6,7 @@ part of 'user_client.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Alumno _$AlumnoFromJson(Map<String, dynamic> json) => Alumno(
+UserClient _$UserClientFromJson(Map<String, dynamic> json) => UserClient(
       json['name'] as String,
       json['lastName'] as String,
       json['email'] as String,
@@ -15,7 +15,7 @@ Alumno _$AlumnoFromJson(Map<String, dynamic> json) => Alumno(
       $enumDecode(_$RoleEnumMap, json['role']),
     );
 
-Map<String, dynamic> _$AlumnoToJson(Alumno instance) => <String, dynamic>{
+Map<String, dynamic> _$UserClientToJson(UserClient instance) => <String, dynamic>{
       'name': instance.nombre,
       'lastName': instance.apellido,
       'email': instance.email,
@@ -25,6 +25,6 @@ Map<String, dynamic> _$AlumnoToJson(Alumno instance) => <String, dynamic>{
     };
 
 const _$RoleEnumMap = {
-  Role.Admin: 'Admin',
-  Role.User: 'User',
+  Role.admin: 'Admin',
+  Role.user: 'User',
 };

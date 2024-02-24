@@ -4,13 +4,13 @@ import 'package:json_annotation/json_annotation.dart';
 part 'reservation.g.dart';
 
 @JsonSerializable()
-class Booking {
+class Reservation {
   DateTime startTime;
   DateTime endTime;
   String userId;
   String meetingId;
 
-  Booking(this.startTime, this.endTime, this.userId, this.meetingId);
+  Reservation(this.startTime, this.endTime, this.userId, this.meetingId);
 
   static DateTime timeStampToDateTime(Timestamp timestamp) {
     return DateTime.parse(timestamp.toDate().toString());
@@ -29,8 +29,8 @@ class Booking {
     };
   }
 
-  factory Booking.fromMap(Map<String, dynamic> map) {
-    return Booking(
+  factory Reservation.fromMap(Map<String, dynamic> map) {
+    return Reservation(
       (map['startTime'] as Timestamp)
           .toDate(), // Retrieve startTime as Timestamp
       (map['endTime'] as Timestamp).toDate(), // Retrieve endTime as Timestamp
@@ -40,6 +40,6 @@ class Booking {
   }
   Map<String, dynamic> toJson() => _$ReservaToJson(this);
 
-  factory Booking.fromJson(Map<String, dynamic> json) =>
+  factory Reservation.fromJson(Map<String, dynamic> json) =>
       _$ReservaFromJson(json);
 }

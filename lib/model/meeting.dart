@@ -11,7 +11,7 @@ class Meeting {
   DateTime endTime;
   String subject;
   @JsonKey(name: 'reservations')
-  List<Booking>? reservations;
+  List<Reservation>? reservations;
   @JsonKey(name: 'usersId')
   List<String>? usersId;
 
@@ -39,7 +39,7 @@ class Meeting {
       endTime: timeStampToDateTime(map['endTime'] as Timestamp),
       subject: map['subject'] as String,
       reservations: map['reservations'] != null
-          ? List<Booking>.from(map['reservations'] as List)
+          ? List<Reservation>.from(map['reservations'] as List)
           : null,
       usersId: map['usersId'] != null
           ? List<String>.from(map['usersId'] as List)
@@ -65,8 +65,9 @@ class Meeting {
       startTime: (data['startTime'] as Timestamp).toDate(),
       endTime: (data['endTime'] as Timestamp).toDate(),
       subject: data['subject'],
-      reservations:
-          (data['reservations'] as List).map((i) => Booking.fromMap(i)).toList(),
+      reservations: (data['reservations'] as List)
+          .map((i) => Reservation.fromMap(i))
+          .toList(),
       usersId: List<String>.from(data['usersId']),
     );
   }

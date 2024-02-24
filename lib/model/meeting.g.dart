@@ -12,11 +12,10 @@ Meeting _$MeetingFromJson(Map<String, dynamic> json) => Meeting(
       endTime: DateTime.parse(json['endTime'] as String),
       subject: json['subject'] as String,
       reservations: (json['reservations'] as List<dynamic>?)
-          ?.map((e) => Booking.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => Reservation.fromJson(e as Map<String, dynamic>))
           .toList(),
-      usersId: (json['usersId'] as List<dynamic>?)
-          ?.map((e) => e as String)
-          .toList(),
+      usersId:
+          (json['usersId'] as List<dynamic>?)?.map((e) => e as String).toList(),
     );
 
 Map<String, dynamic> _$MeetingToJson(Meeting instance) => <String, dynamic>{

@@ -29,7 +29,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
 
   void _showAppointmentDialog(BuildContext context, Meeting meeting) async {
     /// This is the appointment that is sent to appointmentService.createAppointment
-    Booking newAppointment = Booking(
+    Reservation newAppointment = Reservation(
       meeting.startTime,
       meeting.endTime,
       FirebaseAuth.instance.currentUser!.email.toString(),
@@ -60,7 +60,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
               child:
                   const Text('Reservar', style: TextStyle(color: Colors.black)),
               onPressed: () async {
-                bookingService.makeAppointment(context, meeting, newAppointment);
+                bookingService.makeAppointment(
+                    context, meeting, newAppointment);
                 Navigator.pop(context);
               },
             ),

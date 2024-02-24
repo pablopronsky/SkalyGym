@@ -11,7 +11,8 @@ class AppointmentsListComponent extends StatefulWidget {
   const AppointmentsListComponent({Key? key}) : super(key: key);
 
   @override
-  AppointmentsListComponentState createState() => AppointmentsListComponentState();
+  AppointmentsListComponentState createState() =>
+      AppointmentsListComponentState();
 }
 
 class AppointmentsListComponentState extends State<AppointmentsListComponent> {
@@ -40,8 +41,8 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                 itemBuilder: (context, index) {
                   final reservaClaseData =
                       snapshot.data!.docs[index].data() as Map<String, dynamic>;
-                  final reservasDate =
-                      Meeting.timeStampToDateTime(reservaClaseData['meetingDate']);
+                  final reservasDate = Meeting.timeStampToDateTime(
+                      reservaClaseData['meetingDate']);
 
                   return Column(
                     children: [

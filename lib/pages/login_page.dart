@@ -1,75 +1,33 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/text_field_input.dart';
+import 'package:gym/pages/register_page.dart';
+import 'package:gym/pages/view_model/login_controller.dart';
+import 'package:gym/pages/view_model/login_state.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../components/snackbar.dart';
 import 'forgot_password_page.dart';
 
-class LoginPage extends StatefulWidget {
-  final Function()? onTap;
-
-  const LoginPage({super.key, required this.onTap});
+class LoginPage extends StatefulHookConsumerWidget {
+  const LoginPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  ConsumerState<LoginPage> createState() => _LoginPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-
+class _LoginPageState extends ConsumerState<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  /// This method takes the input from the controllers and tries to sing in into Firebase signInWithEmailAndPassword
-  logInWithEmail() async {
-    Future(() async {
-      try {
-        await FirebaseAuth.instance
-            .signInWithEmailAndPassword(
-                email: emailController.text, password: passwordController.text);
-
-        if (mounted) {
-          Navigator.pushReplacementNamed(context, '/auth_page');
-        }
-      } on FirebaseAuthException catch (error) {
-        if (mounted) {
-          Navigator.pop(context);
-        }
-        showCustomSnackBar(
-          context: context,
-          message: getErrorMessage(error.code),
-          backgroundColor: Colors.red,
-        );
-      } catch (error) {
-        if (mounted) {
-          Navigator.pop(context);
-        }
-        showCustomSnackBar(
-          context: context,
-          message: 'Ocurrió un error',
-          backgroundColor: Colors.red,
-        );
-      }
-    }).whenComplete(() {
-      if (mounted) {
-        Navigator.pop(context);
-      }
-    });
-  }
-
-  String getErrorMessage(String code) {
-    switch (code) {
-      case 'user-not-found':
-        return 'No hay ningún usuario con ese correo electrónico.';
-      case 'wrong-password':
-        return 'La contraseña es incorrecta.';
-      default:
-        return 'Ocurrió un error. Inténtalo nuevamente.';
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
+    ref.listen<LoginState>(loginControllerProvider, ((previous, state) {
+      if (state is LoginStateError) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+          content: Text(state.error),
+        ));
+      }
+    }));
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -133,7 +91,9 @@ class _LoginPageState extends State<LoginPage> {
                 // boton de abrir sesion
                 MyButton(
                   text: 'Abrir sesion',
-                  onTap: logInWithEmail,
+                  onTap:()=> ref
+                  .read(loginControllerProvider.notifier)
+                  .login(emailController.text, passwordController.text)
                 ),
                 const SizedBox(height: 25),
                 Padding(
@@ -163,7 +123,10 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
-                      onTap: widget.onTap,
+                      onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const RegisterPage()),
+                      ),
                       child: const Text(
                         'Registrate',
                         style: TextStyle(

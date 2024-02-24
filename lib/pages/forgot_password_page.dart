@@ -24,8 +24,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   Future passwordResetEmail() async {
     try {
       await FirebaseAuth.instance.sendPasswordResetEmail(
-        email: _emailController.text
-            .trim(),
+        email: _emailController.text.trim(),
       );
 
       // Success message

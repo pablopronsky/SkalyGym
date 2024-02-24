@@ -45,8 +45,7 @@ class _PerfilState extends State<Perfil> {
                   hintText: "Ingresa nuevo $field",
                   hintStyle: const TextStyle(color: Colors.grey),
                   focusedBorder: const UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: Colors.grey),
+                    borderSide: BorderSide(color: Colors.grey),
                   ),
                 ),
                 onChanged: (value) {

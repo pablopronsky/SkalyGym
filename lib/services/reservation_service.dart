@@ -20,7 +20,7 @@ class BookingService {
 
   /// This method creates an appointment (reserva) document, that includes one User and one Meeting.
   Future<void> makeAppointment(
-      BuildContext context, Meeting meeting, Booking reserva) async {
+      BuildContext context, Meeting meeting, Reservation reserva) async {
     final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
     final userDocRef =
         FirebaseFirestore.instance.collection('users').doc(currentStudentEmail);
@@ -64,7 +64,8 @@ class BookingService {
       }
 
       // 4. Create Reservation in 'reservas' Collection
-      transaction.set(FirebaseFirestore.instance.collection('reservations').doc(), {
+      transaction
+          .set(FirebaseFirestore.instance.collection('reservations').doc(), {
         'meetingId': meeting.id,
         'meetingDate': Meeting.dateTimeToTimeStamp(meeting.startTime),
         'userEmail': currentStudentEmail,
@@ -106,7 +107,6 @@ class BookingService {
 
     return reservasCount >= maxCapacity;
   }
-
 
   /// Helper function that returns whether the user has or has not a previous reservation into the selected meeting.
   Future<bool> _hasExistingReservationInClass(

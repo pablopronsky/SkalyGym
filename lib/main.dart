@@ -1,10 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym/pages/auth_page.dart';
 import 'package:gym/pages/calendar_page.dart';
 import 'package:gym/pages/my_home_page.dart';
 import 'package:gym/pages/profile.dart';
-import 'package:gym/services/meeting_service.dart';
+import 'package:gym/pages/register_page.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 
@@ -17,7 +18,7 @@ void main() async {
   );
   //MeetingService meetingService = MeetingService();
   //meetingService.createMultipleClasses();
-  initializeDateFormatting().then((_) => runApp(const MyApp()));
+  initializeDateFormatting().then((_) => runApp(const ProviderScope(child: MyApp())));
 }
 
 class MyApp extends StatelessWidget {
@@ -39,6 +40,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const Perfil(),
         '/calendar': (context) => const Calendar(),
         '/auth_page': (context) => const AuthPage(),
+        '/register_page': (context) => const RegisterPage(),
       },
       debugShowCheckedModeBanner: false,
       home: const AuthPage(),

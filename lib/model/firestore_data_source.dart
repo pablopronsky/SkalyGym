@@ -19,7 +19,7 @@ class FirestoreStreamDataSource extends CalendarDataSource<Meeting> {
           endTime: doc['endTime'].toDate(),
         );
       }).toList();
-      // Update the appointments list with Meetings
+
       appointments = events;
       notifyListeners(CalendarDataSourceAction.reset, appointments!);
     });

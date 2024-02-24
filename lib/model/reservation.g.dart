@@ -6,14 +6,14 @@ part of 'reservation.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Booking _$ReservaFromJson(Map<String, dynamic> json) => Booking(
+Reservation _$ReservaFromJson(Map<String, dynamic> json) => Reservation(
       DateTime.parse(json['startTime'] as String),
       DateTime.parse(json['endTime'] as String),
       json['userId'] as String,
       json['meetingId'] as String,
     );
 
-Map<String, dynamic> _$ReservaToJson(Booking instance) => <String, dynamic>{
+Map<String, dynamic> _$ReservaToJson(Reservation instance) => <String, dynamic>{
       'startTime': instance.startTime.toIso8601String(),
       'endTime': instance.endTime.toIso8601String(),
       'userId': instance.userId,

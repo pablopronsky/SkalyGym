@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'enum_rol.dart';
@@ -5,11 +6,11 @@ import 'user.dart';
 part 'user_client.g.dart';
 
 @JsonSerializable()
-class Alumno extends Usuario {
+class UserClient extends Usuario {
   int weeklyCredits;
   Role role;
 
-  Alumno(
+  UserClient(
     String name,
     String lastName,
     String email,
@@ -18,18 +19,10 @@ class Alumno extends Usuario {
     this.role,
   ) : super(name, lastName, email, phoneNumber);
 
-  factory Alumno.fromJson(Map<String, dynamic> json) => _$AlumnoFromJson(json);
+  factory UserClient.fromFirestore(DocumentSnapshot doc) =>
+      UserClient.fromJson(doc.data() as Map<String, dynamic>);
 
-  Map<String, dynamic> toJson() => _$AlumnoToJson(this);
+  factory UserClient.fromJson(Map<String, dynamic> json) => _$UserClientFromJson(json);
 
-  factory Alumno.fromMap(Map<String, dynamic> data) {
-    return Alumno(
-      data['name'] as String,
-      data['lastName'] as String,
-      data['email'] as String,
-      data['phoneNumber'] as String,
-      data['weeklyCredits'] as int,
-      Role.values.byName(data['rol']),
-    );
-  }
+  Map<String, dynamic> toJson() => _$UserClientToJson(this);
 }
