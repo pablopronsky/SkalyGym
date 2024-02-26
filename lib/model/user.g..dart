@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'user_client.dart';
+part of 'user.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
@@ -12,19 +12,13 @@ UserClient _$UserClientFromJson(Map<String, dynamic> json) => UserClient(
       json['email'] as String,
       json['phoneNumber'] as String,
       json['weeklyCredits'] as int,
-      $enumDecode(_$RoleEnumMap, json['role']),
     );
 
 Map<String, dynamic> _$UserClientToJson(UserClient instance) => <String, dynamic>{
-      'name': instance.nombre,
-      'lastName': instance.apellido,
+      'name': instance.name,
+      'lastName': instance.lastName,
       'email': instance.email,
-      'phoneNumber': instance.numeroDeCelular,
+      'phoneNumber': instance.phoneNumber,
       'weeklyCredits': instance.weeklyCredits,
-      'role': _$RoleEnumMap[instance.role]!,
     };
 
-const _$RoleEnumMap = {
-  Role.admin: 'Admin',
-  Role.user: 'User',
-};

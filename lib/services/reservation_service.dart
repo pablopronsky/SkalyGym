@@ -202,7 +202,6 @@ class BookingService {
         backgroundColor: Colors.green[400],
       );
     } catch (error) {
-      print(error);
       showCustomSnackBar(
         context: context,
         message: 'Error al eliminar la reserva}',

@@ -10,22 +10,18 @@ class AuthRepository {
   Future<User?> signInWithEmailAndPassword(
       String email, String password) async {
     try {
-      print("llega hasta logear");
       final result = await _auth.signInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      print("llega hasta logear +1");
       return result.user;
     } on FirebaseAuthException catch (e) {
-
-      print("llega hasta logear +2");
       if (e.code == 'user-not-found') {
-        throw AuthException('User not found');
+        throw AuthException('Usuario no encontrado');
       } else if (e.code == 'wrong-password') {
-        throw AuthException('Wrong password');
+        throw AuthException('Contraseña incorrecta');
       } else {
-        throw AuthException('An error occured. Please try again later, ${e}');
+        throw AuthException('Ocurrió un error, intenta nuevamente');
       }
     }
   }

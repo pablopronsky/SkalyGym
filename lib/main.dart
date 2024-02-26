@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym/pages/auth_page.dart';
 import 'package:gym/pages/calendar_page.dart';
+import 'package:gym/pages/login_page.dart';
 import 'package:gym/pages/my_home_page.dart';
 import 'package:gym/pages/profile.dart';
 import 'package:gym/pages/register_page.dart';
@@ -39,11 +40,11 @@ class MyApp extends StatelessWidget {
         '/home_page': (context) => const MyHomePage(),
         '/profile': (context) => const Perfil(),
         '/calendar': (context) => const Calendar(),
-        '/auth_page': (context) => const AuthPage(),
+        '/auth_page': (context) => const AuthPage(targetPage: LoginPage(),),
         '/register_page': (context) => const RegisterPage(),
       },
       debugShowCheckedModeBanner: false,
-      home: const AuthPage(),
+      home: const AuthPage(targetPage: LoginPage(),),
     );
   }
 }

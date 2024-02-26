@@ -1,12 +1,7 @@
-// ignore_for_file: use_build_context_synchronously
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/text_field_input.dart';
-import '../components/snackbar.dart';
-import '../model/enum_rol.dart';
+import '../services/auth_service.dart';
 import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -19,91 +14,13 @@ class RegisterPage extends StatefulWidget {
 
 class _RegisterPageState extends State<RegisterPage> {
   // Text controllers from the registration form
-  final nombreController = TextEditingController();
-  final apellidoController = TextEditingController();
+  final nameController = TextEditingController();
+  final lastnameController = TextEditingController();
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
-  final celularController = TextEditingController();
-
-  /// Sign up method. Uses Email and Password.
-  Future<void> emailSignUp() async {
-    try {
-      if (passwordController.text == confirmPasswordController.text) {
-        showDialog(
-          context: context,
-          builder: (context) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        );
-        UserCredential userCredential =
-            await FirebaseAuth.instance.createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
-        FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCredential.user!.email)
-            .set({
-          'username': emailController.text.split('@')[0],
-          'name': nombreController.text,
-          'lastName': apellidoController.text,
-          'phoneNumber': celularController.text,
-          'weeklyCredits': 3,
-          'role': Role.user.name,
-        });
-        Navigator.pop(context);
-        showCustomSnackBar(
-          context: context,
-          message: 'Registration Successful!',
-          backgroundColor: Colors.green[400],
-        );
-      } else {
-        // Error Snackbar
-        showCustomSnackBar(
-          context: context,
-          message: 'Passwords do not match',
-          backgroundColor: Colors.red,
-        );
-      }
-    } on FirebaseAuthException catch (error) {
-      Navigator.pop(context);
-      showCustomSnackBar(
-        context: context,
-        message: error.message ?? 'Registration Error',
-        backgroundColor: Colors.red[400],
-      );
-    } catch (error) {
-      if (mounted) {
-        Navigator.pop(context);
-      }
-      showCustomSnackBar(
-        context: context,
-        message: 'An error occurred',
-        backgroundColor: Colors.red[400],
-      );
-    }
-  }
-
-  // Error message while logging in
-  void showErrorMessage(message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.deepPurple,
-          title: Center(
-            child: Text(
-              message,
-              style: const TextStyle(color: Colors.white),
-            ),
-          ),
-        );
-      },
-    );
-  }
+  final phoneNumberController = TextEditingController();
+  AuthService authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -131,21 +48,21 @@ class _RegisterPageState extends State<RegisterPage> {
                 const SizedBox(height: 25),
                 // Name
                 TextFieldInput(
-                  controller: nombreController,
+                  controller: nameController,
                   hintText: 'Nombre',
                   obscureText: false,
                 ),
                 const SizedBox(height: 15),
                 // Last name
                 TextFieldInput(
-                  controller: apellidoController,
+                  controller: lastnameController,
                   hintText: 'Apellido',
                   obscureText: false,
                 ),
                 const SizedBox(height: 15),
                 // Phone number
                 TextFieldInput(
-                  controller: celularController,
+                  controller: phoneNumberController,
                   hintText: 'Celular',
                   obscureText: false,
                 ),
@@ -172,8 +89,17 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 50),
                 MyButton(
-                  text: 'Registrarme',
-                  onTap: emailSignUp,
+                  text: 'Registrar',
+                  onTap: () async {
+                    await authService.emailSignUp(
+                        nameController.text,
+                        lastnameController.text,
+                        emailController.text,
+                        passwordController.text,
+                        confirmPasswordController.text,
+                        phoneNumberController.text,
+                        context);
+                  },
                 ),
                 const SizedBox(height: 25),
                 Padding(
