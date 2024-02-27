@@ -90,11 +90,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 const SizedBox(height: 25),
                 // boton de abrir sesion
                 MyButton(
-                  text: 'Abrir sesion',
-                  onTap:()=> ref
-                  .read(loginControllerProvider.notifier)
-                  .login(emailController.text, passwordController.text)
-                ),
+                    text: 'Abrir sesion',
+                    onTap: () => ref
+                        .read(loginControllerProvider.notifier)
+                        .login(emailController.text, passwordController.text)),
                 const SizedBox(height: 25),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -125,7 +124,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     GestureDetector(
                       onTap: () => Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const RegisterPage()),
+                        MaterialPageRoute(
+                            builder: (context) => const RegisterPage()),
                       ),
                       child: const Text(
                         'Registrate',

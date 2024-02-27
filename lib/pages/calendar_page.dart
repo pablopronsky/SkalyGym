@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gym/components/calendar_component.dart';
 import '../components/appbar.dart';
+import '../components/calendar_component.dart';
 
 /// This page renders and appBar along with the CalendarComponent.
 class Calendar extends StatelessWidget {

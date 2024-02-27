@@ -14,11 +14,11 @@ UserClient _$UserClientFromJson(Map<String, dynamic> json) => UserClient(
       json['weeklyCredits'] as int,
     );
 
-Map<String, dynamic> _$UserClientToJson(UserClient instance) => <String, dynamic>{
+Map<String, dynamic> _$UserClientToJson(UserClient instance) =>
+    <String, dynamic>{
       'name': instance.name,
       'lastName': instance.lastName,
       'email': instance.email,
       'phoneNumber': instance.phoneNumber,
       'weeklyCredits': instance.weeklyCredits,
     };
-

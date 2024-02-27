@@ -22,6 +22,7 @@ class AuthPage extends ConsumerWidget {
         error: (e, trace) => targetPage);
   }
 }
+
 class SplashScreen extends StatelessWidget {
   const SplashScreen({Key? key}) : super(key: key);
 

@@ -15,7 +15,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       centerTitle: true,
-      backgroundColor: Colors.grey[900],
+      backgroundColor: Colors.grey[800],
       iconTheme: const IconThemeData(color: Colors.white),
     );
   }

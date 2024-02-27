@@ -7,7 +7,6 @@ import 'package:gym/pages/register_page.dart';
 
 import '../components/snackbar.dart';
 import '../pages/auth_page.dart';
-import '../pages/login_page.dart';
 
 class AuthService {
   String email = "pronskypablo@gmail.com";
@@ -30,31 +29,37 @@ class AuthService {
 
   /// Email register, Unimplemented with riverpod YET
   Future<void> emailSignUp(
-      String nameController, String lastnameController, String emailController,
-      String passwordController, String confirmPasswordController, String phoneController, context) async {
+      String nameController,
+      String lastnameController,
+      String emailController,
+      String passwordController,
+      String confirmPasswordController,
+      String phoneController,
+      context) async {
     try {
       if (!passwordsMatch(passwordController, confirmPasswordController)) {
         showPasswordMismatchError(context);
         return;
       }
       showProgressDialog(context);
-      if (await validateEmail(emailController, context)){
+      if (await validateEmail(emailController, context)) {
         Navigator.pop(context);
       }
 
-      final userCredential = await createUser(emailController, passwordController);
-      await saveUserData(userCredential, emailController, nameController, lastnameController,phoneController);
+      final userCredential =
+          await createUser(emailController, passwordController);
+      await saveUserData(userCredential, emailController, nameController,
+          lastnameController, phoneController);
 
       Navigator.pop(context);
       showRegistrationSuccess(context);
-
     } on FirebaseAuthException catch (error) {
       Navigator.pop(context);
-      showFirebaseRegistrationError(error,context);
+      showFirebaseRegistrationError(error, context);
     } catch (error) {
-        Navigator.pop(context);
+      Navigator.pop(context);
       showGenericRegistrationError(context);
-    }finally {
+    } finally {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -64,22 +69,26 @@ class AuthService {
     }
   }
 
-  bool passwordsMatch(String passwordController, String confirmPasswordController) {
+  bool passwordsMatch(
+      String passwordController, String confirmPasswordController) {
     return passwordController == confirmPasswordController;
   }
 
   Future<bool> validateEmail(String emailController, context) async {
-    String emailPattern = r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
+    String emailPattern =
+        r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+";
     RegExp regex = RegExp(emailPattern);
 
-    if (!regex.hasMatch(emailController) || !EmailValidator.validate(emailController)) {
+    if (!regex.hasMatch(emailController) ||
+        !EmailValidator.validate(emailController)) {
       showCustomSnackBar(
         context: context,
         message: 'Por favor ingresa un email válido',
         backgroundColor: Colors.red,
       );
       return true;
-    } return false;
+    }
+    return false;
   }
 
   void showProgressDialog(context) {
@@ -90,14 +99,20 @@ class AuthService {
     );
   }
 
-  Future<UserCredential> createUser(String emailController, String passwordController) async {
+  Future<UserCredential> createUser(
+      String emailController, String passwordController) async {
     return await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: emailController,
       password: passwordController,
     );
   }
 
-  Future<void> saveUserData(UserCredential userCredential, String emailController, String nameController, String lastnameController, String phoneNumber) async {
+  Future<void> saveUserData(
+      UserCredential userCredential,
+      String emailController,
+      String nameController,
+      String lastnameController,
+      String phoneNumber) async {
     FirebaseFirestore.instance
         .collection('users')
         .doc(userCredential.user!.email)
@@ -130,10 +145,11 @@ class AuthService {
     String message;
     switch (error.code) {
       case 'email-already-in-use':
-        message= 'El email ingresado ya está en uso. Intenta con otro.';
+        message = 'El email ingresado ya está en uso. Intenta con otro.';
         break;
       case 'weak-password':
-        message = 'La contraseña es demasiado débil. Debe tener al menos 6 caracteres.';
+        message =
+            'La contraseña es demasiado débil. Debe tener al menos 6 caracteres.';
         break;
       default:
         message = 'Error al registrarte. Intentalo nuevamente más tarde.';
@@ -152,5 +168,4 @@ class AuthService {
       backgroundColor: Colors.red[400],
     );
   }
-
 }

@@ -19,7 +19,8 @@ void main() async {
   );
   //MeetingService meetingService = MeetingService();
   //meetingService.createMultipleClasses();
-  initializeDateFormatting().then((_) => runApp(const ProviderScope(child: MyApp())));
+  initializeDateFormatting()
+      .then((_) => runApp(const ProviderScope(child: MyApp())));
 }
 
 class MyApp extends StatelessWidget {
@@ -40,11 +41,15 @@ class MyApp extends StatelessWidget {
         '/home_page': (context) => const MyHomePage(),
         '/profile': (context) => const Perfil(),
         '/calendar': (context) => const Calendar(),
-        '/auth_page': (context) => const AuthPage(targetPage: LoginPage(),),
+        '/auth_page': (context) => const AuthPage(
+              targetPage: LoginPage(),
+            ),
         '/register_page': (context) => const RegisterPage(),
       },
       debugShowCheckedModeBanner: false,
-      home: const AuthPage(targetPage: LoginPage(),),
+      home: const AuthPage(
+        targetPage: LoginPage(),
+      ),
     );
   }
 }

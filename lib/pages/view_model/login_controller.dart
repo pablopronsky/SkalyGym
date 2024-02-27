@@ -1,4 +1,3 @@
-
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../providers/auth_provider.dart';
@@ -13,9 +12,9 @@ class LoginController extends StateNotifier<LoginState> {
     state = const LoginStateLoading();
     try {
       await ref.read(authRepositoryProvider).signInWithEmailAndPassword(
-        email,
-        password,
-      );
+            email,
+            password,
+          );
       state = const LoginStateSuccess();
     } catch (e) {
       state = LoginStateError(e.toString());
@@ -28,6 +27,6 @@ class LoginController extends StateNotifier<LoginState> {
 }
 
 final loginControllerProvider =
-StateNotifierProvider<LoginController, LoginState>((ref) {
+    StateNotifierProvider<LoginController, LoginState>((ref) {
   return LoginController(ref);
 });

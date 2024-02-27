@@ -5,7 +5,6 @@ import '../services/auth_service.dart';
 import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
-
   const RegisterPage({super.key});
 
   @override
@@ -138,7 +137,8 @@ class _RegisterPageState extends State<RegisterPage> {
                       GestureDetector(
                         onTap: () => Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => const LoginPage()),
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
                         ),
                         child: const Text(
                           'Registrate',

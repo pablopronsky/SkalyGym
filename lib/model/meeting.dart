@@ -32,47 +32,23 @@ class Meeting {
     return Timestamp.fromDate(dateTime ?? DateTime.now());
   }
 
-  factory Meeting.fromMap(Map<String, dynamic> map) {
+  factory Meeting.fromFirestore(DocumentSnapshot<Map<String, dynamic>> snapshot,
+      [SnapshotOptions? options]) {
+    final data = snapshot.data()!;
     return Meeting(
-      id: map['id'] as String,
-      startTime: timeStampToDateTime(map['startTime'] as Timestamp),
-      endTime: timeStampToDateTime(map['endTime'] as Timestamp),
-      subject: map['subject'] as String,
-      reservations: map['reservations'] != null
-          ? List<Reservation>.from(map['reservations'] as List)
-          : null,
-      usersId: map['usersId'] != null
-          ? List<String>.from(map['usersId'] as List)
-          : null,
+      startTime: data['startTime'].toDate(),
+      endTime: data['endTime'].toDate(),
+      subject: data['subject'],
+      reservations: data['usersId'],
+      id: snapshot.id,
     );
   }
 
-  Map<String, dynamic> toMap() {
+  Map<String, Object?> toFirestore() {
     return {
-      'id': id,
-      'startTime': dateTimeToTimeStamp(startTime),
-      'endTime': dateTimeToTimeStamp(endTime),
-      'subject': subject,
-      'reservations': reservations?.map((reserva) => reserva.toMap()).toList(),
-      'usersId': usersId,
+      "date": Timestamp.fromDate(startTime),
+      "title": subject,
+      "description": usersId,
     };
   }
-
-  factory Meeting.fromFirestore(DocumentSnapshot doc) {
-    Map data = doc.data() as Map;
-    return Meeting(
-      id: data['id'],
-      startTime: (data['startTime'] as Timestamp).toDate(),
-      endTime: (data['endTime'] as Timestamp).toDate(),
-      subject: data['subject'],
-      reservations: (data['reservations'] as List)
-          .map((i) => Reservation.fromMap(i))
-          .toList(),
-      usersId: List<String>.from(data['usersId']),
-    );
-  }
-
-  factory Meeting.fromJson(Map<String, dynamic> json) =>
-      _$MeetingFromJson(json);
-  Map<String, dynamic> toJson() => _$MeetingToJson(this);
 }
