@@ -18,6 +18,9 @@ class LoginPage extends StatefulHookConsumerWidget {
 class _LoginPageState extends ConsumerState<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
+  final emailFocusNode = FocusNode();
+  final passwordFocusNode = FocusNode();
+  final buttonFocusNode = FocusNode();
   @override
   Widget build(BuildContext context) {
     ref.listen<LoginState>(loginControllerProvider, ((previous, state) {
@@ -56,15 +59,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   controller: emailController,
                   hintText: 'Email',
                   obscureText: false,
+                  autofocus: true,
+                  keyboardType: TextInputType.emailAddress,
+                  focusNode: emailFocusNode,
+                  textInputAction: TextInputAction.next,
                 ),
-                const SizedBox(height: 10),
-
+                const SizedBox(height: 15,),
                 // contraseña
                 TextFieldInput(
                   controller: passwordController,
                   hintText: 'Contraseña',
                   obscureText: true,
+                  autofocus: false,
+                  keyboardType: TextInputType.emailAddress,
+                  focusNode: passwordFocusNode,
+                  textInputAction: TextInputAction.done,
                 ),
+
                 const SizedBox(height: 10),
 
                 Padding(
@@ -90,6 +101,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 const SizedBox(height: 25),
                 // boton de abrir sesion
                 MyButton(
+                    focusNode: buttonFocusNode,
                     text: 'Abrir sesion',
                     onTap: () => ref
                         .read(loginControllerProvider.notifier)

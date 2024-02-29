@@ -14,7 +14,7 @@ class ForgotPasswordPage extends StatefulWidget {
 
 class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   final _emailController = TextEditingController();
-
+  final emailFocusNode = FocusNode();
   @override
   void dispose() {
     _emailController.dispose();
@@ -90,6 +90,10 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             controller: _emailController,
             hintText: 'Email',
             obscureText: false,
+            autofocus: true,
+            keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.send,
+            focusNode: emailFocusNode,
           ),
           const SizedBox(height: 25),
           MaterialButton(

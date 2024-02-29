@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/text_field_input.dart';
@@ -19,6 +20,15 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
   final phoneNumberController = TextEditingController();
+
+  final nameFocusNode = FocusNode();
+  final lastNameFocusNode = FocusNode();
+  final phoneNumberFocusNode = FocusNode();
+  final emailFocusNode = FocusNode();
+  final passwordFocusNode = FocusNode();
+  final confirmPasswordFocusNode = FocusNode();
+  final signUpFocusNode = FocusNode();
+
   AuthService authService = AuthService();
 
   @override
@@ -31,7 +41,24 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 25),
+                 Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/login_page');
+                      },
+                      child: const Padding(
+                        padding: EdgeInsets.all(4.0),
+                        child: Icon(
+                          Icons.arrow_back_outlined,
+                          size: 40,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 10),
                 // logo
                 Image.asset(
                   'lib/assets/logo_skaly.png',
@@ -50,6 +77,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: nameController,
                   hintText: 'Nombre',
                   obscureText: false,
+                  keyboardType: TextInputType.name,
+                  autofocus: true,
+                  focusNode: nameFocusNode,
+                  textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(height: 15),
                 // Last name
@@ -57,6 +88,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: lastnameController,
                   hintText: 'Apellido',
                   obscureText: false,
+                  keyboardType: TextInputType.name,
+                  autofocus: false,
+                  focusNode: lastNameFocusNode,
+                  textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(height: 15),
                 // Phone number
@@ -64,6 +99,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: phoneNumberController,
                   hintText: 'Celular',
                   obscureText: false,
+                  keyboardType: TextInputType.phone,
+                  autofocus: false,
+                  focusNode: phoneNumberFocusNode,
+                  textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(height: 15),
                 // Email
@@ -71,6 +110,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: emailController,
                   hintText: 'Email',
                   obscureText: false,
+                  keyboardType: TextInputType.emailAddress,
+                  autofocus: false,
+                  focusNode: emailFocusNode,
+                  textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(height: 15),
                 // Password
@@ -78,6 +121,10 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: passwordController,
                   hintText: 'Contraseña',
                   obscureText: true,
+                  keyboardType: TextInputType.text,
+                  autofocus: false,
+                  focusNode: passwordFocusNode,
+                  textInputAction: TextInputAction.next,
                 ),
                 const SizedBox(height: 15),
                 // Repeat password
@@ -85,9 +132,15 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: confirmPasswordController,
                   hintText: 'Confirmar contraseña',
                   obscureText: true,
+                  keyboardType: TextInputType.text,
+                  autofocus: false,
+                  focusNode: confirmPasswordFocusNode,
+                  textInputAction: TextInputAction.done,
+
                 ),
                 const SizedBox(height: 50),
                 MyButton(
+                  focusNode: signUpFocusNode,
                   text: 'Registrar',
                   onTap: () async {
                     await authService.emailSignUp(
@@ -130,7 +183,7 @@ class _RegisterPageState extends State<RegisterPage> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        'Ya tenes cuenta? Abri sesión',
+                        'Ya tenes cuenta?',
                         style: TextStyle(color: Colors.grey[700]),
                       ),
                       const SizedBox(width: 4),
@@ -141,7 +194,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               builder: (context) => const LoginPage()),
                         ),
                         child: const Text(
-                          'Registrate',
+                          'Abrir sesion',
                           style: TextStyle(
                             color: Colors.blue,
                             fontWeight: FontWeight.bold,

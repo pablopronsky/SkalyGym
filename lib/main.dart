@@ -41,10 +41,11 @@ class MyApp extends StatelessWidget {
         '/home_page': (context) => const MyHomePage(),
         '/profile': (context) => const Perfil(),
         '/calendar': (context) => const Calendar(),
+        '/register_page': (context) => const RegisterPage(),
+        '/login_page' : (context) => const LoginPage(),
         '/auth_page': (context) => const AuthPage(
               targetPage: LoginPage(),
             ),
-        '/register_page': (context) => const RegisterPage(),
       },
       debugShowCheckedModeBanner: false,
       home: const AuthPage(

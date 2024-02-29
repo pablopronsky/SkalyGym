@@ -134,7 +134,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 color: Colors.red,
               ),
               selectedDecoration: BoxDecoration(
-                shape: BoxShape.circle,
+                shape: BoxShape.rectangle,
                 color: Colors.blueAccent,
               ),
               todayTextStyle: TextStyle(color: Colors.white),

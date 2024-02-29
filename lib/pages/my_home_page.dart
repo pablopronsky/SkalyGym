@@ -5,6 +5,7 @@ import 'package:gym/pages/profile.dart';
 
 import '../components/drawer.dart';
 import '../components/appointment_list.dart';
+import '../components/snackbar.dart';
 import '../services/user_service.dart';
 import 'calendar_page.dart';
 
@@ -28,8 +29,13 @@ class MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void signOut() {
-    FirebaseAuth.instance.signOut();
+  void signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      // Handle successful sign out (e.g., navigate to login screen)
+    } on FirebaseAuthException catch (e) {
+      print("error: $e");
+    }
   }
 
   @override

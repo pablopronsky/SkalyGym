@@ -4,12 +4,22 @@ class TextFieldInput extends StatelessWidget {
   final controller;
   final String hintText;
   final bool obscureText;
+  final bool autofocus;
+  final keyboardType;
+  final textInputAction;
+  final FocusNode focusNode;
+
 
   const TextFieldInput(
       {super.key,
-      required this.controller,
-      required this.hintText,
-      required this.obscureText});
+        required this.controller,
+        required this.hintText,
+        required this.obscureText,
+        required this.autofocus,
+        required this.keyboardType,
+        this.textInputAction,
+        required this.focusNode,
+      });
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +28,13 @@ class TextFieldInput extends StatelessWidget {
       child: TextField(
         controller: controller,
         obscureText: obscureText,
+        autofocus: autofocus,
+        keyboardType: keyboardType,
+        focusNode: focusNode,
+        textInputAction: textInputAction,
+          onTapOutside: (event) {
+            FocusManager.instance.primaryFocus?.unfocus();
+          },
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
@@ -25,9 +42,9 @@ class TextFieldInput extends StatelessWidget {
           focusedBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.grey.shade400),
           ),
+          hintText: hintText,
           fillColor: Colors.grey.shade200,
           filled: true,
-          hintText: hintText,
           hintStyle: TextStyle(color: Colors.grey[500]),
         ),
       ),
