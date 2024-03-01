@@ -42,7 +42,7 @@ class MyApp extends StatelessWidget {
         '/profile': (context) => const Perfil(),
         '/calendar': (context) => const Calendar(),
         '/register_page': (context) => const RegisterPage(),
-        '/login_page' : (context) => const LoginPage(),
+        '/login_page': (context) => const LoginPage(),
         '/auth_page': (context) => const AuthPage(
               targetPage: LoginPage(),
             ),
@@ -50,6 +50,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: const AuthPage(
         targetPage: LoginPage(),
+      ),
+      darkTheme: ThemeData(
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey, brightness: Brightness.dark), // Example color choice for dark mode
+      ),
+      theme: ThemeData( // Updated: Combined common elements
+        useMaterial3: true,
+        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue), // Example color choice
       ),
     );
   }

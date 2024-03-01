@@ -5,10 +5,11 @@ class MyButton extends StatelessWidget {
   final String text;
   final FocusNode focusNode;
 
-  const MyButton({super.key,
-    required this.onTap,
-    required this.text,
-    required this.focusNode});
+  const MyButton(
+      {super.key,
+      required this.onTap,
+      required this.text,
+      required this.focusNode});
 
   @override
   Widget build(BuildContext context) {

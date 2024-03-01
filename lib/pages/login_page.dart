@@ -53,7 +53,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   style: TextStyle(color: Colors.grey[700], fontSize: 18),
                 ),
                 const SizedBox(height: 25),
-
                 // mail
                 TextFieldInput(
                   controller: emailController,
@@ -64,7 +63,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   focusNode: emailFocusNode,
                   textInputAction: TextInputAction.next,
                 ),
-                const SizedBox(height: 15,),
+                const SizedBox(
+                  height: 15,
+                ),
                 // contraseña
                 TextFieldInput(
                   controller: passwordController,
@@ -75,9 +76,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   focusNode: passwordFocusNode,
                   textInputAction: TextInputAction.done,
                 ),
-
                 const SizedBox(height: 10),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
@@ -105,7 +104,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     text: 'Abrir sesion',
                     onTap: () => ref
                         .read(loginControllerProvider.notifier)
-                        .login(emailController.text, passwordController.text)),
+                        .login(emailController.text, passwordController.text)
+                ),
                 const SizedBox(height: 25),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),

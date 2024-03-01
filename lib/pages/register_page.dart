@@ -41,7 +41,7 @@ class _RegisterPageState extends State<RegisterPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                 Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     GestureDetector(
@@ -136,7 +136,6 @@ class _RegisterPageState extends State<RegisterPage> {
                   autofocus: false,
                   focusNode: confirmPasswordFocusNode,
                   textInputAction: TextInputAction.done,
-
                 ),
                 const SizedBox(height: 50),
                 MyButton(

@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gym/services/reservation_service.dart';
+import 'package:gym/services/booking_service.dart';
 import 'package:gym/utils/capitalize.dart';
 import 'package:intl/intl.dart';
 
@@ -52,8 +52,9 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                         subtitle: Text(
                             'Dia: ${DateFormat('dd-MM-yyyy – hh:mm a').format(reservasDate)}'),
                         trailing: IconButton(
-                          icon: const Icon(Icons.free_cancellation_rounded,
-                              color: Colors.red),
+                          tooltip: 'Cancelar',
+                          icon: const Icon(Icons.cancel_outlined,
+                              color: Colors.redAccent,),
                           onPressed: () => reservaServicio.cancelarReserva(
                               snapshot.data!.docs[index].id, userId!, context),
                         ),

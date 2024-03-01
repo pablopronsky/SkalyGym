@@ -9,32 +9,31 @@ class TextFieldInput extends StatelessWidget {
   final textInputAction;
   final FocusNode focusNode;
 
-
-  const TextFieldInput(
-      {super.key,
-        required this.controller,
-        required this.hintText,
-        required this.obscureText,
-        required this.autofocus,
-        required this.keyboardType,
-        this.textInputAction,
-        required this.focusNode,
-      });
+  const TextFieldInput({
+    super.key,
+    required this.controller,
+    required this.hintText,
+    required this.obscureText,
+    required this.autofocus,
+    required this.keyboardType,
+    this.textInputAction,
+    required this.focusNode,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
-      child: TextField(
+      child: TextFormField(
         controller: controller,
         obscureText: obscureText,
         autofocus: autofocus,
         keyboardType: keyboardType,
         focusNode: focusNode,
         textInputAction: textInputAction,
-          onTapOutside: (event) {
-            FocusManager.instance.primaryFocus?.unfocus();
-          },
+        onTapOutside: (event) {
+          FocusManager.instance.primaryFocus?.unfocus();
+        },
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),

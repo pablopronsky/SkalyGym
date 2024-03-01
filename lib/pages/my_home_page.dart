@@ -5,7 +5,7 @@ import 'package:gym/pages/profile.dart';
 
 import '../components/drawer.dart';
 import '../components/appointment_list.dart';
-import '../components/snackbar.dart';
+import '../services/auth_service.dart';
 import '../services/user_service.dart';
 import 'calendar_page.dart';
 
@@ -29,22 +29,13 @@ class MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  void signOut() async {
-    try {
-      await FirebaseAuth.instance.signOut();
-      // Handle successful sign out (e.g., navigate to login screen)
-    } on FirebaseAuthException catch (e) {
-      print("error: $e");
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: const AppBarComponent(),
         drawer: MyDrawer(
           onProfileTap: goToProfilePage,
-          onSignOut: signOut,
+          onSignOut: AuthService.signOut,
         ),
         body: SingleChildScrollView(
           child: Column(
@@ -82,8 +73,7 @@ class MyHomePageState extends State<MyHomePage> {
                           child: Text('Ver clases disponibles',
                               style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
                                 letterSpacing: 1,
                               )),
                         ),
@@ -93,7 +83,7 @@ class MyHomePageState extends State<MyHomePage> {
                 ],
               ),
               const SizedBox(
-                height: 50,
+                height: 30,
               ),
               const SizedBox(
                 height: 300,
@@ -104,6 +94,7 @@ class MyHomePageState extends State<MyHomePage> {
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
+                    SizedBox(height: 20,),
                     AppointmentsListComponent(),
                   ],
                 ),
@@ -111,19 +102,24 @@ class MyHomePageState extends State<MyHomePage> {
               const SizedBox(
                 height: 50,
               ),
-              StreamBuilder<int>(
-                  stream:
-                      UserService.getUserCreditsStream(currentStudentEmail!),
-                  builder: (context, snapshot) {
-                    if (snapshot.hasError) {
-                      return const Text('Error');
-                    } else if (!snapshot.hasData) {
-                      return const CircularProgressIndicator();
-                    } else {
-                      return Text(
-                          'Clases disponibles para reservar: ${snapshot.data}');
-                    }
-                  })
+              Column(
+                children: [
+                  StreamBuilder<int>(
+                      stream:
+                          UserService.getUserCreditsStream(currentStudentEmail!),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text('Error');
+                        } else if (!snapshot.hasData) {
+                          return const CircularProgressIndicator();
+                        } else {
+                          return Text(
+                              'Clases disponibles para reservar: ${snapshot.data}',
+                          );
+                        }
+                      }),
+                ],
+              )
             ],
           ),
         ));

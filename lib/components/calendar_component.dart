@@ -3,7 +3,7 @@ import 'dart:collection';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gym/services/reservation_service.dart';
+import 'package:gym/services/booking_service.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../model/meeting.dart';
@@ -18,6 +18,7 @@ class CalendarComponent extends StatefulWidget {
 }
 
 class _CalendarComponentState extends State<CalendarComponent> {
+  Color meetingColor = Colors.transparent;
   late DateTime _focusedDay;
   late DateTime _firstDay;
   late DateTime _lastDay;
@@ -26,6 +27,13 @@ class _CalendarComponentState extends State<CalendarComponent> {
   final MeetingService _meetingService = MeetingService();
   late StreamSubscription _subscription;
   BookingService bookingService = BookingService();
+
+  void _fetchMeetingColor() async {
+    Color color = await _meetingService.getMeetingColorIndicator(_selectedDay);
+    setState(() {
+      meetingColor = color;
+    });
+  }
 
   void _showAppointmentDialog(BuildContext context, Meeting meeting) async {
     /// This is the appointment that is sent to appointmentService.createAppointment
@@ -87,6 +95,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
         _events = events; // Update your State variable
       });
     });
+    _fetchMeetingColor();
   }
 
   @override
@@ -100,10 +109,12 @@ class _CalendarComponentState extends State<CalendarComponent> {
     return key.day * 1000000 + key.month * 10000 + key.year;
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ListView(
+      body: Column(
         children: [
           const SizedBox(
             height: 30,
@@ -116,6 +127,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
             focusedDay: _focusedDay,
             firstDay: _firstDay,
             lastDay: _lastDay,
+            startingDayOfWeek: StartingDayOfWeek.monday,
             onPageChanged: (focusedDay) {
               setState(() {
                 _focusedDay = focusedDay;
@@ -130,28 +142,30 @@ class _CalendarComponentState extends State<CalendarComponent> {
               });
             },
             calendarStyle: const CalendarStyle(
-              weekendTextStyle: TextStyle(
-                color: Colors.red,
-              ),
               selectedDecoration: BoxDecoration(
+                border: Border(),
                 shape: BoxShape.rectangle,
-                color: Colors.blueAccent,
+                color: Colors.indigoAccent  ,
               ),
               todayTextStyle: TextStyle(color: Colors.white),
             ),
             calendarBuilders: CalendarBuilders(
               headerTitleBuilder: (context, day) {
                 // Customize the header
-                String monthName = Capitalize.capitalizeFirstLetter(DateFormat.MMMM('es_ES').format(day)); // Format and capitalize
+                String monthName = Capitalize.capitalizeFirstLetter(
+                    DateFormat.MMMM('es_ES')
+                        .format(day)); // Format and capitalize
                 return Container(
                   padding: const EdgeInsets.all(8.0),
-                  child: Text(monthName,
+                  child: Text(
+                    monthName,
                     textAlign: TextAlign.center,
-                  style: const TextStyle(
-                    fontSize: 24,
-                    color: Colors.blueAccent,
-                    fontWeight: FontWeight.bold,
-                  ),),
+                    style: const TextStyle(
+                      fontSize: 24,
+                      color: Colors.blueAccent,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 );
               },
             ),
@@ -159,43 +173,46 @@ class _CalendarComponentState extends State<CalendarComponent> {
           const SizedBox(
             height: 30,
           ),
-          ..._meetingService.getEventsForTheDay(_selectedDay).map(
-                (event) => Row(
-                  // Use a Row to place elements side-by-side
-                  mainAxisAlignment:
-                      MainAxisAlignment.spaceBetween, // Space elements evenly
-                  children: [
-                    Expanded(
-                      // Make ListTile take available space
+          ListView.builder(
+            scrollDirection: Axis.vertical,
+            shrinkWrap: true,
+            itemCount: _meetingService.getEventsForTheDay(_selectedDay).length,
+            itemBuilder: (context, index) {
+              final event = _meetingService.getEventsForTheDay(_selectedDay)[index];
+              return Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Material(
+                      color: meetingColor,
                       child: ListTile(
-                        title: Text(Capitalize.capitalizeFirstLetter(
-                            event.subject),
-                        style: const TextStyle(
-                          fontSize: 18,
-                        ),),
+                        title: Text(
+                          Capitalize.capitalizeFirstLetter(event.subject),
+                          style: const TextStyle(fontSize: 18),
+                        ),
                         subtitle: Text(
-                        DateFormat('yyyy-MM-dd HH:mm').format(event.startTime),
-                        style: const TextStyle(
-                          fontSize: 15,
-                        ),),
+                          DateFormat('dd-MM-yyyy HH:mm').format(event.startTime),
+                          style: const TextStyle(fontSize: 15),
+                        ),
                       ),
                     ),
-                    IconButton(
-                      // Add the button
-                      icon: const Icon(
-                        Icons.add_circle_outlined,
-                        size: 30,
-                        color: Colors.blueAccent,
-                      ),
-                      enableFeedback: true,
-                      disabledColor: Colors.grey,
-                      onPressed: () {
-                        _showAppointmentDialog(context, event);
-                      },
-                    ),const Divider(),
-                  ],
-                ),
-              ).toList(),
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      Icons.add_circle_outlined,
+                      size: 30,
+                      color: Colors.indigoAccent,
+                    ),
+                    enableFeedback: true,
+                    disabledColor: Colors.grey,
+                    onPressed: () {
+                      _showAppointmentDialog(context, event);
+                    },
+                  ),
+                ],
+              );
+            },
+          )
         ],
       ),
     );

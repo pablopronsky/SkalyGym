@@ -168,4 +168,13 @@ class AuthService {
       backgroundColor: Colors.red[400],
     );
   }
+
+  static void signOut() async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      // Handle successful sign out (e.g., navigate to login screen)
+    } on FirebaseAuthException catch (e) {
+      print("error: $e");
+    }
+  }
 }
