@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym/components/list_tile.dart';
 
-class MyDrawer extends StatelessWidget {
+import '../pages/view_model/login_controller.dart';
+class MyDrawer extends ConsumerWidget {
   final void Function()? onProfileTap;
-  final void Function()? onSignOut;
 
   const MyDrawer(
-      {super.key, required this.onProfileTap, required this.onSignOut});
+      {super.key, required this.onProfileTap,});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Drawer(
       backgroundColor: Colors.grey[900],
       child: Padding(
@@ -45,7 +46,7 @@ class MyDrawer extends StatelessWidget {
               child: MyListTile(
                 icon: Icons.logout,
                 text: 'C E R R A R  S E S I O N',
-                onTap: onSignOut,
+                onTap: () => ref.read(loginControllerProvider.notifier).signOut(),
               ),
             ),
           ],

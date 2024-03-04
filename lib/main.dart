@@ -6,6 +6,7 @@ import 'package:gym/pages/login_page.dart';
 import 'package:gym/pages/my_home_page.dart';
 import 'package:gym/pages/profile.dart';
 import 'package:gym/pages/register_page.dart';
+import 'package:gym/pages/view_model/auth_check.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 
@@ -42,9 +43,10 @@ class MyApp extends StatelessWidget {
         '/calendar': (context) => const Calendar(),
         '/register_page': (context) => const RegisterPage(),
         '/login_page': (context) => const LoginPage(),
+        'auth_check' : (context) => const AuthChecker(),
       },
       debugShowCheckedModeBanner: false,
-      home: const LoginPage(),
+      home: const AuthChecker(),
       darkTheme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey, brightness: Brightness.dark), // Example color choice for dark mode

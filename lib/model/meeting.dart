@@ -2,8 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:gym/model/reservation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
-part 'meeting.g.dart';
-
 @JsonSerializable()
 class Meeting {
   String id;

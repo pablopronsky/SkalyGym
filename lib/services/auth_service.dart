@@ -3,6 +3,7 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:gym/pages/view_model/auth_check.dart';
 
 import '../components/snackbar.dart';
 
@@ -36,20 +37,22 @@ class AuthService {
     try {
       if (!passwordsMatch(passwordController, confirmPasswordController)) {
         showPasswordMismatchError(context);
+        return;
       }
       showProgressDialog(context);
 
       if (await validateEmail(emailController, context)) {
         Navigator.pop(context);
+        return;
       }
 
-      final userCredential =
-          await createUser(emailController, passwordController);
+      final userCredential = await createUser(emailController, passwordController);
+
       await saveUserData(userCredential, emailController, nameController,
           lastnameController, phoneController);
+
       showRegistrationSuccess(context);
-      Navigator.pop(context);
-      Navigator.pushReplacementNamed(context, '/home_page');
+      Navigator.pushReplacementNamed(context, 'auth_check');
     } on FirebaseAuthException catch (error) {
       Navigator.pop(context);
       showFirebaseRegistrationError(error, context);
@@ -160,10 +163,6 @@ class AuthService {
   }
 
   void signOut() async {
-    try {
       await FirebaseAuth.instance.signOut();
-    } on FirebaseAuthException catch (e) {
-      print("Sign out error. Code: ${e.code}, Message: ${e.message}");
-    }
   }
 }

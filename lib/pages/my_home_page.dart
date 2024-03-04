@@ -5,11 +5,10 @@ import 'package:gym/pages/profile.dart';
 
 import '../components/drawer.dart';
 import '../components/appointment_list.dart';
-import '../services/auth_service.dart';
 import '../services/user_service.dart';
 import 'calendar_page.dart';
 
-class MyHomePage extends StatefulWidget {
+  class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
@@ -18,7 +17,6 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
-  AuthService authService = AuthService();
 
   void goToProfilePage() {
     Navigator.pop(context);
@@ -36,7 +34,6 @@ class MyHomePageState extends State<MyHomePage> {
         appBar: const AppBarComponent(),
         drawer: MyDrawer(
           onProfileTap: goToProfilePage,
-          onSignOut: authService.signOut,
         ),
         body: SingleChildScrollView(
           child: Column(

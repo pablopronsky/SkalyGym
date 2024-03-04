@@ -14,6 +14,7 @@ class AuthRepository {
         email: email,
         password: password,
       );
+
       return result.user;
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
