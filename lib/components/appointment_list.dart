@@ -60,7 +60,10 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                         ),
                       ),
                       if (index < snapshot.data!.docs.length - 1)
-                        const Divider(),
+                        Divider(
+                          thickness: 0.5,
+                          color: Colors.grey[400],
+                        )
                     ],
                   );
                 },

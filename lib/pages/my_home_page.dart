@@ -18,6 +18,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
+  AuthService authService = AuthService();
 
   void goToProfilePage() {
     Navigator.pop(context);
@@ -35,7 +36,7 @@ class MyHomePageState extends State<MyHomePage> {
         appBar: const AppBarComponent(),
         drawer: MyDrawer(
           onProfileTap: goToProfilePage,
-          onSignOut: AuthService.signOut,
+          onSignOut: authService.signOut,
         ),
         body: SingleChildScrollView(
           child: Column(

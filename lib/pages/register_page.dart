@@ -69,7 +69,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 // Welcome back
                 Text(
                   'Crea tu cuenta',
-                  style: TextStyle(color: Colors.grey[700], fontSize: 16),
+                  style: TextStyle(color: Colors.grey[700], fontSize: 18),
                 ),
                 const SizedBox(height: 25),
                 // Name
@@ -139,7 +139,6 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 50),
                 MyButton(
-                  focusNode: signUpFocusNode,
                   text: 'Registrar',
                   onTap: () async {
                     await authService.emailSignUp(
@@ -152,58 +151,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         context);
                   },
                 ),
-                const SizedBox(height: 25),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                          child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      )),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                        child: Text(
-                          'O',
-                          style: TextStyle(color: Colors.grey[700]),
-                        ),
-                      ),
-                      Expanded(
-                          child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ))
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Ya tenes cuenta?',
-                        style: TextStyle(color: Colors.grey[700]),
-                      ),
-                      const SizedBox(width: 4),
-                      GestureDetector(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()),
-                        ),
-                        child: const Text(
-                          'Abrir sesion',
-                          style: TextStyle(
-                            color: Colors.blue,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 50),
-                    ],
-                  ),
-                )
+                const SizedBox(height: 50,)
               ],
             ),
           ),

@@ -1,7 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:gym/pages/auth_page.dart';
 import 'package:gym/pages/calendar_page.dart';
 import 'package:gym/pages/login_page.dart';
 import 'package:gym/pages/my_home_page.dart';
@@ -43,14 +42,9 @@ class MyApp extends StatelessWidget {
         '/calendar': (context) => const Calendar(),
         '/register_page': (context) => const RegisterPage(),
         '/login_page': (context) => const LoginPage(),
-        '/auth_page': (context) => const AuthPage(
-              targetPage: LoginPage(),
-            ),
       },
       debugShowCheckedModeBanner: false,
-      home: const AuthPage(
-        targetPage: LoginPage(),
-      ),
+      home: const LoginPage(),
       darkTheme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey, brightness: Brightness.dark), // Example color choice for dark mode

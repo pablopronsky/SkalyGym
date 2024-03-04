@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../model/meeting.dart';
 import '../model/reservation.dart';
-import '../providers/meeting_provider.dart';
+import '../services/meeting_service.dart';
 import '../utils/capitalize.dart';
 
 class CalendarComponent extends StatefulWidget {
@@ -30,6 +30,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
 
   void _fetchMeetingColor() async {
     Color color = await _meetingService.getMeetingColorIndicator(_selectedDay);
+    print("$_selectedDay, ${color.toString()}");
     setState(() {
       meetingColor = color;
     });
@@ -179,6 +180,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
             itemCount: _meetingService.getEventsForTheDay(_selectedDay).length,
             itemBuilder: (context, index) {
               final event = _meetingService.getEventsForTheDay(_selectedDay)[index];
+              print(_selectedDay);
               return Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [

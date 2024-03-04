@@ -31,6 +31,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
       }
     }));
 
+    @override
+    void dispose() {
+      emailController.dispose();
+      passwordController.dispose();
+      emailFocusNode.dispose();
+      passwordFocusNode.dispose();
+      buttonFocusNode.dispose();
+      super.dispose();
+    }
+
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: SafeArea(
@@ -100,7 +110,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 const SizedBox(height: 25),
                 // boton de abrir sesion
                 MyButton(
-                    focusNode: buttonFocusNode,
                     text: 'Abrir sesion',
                     onTap: () => ref
                         .read(loginControllerProvider.notifier)

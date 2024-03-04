@@ -3,18 +3,15 @@ import 'package:flutter/material.dart';
 class MyButton extends StatelessWidget {
   final Function()? onTap;
   final String text;
-  final FocusNode focusNode;
 
   const MyButton(
       {super.key,
       required this.onTap,
-      required this.text,
-      required this.focusNode});
+      required this.text,});
 
   @override
   Widget build(BuildContext context) {
     return FocusableActionDetector(
-      focusNode: focusNode,
       child: GestureDetector(
         onTap: onTap,
         child: Container(

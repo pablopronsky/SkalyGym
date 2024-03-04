@@ -3,13 +3,10 @@ import 'package:email_validator/email_validator.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:gym/pages/register_page.dart';
 
 import '../components/snackbar.dart';
-import '../pages/auth_page.dart';
 
 class AuthService {
-  String email = "pronskypablo@gmail.com";
 
   ///Google Sign In method. not being used yet.
   signInWithGoogle() async {
@@ -39,9 +36,9 @@ class AuthService {
     try {
       if (!passwordsMatch(passwordController, confirmPasswordController)) {
         showPasswordMismatchError(context);
-        return;
       }
       showProgressDialog(context);
+
       if (await validateEmail(emailController, context)) {
         Navigator.pop(context);
       }
@@ -50,22 +47,15 @@ class AuthService {
           await createUser(emailController, passwordController);
       await saveUserData(userCredential, emailController, nameController,
           lastnameController, phoneController);
-
-      Navigator.pop(context);
       showRegistrationSuccess(context);
+      Navigator.pop(context);
+      Navigator.pushReplacementNamed(context, '/home_page');
     } on FirebaseAuthException catch (error) {
       Navigator.pop(context);
       showFirebaseRegistrationError(error, context);
     } catch (error) {
       Navigator.pop(context);
       showGenericRegistrationError(context);
-    } finally {
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const AuthPage(targetPage: RegisterPage()),
-        ),
-      );
     }
   }
 
@@ -169,12 +159,11 @@ class AuthService {
     );
   }
 
-  static void signOut() async {
+  void signOut() async {
     try {
       await FirebaseAuth.instance.signOut();
-      // Handle successful sign out (e.g., navigate to login screen)
     } on FirebaseAuthException catch (e) {
-      print("error: $e");
+      print("Sign out error. Code: ${e.code}, Message: ${e.message}");
     }
   }
 }

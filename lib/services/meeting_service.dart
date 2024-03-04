@@ -59,7 +59,7 @@ class MeetingService {
       final userIds = doc.get('userId') as List;
       totalParticipants += userIds.length;
     }
-
+    print(totalParticipants);
     // Determine color based on participant count
     if (totalParticipants < 4) {
       return Colors.lightGreenAccent;
