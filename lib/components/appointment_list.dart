@@ -49,7 +49,7 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                     children: [
                       ListTile(
                         title: Text(
-                          'Día: ${Capitalize.capitalizeFirstLetter(DateFormat('EEEE', 'es_AR').format(reservasDate))}',
+                          Capitalize.capitalizeFirstLetter(DateFormat('EEEE', 'es_AR').format(reservasDate)),
                           style: const TextStyle(
                             color: AppColors.fontColor,
                             fontWeight: FontWeight.bold,
@@ -61,7 +61,7 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                           children: [
                             Text(
                               'Hora: ${DateFormat('dd-MM-yyyy – hh:mm a').format(reservasDate)}',
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: AppColors.fontColor,
                               ),
                             ),
@@ -71,7 +71,8 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                           tooltip: 'Cancelar',
                           icon: const Icon(
                             Icons.delete,
-                            color: Colors.redAccent,
+                            color: Colors.red,
+                            size: 22,
                           ),
                           onPressed: () => reservaServicio.cancelarReserva(
                               snapshot.data!.docs[index].id, userId!, context),

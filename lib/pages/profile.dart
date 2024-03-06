@@ -28,7 +28,7 @@ class _PerfilState extends State<Perfil> {
     await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              backgroundColor: Colors.grey[900],
+              backgroundColor: AppColors.backgroundColor,
               title: Text(
                 textAlign: TextAlign.center,
                 "Editar $field",
@@ -44,9 +44,9 @@ class _PerfilState extends State<Perfil> {
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: "Ingresa nuevo $field",
-                  hintStyle: const TextStyle(color: Colors.grey),
+                  hintStyle: const TextStyle(color: AppColors.fontColor),
                   focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: Colors.grey),
+                    borderSide: BorderSide(color: AppColors.fontColor),
                   ),
                 ),
                 onChanged: (value) {
@@ -61,7 +61,7 @@ class _PerfilState extends State<Perfil> {
                     TextButton(
                       child: const Text(
                         'Cancelar',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: AppColors.fontColor),
                       ),
                       onPressed: () => Navigator.pop(context),
                     ),
@@ -69,7 +69,7 @@ class _PerfilState extends State<Perfil> {
                     TextButton(
                       child: const Text(
                         'Guardar',
-                        style: TextStyle(color: Colors.white),
+                        style: TextStyle(color: AppColors.fontColor),
                       ),
                       onPressed: () => Navigator.of(context).pop(newValue),
                     ),
@@ -86,13 +86,13 @@ class _PerfilState extends State<Perfil> {
           showCustomSnackBar(
               context: context,
               message: '$field actualizado correctamente',
-              backgroundColor: Colors.green[400]);
+              backgroundColor: AppColors.successColor);
         }).catchError((error) {
           // Error
           showCustomSnackBar(
             context: context,
             message: 'Error al actualizar $field',
-            backgroundColor: Colors.red[400],
+            backgroundColor: AppColors.errorColor,
           );
         });
       } else {
@@ -129,24 +129,25 @@ class _PerfilState extends State<Perfil> {
                     const Icon(
                       Icons.person,
                       size: 72,
+                        color: AppColors.fontColor,
                     ),
                     // Email
                     Text(
                       currentUser.email!,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.grey[700],
+                      style: const TextStyle(
+                        color: AppColors.fontColor,
                       ),
                     ),
                     const SizedBox(
                       height: 50,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 25.0),
+                    const Padding(
+                      padding: EdgeInsets.only(left: 25.0),
                       child: Text(
                         'Mis Detalles',
                         style: TextStyle(
-                          color: Colors.grey[600],
+                          color: AppColors.fontColor,
                         ),
                       ),
                     ),

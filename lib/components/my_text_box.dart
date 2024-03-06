@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utils/constants.dart';
+
 class MyTextBox extends StatelessWidget {
   final String text;
   final String sectionName;
@@ -18,7 +20,7 @@ class MyTextBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.grey[200],
+        color: AppColors.textFieldColor,
         borderRadius: BorderRadius.circular(8),
       ),
       padding: const EdgeInsets.only(left: 15, bottom: 15),
@@ -36,14 +38,16 @@ class MyTextBox extends StatelessWidget {
             children: [
               Text(
                 sectionName,
-                style: TextStyle(
-                  color: Colors.grey[500],
+                style: const TextStyle(
+                  color: AppColors.fontColor,
                 ),
               ),
               showSettingsIcon
                   ? IconButton(
                       onPressed: onPressed,
-                      icon: const Icon(Icons.settings),
+                      icon: const Icon(Icons.settings,
+                        color: AppColors.fontColor,
+                      ),
                     )
                   : const SizedBox(
                       width: 48,
@@ -52,7 +56,10 @@ class MyTextBox extends StatelessWidget {
             ],
           ),
           // Section details
-          Text(text),
+          Text(text,
+          style: const TextStyle(
+              color: AppColors.fontColor
+          ),),
         ],
       ),
     );

@@ -2,6 +2,9 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gym/components/appbar.dart';
+import 'package:gym/components/button.dart';
+import 'package:gym/utils/constants.dart';
 
 import '../components/text_field_input.dart';
 
@@ -63,26 +66,28 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: AppBar(
-        backgroundColor: Colors.grey[300],
-        elevation: 0,
-      ),
+      backgroundColor: AppColors.backgroundColor,
+      appBar: const AppBarComponent(),
       body: Column(
         children: [
+          const SizedBox(height: 15,),
           // logo
           Image.asset(
             'lib/assets/logo_skaly.png',
             width: 150,
             height: 150,
+              color: AppColors.fontColor
           ),
           const SizedBox(height: 25),
-          Text(
-            'Ingresa el mail para recuperar tu contraseña',
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 20,
-              color: Colors.grey[800],
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'Ingresa el mail de recuperación',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                color: AppColors.fontColor,
+              ),
             ),
           ),
           const SizedBox(height: 25), // mail
@@ -96,17 +101,11 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             focusNode: emailFocusNode,
             isPassword: false,
           ),
-          const SizedBox(height: 25),
-          MaterialButton(
-            onPressed: () => passwordResetEmail(),
-            child: Text(
-              'Recuperar contraseña',
-              style: TextStyle(
-                color: Colors.grey[800],
-                fontSize: 18,
-              ),
+          const SizedBox(height: 50),
+          MyButton(
+            onTap: () => passwordResetEmail(),
+            text: 'Recuperar contraseña',
             ),
-          )
         ],
       ),
     );

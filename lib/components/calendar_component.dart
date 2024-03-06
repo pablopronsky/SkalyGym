@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/repository/reservation_repository.dart';
 import 'package:gym/services/reservation_service.dart';
@@ -44,54 +45,72 @@ class _CalendarComponentState extends State<CalendarComponent> {
     if (!context.mounted) return;
     showDialog(
       context: context,
-      builder: (BuildContext buildContext) => AlertDialog(
-        backgroundColor: Colors.blueGrey,
-        contentTextStyle: const TextStyle(color: Colors.black),
-        title: const Text(
-          'Reservar clase',
-          style: TextStyle(
-            color: AppColors.fontColor,
-          ),
-        ),
-        content: isClassFull
-            ? const Text(
-                'La clase esta llena',
+      builder: (context) => Container(
+        color: AppColors.textFieldColor,
+        child: CupertinoAlertDialog(
+          title: const Center(
+            child: Padding(
+              padding: EdgeInsets.only(bottom: 5),
+              child: Text(
+                'Reservar clase',
                 style: TextStyle(
-                  color: AppColors.fontColor,
-                ),
-              )
-            : Text(
-                '¿Confirmar reserva? ${DateFormat('HH:mm').format(meeting.startTime)} - ${DateFormat('HH:mm').format(meeting.endTime)}',
-                style: const TextStyle(
-                  color: AppColors.fontColor,
+                  color: AppColors.blackColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 15,
                 ),
               ),
-        actions: <Widget>[
-          TextButton(
-              child: const Text(
-                'Cancelar',
-                style: TextStyle(
-                  color: AppColors.fontColor,
-                ),
-              ),
-              onPressed: () {
-                Navigator.pop(context);
-              }),
-          if (!isClassFull)
-            TextButton(
-              child: const Text(
-                'Reservar',
-                style: TextStyle(
-                  color: AppColors.fontColor,
-                ),
-              ),
-              onPressed: () async {
-                bookingService.makeAppointment(
-                    context, meeting, newAppointment);
-                Navigator.pop(context);
-              },
             ),
-        ],
+          ),
+          content: isClassFull
+              ? const Text(
+                  'La clase esta llena',
+                  style: TextStyle(
+                    color: AppColors.blackColor,
+                  ),
+                )
+              : Center(
+                child: Text(
+                    'Confirmar reserva el día ${DateFormat('dd/MM').format(meeting.startTime)}, ${DateFormat('HH:mm').format(meeting.startTime)}hs',
+                    style: const TextStyle(
+                      color: AppColors.blackColor,
+                      fontSize: 14,
+                    ),
+                  ),
+              ),
+          actions: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CupertinoButton(
+                    child: const Text(
+                      'Cancelar',
+                      style: TextStyle(
+                        color: AppColors.blackColor,
+                        fontSize: 13,
+                      ),
+                    ),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    }),
+                if (!isClassFull)
+                  CupertinoButton(
+                    child: const Text(
+                      'Reservar',
+                      style: TextStyle(
+                        color: AppColors.blackColor,
+                        fontSize: 14,
+                      ),
+                    ),
+                    onPressed: () async {
+                      bookingService.makeAppointment(
+                          context, meeting, newAppointment);
+                      Navigator.pop(context);
+                    },
+                  ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -266,8 +285,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
                       size: 30,
                       color: event.freeSlotsCount > 0
                           ? event.freeSlotsCount == 1
-                              ? Colors.orange
-                              : Colors.lightBlue[200]
+                              ? Colors.yellowAccent
+                              : Colors.green
                           : Colors.grey,
                     ),
                     tooltip: event.freeSlotsCount > 0
