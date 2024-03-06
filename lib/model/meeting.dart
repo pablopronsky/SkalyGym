@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:gym/model/reservation.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 @JsonSerializable()
@@ -23,6 +22,10 @@ class Meeting {
     required this.numParticipants,
   });
 
+  int get freeSlotsCount {
+    return maxMeetingCapacity - userId!.length;
+  }
+
   static DateTime timeStampToDateTime(Timestamp timestamp) {
     return DateTime.parse(timestamp.toDate().toString());
   }
@@ -41,14 +44,18 @@ class Meeting {
       maxMeetingCapacity: data['maxMeetingCapacity'],
       numParticipants: data['numParticipants'],
       id: snapshot.id,
+      userId: List<String>.from(data['userId'] ?? []),
     );
   }
 
   Map<String, Object?> toFirestore() {
     return {
-      "date": Timestamp.fromDate(startTime),
-      "title": subject,
-      "description": userId,
+      "startTime": Timestamp.fromDate(startTime),
+      "endTime": Timestamp.fromDate(endTime),
+      "subject": subject,
+      "maxMeetingCapacity": maxMeetingCapacity,
+      "numParticipants": numParticipants,
+      "userId": userId,
     };
   }
 }

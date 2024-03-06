@@ -2,9 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
 import 'package:gym/repository/reservation_repository.dart';
 import 'package:gym/services/reservation_service.dart';
 import 'package:gym/utils/constants.dart';
@@ -110,7 +108,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: Color(0xff2c3e50),
       body: Column(
         children: [
           const SizedBox(
@@ -205,8 +203,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
                               style: const TextStyle(fontSize: 15),
                             ),
                             Text(
-                                'Espacios libres:', // Access calculated data
-                                style: TextStyle(
+                              "Cupos libres: ${event.freeSlotsCount}.",
+                                style: const TextStyle(
                                   fontSize: 15,
                                 ),
                               ), // Add this line
@@ -216,17 +214,24 @@ class _CalendarComponentState extends State<CalendarComponent> {
                     ),
                   ),
                   IconButton(
-                    icon: const Icon(
-                      Icons.add_circle_outlined,
+                    icon: Icon(
+                      Icons.event_available,
                       size: 30,
-                      color: AppColors.primary,
+                      color: event.freeSlotsCount > 0
+                          ? event.freeSlotsCount == 1
+                          ? Colors.orange
+                          : Colors.lightBlue[200]
+                          : Colors.grey,
                     ),
-                    tooltip: 'Reservar',
+                    tooltip: event.freeSlotsCount > 0
+                        ? 'Reservar'
+                        : 'Clase completa',
                     enableFeedback: true,
-                    disabledColor: null,
-                    onPressed: () {
+                    onPressed: event.freeSlotsCount > 0
+                        ? () {
                       _showAppointmentDialog(context, event);
-                    },
+                    }
+                        : null,
                   ),
                 ],
               );
