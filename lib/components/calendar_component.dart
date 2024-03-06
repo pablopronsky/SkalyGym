@@ -2,8 +2,12 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:gym/services/booking_service.dart';
+import 'package:flutter/painting.dart';
+import 'package:gym/repository/reservation_repository.dart';
+import 'package:gym/services/reservation_service.dart';
+import 'package:gym/utils/constants.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../model/meeting.dart';
@@ -26,15 +30,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
   late Map<DateTime, List<Meeting>> _events;
   final MeetingService _meetingService = MeetingService();
   late StreamSubscription _subscription;
-  BookingService bookingService = BookingService();
-
-  void _fetchMeetingColor() async {
-    Color color = await _meetingService.getMeetingColorIndicator(_selectedDay);
-    print("$_selectedDay, ${color.toString()}");
-    setState(() {
-      meetingColor = color;
-    });
-  }
+  ReservationService bookingService = ReservationService();
+  final ReservationRepository _repository = ReservationRepository();
 
   void _showAppointmentDialog(BuildContext context, Meeting meeting) async {
     /// This is the appointment that is sent to appointmentService.createAppointment
@@ -96,7 +93,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
         _events = events; // Update your State variable
       });
     });
-    _fetchMeetingColor();
+    _repository.calculateFreeSlotsPerMeeting();
   }
 
   @override
@@ -110,11 +107,10 @@ class _CalendarComponentState extends State<CalendarComponent> {
     return key.day * 1000000 + key.month * 10000 + key.year;
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
       body: Column(
         children: [
           const SizedBox(
@@ -128,6 +124,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
             focusedDay: _focusedDay,
             firstDay: _firstDay,
             lastDay: _lastDay,
+            weekendDays: const [DateTime.sunday],
             startingDayOfWeek: StartingDayOfWeek.monday,
             onPageChanged: (focusedDay) {
               setState(() {
@@ -143,19 +140,27 @@ class _CalendarComponentState extends State<CalendarComponent> {
               });
             },
             calendarStyle: const CalendarStyle(
-              selectedDecoration: BoxDecoration(
-                border: Border(),
-                shape: BoxShape.rectangle,
-                color: Colors.indigoAccent  ,
+              markersMaxCount: 1,
+              markerDecoration: BoxDecoration(
+                color: Colors.redAccent,
+                shape: BoxShape.circle,
               ),
-              todayTextStyle: TextStyle(color: Colors.white),
+              selectedDecoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: AppColors.primary,
+              ),
+              todayTextStyle: TextStyle(
+                color: Colors.white,
+              ),
+              todayDecoration: BoxDecoration(
+                color: AppColors.secondary,
+                shape: BoxShape.circle,
+              )
             ),
             calendarBuilders: CalendarBuilders(
               headerTitleBuilder: (context, day) {
-                // Customize the header
                 String monthName = Capitalize.capitalizeFirstLetter(
-                    DateFormat.MMMM('es_ES')
-                        .format(day)); // Format and capitalize
+                    DateFormat.MMMM('es_ES').format(day));
                 return Container(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
@@ -163,7 +168,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 24,
-                      color: Colors.blueAccent,
+                      color: AppColors.primary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -174,15 +179,15 @@ class _CalendarComponentState extends State<CalendarComponent> {
           const SizedBox(
             height: 30,
           ),
-          ListView.builder(
+          ListView.separated(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
             itemCount: _meetingService.getEventsForTheDay(_selectedDay).length,
             itemBuilder: (context, index) {
-              final event = _meetingService.getEventsForTheDay(_selectedDay)[index];
-              print(_selectedDay);
+              final event =
+                  _meetingService.getEventsForTheDay(_selectedDay)[index];
               return Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Expanded(
                     child: Material(
@@ -192,9 +197,20 @@ class _CalendarComponentState extends State<CalendarComponent> {
                           Capitalize.capitalizeFirstLetter(event.subject),
                           style: const TextStyle(fontSize: 18),
                         ),
-                        subtitle: Text(
-                          DateFormat('dd-MM-yyyy HH:mm').format(event.startTime),
-                          style: const TextStyle(fontSize: 15),
+                        subtitle: Column( // Using a Column for better layout
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              DateFormat('dd-MM-yyyy HH:mm').format(event.startTime),
+                              style: const TextStyle(fontSize: 15),
+                            ),
+                            Text(
+                                'Espacios libres:', // Access calculated data
+                                style: TextStyle(
+                                  fontSize: 15,
+                                ),
+                              ), // Add this line
+                          ],
                         ),
                       ),
                     ),
@@ -203,17 +219,18 @@ class _CalendarComponentState extends State<CalendarComponent> {
                     icon: const Icon(
                       Icons.add_circle_outlined,
                       size: 30,
-                      color: Colors.indigoAccent,
+                      color: AppColors.primary,
                     ),
+                    tooltip: 'Reservar',
                     enableFeedback: true,
-                    disabledColor: Colors.grey,
+                    disabledColor: null,
                     onPressed: () {
                       _showAppointmentDialog(context, event);
                     },
                   ),
                 ],
               );
-            },
+            }, separatorBuilder: (context, index) => const Divider(),
           )
         ],
       ),

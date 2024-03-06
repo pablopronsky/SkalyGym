@@ -8,7 +8,6 @@ import 'package:gym/pages/view_model/auth_check.dart';
 import '../components/snackbar.dart';
 
 class AuthService {
-
   ///Google Sign In method. not being used yet.
   signInWithGoogle() async {
     // Interact
@@ -46,7 +45,8 @@ class AuthService {
         return;
       }
 
-      final userCredential = await createUser(emailController, passwordController);
+      final userCredential =
+          await createUser(emailController, passwordController);
 
       await saveUserData(userCredential, emailController, nameController,
           lastnameController, phoneController);
@@ -163,6 +163,6 @@ class AuthService {
   }
 
   void signOut() async {
-      await FirebaseAuth.instance.signOut();
+    await FirebaseAuth.instance.signOut();
   }
 }

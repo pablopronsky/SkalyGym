@@ -13,12 +13,13 @@ class Calendar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[300],
-      appBar: const AppBarComponent(),
-      body: const Column(
+    return const Scaffold(
+      appBar: AppBarComponent(),
+      body: Column(
         children: [
-          Expanded(child: CalendarComponent()),
+          Expanded(
+            child: CalendarComponent(),
+          ),
         ],
       ),
     );

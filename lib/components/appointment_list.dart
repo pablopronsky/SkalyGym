@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gym/services/booking_service.dart';
+import 'package:gym/services/reservation_service.dart';
 import 'package:gym/utils/capitalize.dart';
 import 'package:intl/intl.dart';
 
 import '../model/meeting.dart';
+import '../utils/constants.dart';
 
 class AppointmentsListComponent extends StatefulWidget {
   const AppointmentsListComponent({Key? key}) : super(key: key);
@@ -17,7 +18,7 @@ class AppointmentsListComponent extends StatefulWidget {
 
 class AppointmentsListComponentState extends State<AppointmentsListComponent> {
   final userId = FirebaseAuth.instance.currentUser?.email;
-  BookingService reservaServicio = BookingService();
+  ReservationService reservaServicio = ReservationService();
 
   @override
   Widget build(BuildContext context) {
@@ -48,13 +49,23 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                     children: [
                       ListTile(
                         title: Text(
-                            'Clase: ${Capitalize.capitalizeFirstLetter(DateFormat('EEEE', 'es_AR').format(reservasDate))}'),
-                        subtitle: Text(
-                            'Dia: ${DateFormat('dd-MM-yyyy – hh:mm a').format(reservasDate)}'),
+                            'Día: ${Capitalize.capitalizeFirstLetter(DateFormat('EEEE', 'es_AR').format(reservasDate))}',
+                        style: const TextStyle(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),),
+                        subtitle: Column( // Use a Column for vertical arrangement
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Hora: ${DateFormat('dd-MM-yyyy – hh:mm a').format(reservasDate)}'),
+                          ],
+                        ),
                         trailing: IconButton(
                           tooltip: 'Cancelar',
-                          icon: const Icon(Icons.cancel_outlined,
-                              color: Colors.redAccent,),
+                          icon: const Icon(
+                            Icons.delete,
+                            color: Colors.redAccent,
+                          ),
                           onPressed: () => reservaServicio.cancelarReserva(
                               snapshot.data!.docs[index].id, userId!, context),
                         ),

@@ -72,6 +72,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   keyboardType: TextInputType.emailAddress,
                   focusNode: emailFocusNode,
                   textInputAction: TextInputAction.next,
+                  isPassword: false,
                 ),
                 const SizedBox(
                   height: 15,
@@ -82,9 +83,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   hintText: 'Contraseña',
                   obscureText: true,
                   autofocus: false,
-                  keyboardType: TextInputType.emailAddress,
+                  keyboardType: TextInputType.visiblePassword,
                   focusNode: passwordFocusNode,
                   textInputAction: TextInputAction.done,
+                  isPassword: true,
                 ),
                 const SizedBox(height: 10),
                 Padding(
@@ -113,8 +115,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     text: 'Abrir sesion',
                     onTap: () => ref
                         .read(loginControllerProvider.notifier)
-                        .login(emailController.text, passwordController.text)
-                ),
+                        .login(emailController.text, passwordController.text)),
                 const SizedBox(height: 25),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),

@@ -8,18 +8,19 @@ class Meeting {
   DateTime startTime;
   DateTime endTime;
   String subject;
-  @JsonKey(name: 'reservations')
-  List<Reservation>? reservations;
-  @JsonKey(name: 'usersId')
-  List<String>? usersId;
+  @JsonKey(name: 'userId')
+  List<String>? userId;
+  int maxMeetingCapacity;
+  int? numParticipants;
 
   Meeting({
     required this.id,
     required this.startTime,
     required this.endTime,
     required this.subject,
-    this.reservations,
-    this.usersId,
+    required this.maxMeetingCapacity,
+    this.userId,
+    required this.numParticipants,
   });
 
   static DateTime timeStampToDateTime(Timestamp timestamp) {
@@ -37,7 +38,8 @@ class Meeting {
       startTime: data['startTime'].toDate(),
       endTime: data['endTime'].toDate(),
       subject: data['subject'],
-      reservations: data['usersId'],
+      maxMeetingCapacity: data['maxMeetingCapacity'],
+      numParticipants: data['numParticipants'],
       id: snapshot.id,
     );
   }
@@ -46,7 +48,7 @@ class Meeting {
     return {
       "date": Timestamp.fromDate(startTime),
       "title": subject,
-      "description": usersId,
+      "description": userId,
     };
   }
 }

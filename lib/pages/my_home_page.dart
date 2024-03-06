@@ -2,13 +2,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/pages/profile.dart';
+import 'package:gym/utils/constants.dart';
 
 import '../components/drawer.dart';
 import '../components/appointment_list.dart';
 import '../services/user_service.dart';
 import 'calendar_page.dart';
 
-  class MyHomePage extends StatefulWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
@@ -31,6 +32,7 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.backgroundColor,
         appBar: const AppBarComponent(),
         drawer: MyDrawer(
           onProfileTap: goToProfilePage,
@@ -63,14 +65,14 @@ class MyHomePageState extends State<MyHomePage> {
                       child: Container(
                         height: 50,
                         decoration: BoxDecoration(
-                          color: Colors.grey[300],
+                          color: Colors.grey[800],
                           borderRadius: BorderRadius.zero,
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: const Center(
                           child: Text('Ver clases disponibles',
                               style: TextStyle(
-                                color: Colors.black,
+                                color: Colors.white,
                                 fontSize: 18,
                                 letterSpacing: 1,
                               )),
@@ -92,7 +94,9 @@ class MyHomePageState extends State<MyHomePage> {
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     AppointmentsListComponent(),
                   ],
                 ),
@@ -101,21 +105,33 @@ class MyHomePageState extends State<MyHomePage> {
                 height: 50,
               ),
               Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  StreamBuilder<int>(
-                      stream:
-                          UserService.getUserCreditsStream(currentStudentEmail!),
-                      builder: (context, snapshot) {
-                        if (snapshot.hasError) {
-                          return const Text('Error');
-                        } else if (!snapshot.hasData) {
-                          return const CircularProgressIndicator();
-                        } else {
-                          return Text(
-                              'Clases disponibles para reservar: ${snapshot.data}',
-                          );
-                        }
-                      }),
+                  Row( // Introduce a Row
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      StreamBuilder<int>(
+                          stream: UserService.getUserCreditsStream(
+                              currentStudentEmail!),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return const Text('Error');
+                            } else if (!snapshot.hasData) {
+                              return const CircularProgressIndicator();
+                            } else {
+                              return Padding(
+                                padding: const EdgeInsets.only(left: 15),
+                                child: Text(
+                                  'Clases disponibles para reservar: ${snapshot.data}',
+                                  style: const TextStyle(
+                                    fontSize: 16,
+                                  ),
+                                ),
+                              );
+                            }
+                          }),
+                    ],
+                  ),
                 ],
               )
             ],

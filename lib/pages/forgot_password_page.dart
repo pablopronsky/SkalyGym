@@ -94,6 +94,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             keyboardType: TextInputType.emailAddress,
             textInputAction: TextInputAction.send,
             focusNode: emailFocusNode,
+            isPassword: false,
           ),
           const SizedBox(height: 25),
           MaterialButton(

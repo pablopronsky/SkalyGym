@@ -43,18 +43,10 @@ class MyApp extends StatelessWidget {
         '/calendar': (context) => const Calendar(),
         '/register_page': (context) => const RegisterPage(),
         '/login_page': (context) => const LoginPage(),
-        'auth_check' : (context) => const AuthChecker(),
+        'auth_check': (context) => const AuthChecker(),
       },
       debugShowCheckedModeBanner: false,
       home: const AuthChecker(),
-      darkTheme: ThemeData(
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blueGrey, brightness: Brightness.dark), // Example color choice for dark mode
-      ),
-      theme: ThemeData( // Updated: Combined common elements
-        useMaterial3: true,
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.blue), // Example color choice
-      ),
     );
   }
 }

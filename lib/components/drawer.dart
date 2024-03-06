@@ -3,11 +3,14 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym/components/list_tile.dart';
 
 import '../pages/view_model/login_controller.dart';
+
 class MyDrawer extends ConsumerWidget {
   final void Function()? onProfileTap;
 
-  const MyDrawer(
-      {super.key, required this.onProfileTap,});
+  const MyDrawer({
+    super.key,
+    required this.onProfileTap,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -46,7 +49,8 @@ class MyDrawer extends ConsumerWidget {
               child: MyListTile(
                 icon: Icons.logout,
                 text: 'C E R R A R  S E S I O N',
-                onTap: () => ref.read(loginControllerProvider.notifier).signOut(),
+                onTap: () =>
+                    ref.read(loginControllerProvider.notifier).signOut(),
               ),
             ),
           ],

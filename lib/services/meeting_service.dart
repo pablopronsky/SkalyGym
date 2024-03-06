@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:gym/utils/constants.dart';
 
 import '../model/meeting.dart';
 
@@ -18,6 +19,7 @@ class MeetingService {
       _streamController.stream;
 
   Future<void> loadFirestoreEvents() async {
+    _events.clear();
     final snap = await FirebaseFirestore.instance
         .collection('meetings')
         .withConverter(
@@ -42,35 +44,8 @@ class MeetingService {
     return _events[day] ?? [];
   }
 
-  Future<Color> getMeetingColorIndicator(DateTime day) async {
-    // Construct the start and end of the day for the query
-    DateTime startOfDay = DateTime(day.year, day.month, day.day);
-    DateTime endOfDay = DateTime(day.year, day.month, day.day, 23, 59, 59);
-
-    // Query Firestore for meetings within the day
-    QuerySnapshot querySnapshot = await firestore.collection('meetings')
-        .where('startTime', isGreaterThanOrEqualTo: startOfDay)
-        .where('startTime', isLessThanOrEqualTo: endOfDay)
-        .get();
-
-    // Count total participants across qualifying meetings
-    int totalParticipants = 0;
-    for (final doc in querySnapshot.docs) {
-      final userIds = doc.get('userId') as List;
-      totalParticipants += userIds.length;
-    }
-    // Determine color based on participant count
-    if (totalParticipants < 4) {
-      return Colors.lightGreenAccent;
-    } else if (totalParticipants == 5) {
-      return Colors.yellowAccent;
-    } else { // 6 or more
-      return Colors.redAccent;
-    }
-  }
-
-
   void dispose() {
     _streamController.close();
   }
+
 }

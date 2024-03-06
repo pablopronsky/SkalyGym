@@ -82,6 +82,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   autofocus: true,
                   focusNode: nameFocusNode,
                   textInputAction: TextInputAction.next,
+                  isPassword: false,
                 ),
                 const SizedBox(height: 15),
                 // Last name
@@ -93,6 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   autofocus: false,
                   focusNode: lastNameFocusNode,
                   textInputAction: TextInputAction.next,
+                  isPassword: false,
                 ),
                 const SizedBox(height: 15),
                 // Phone number
@@ -104,6 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   autofocus: false,
                   focusNode: phoneNumberFocusNode,
                   textInputAction: TextInputAction.next,
+                  isPassword: false,
                 ),
                 const SizedBox(height: 15),
                 // Email
@@ -115,6 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   autofocus: false,
                   focusNode: emailFocusNode,
                   textInputAction: TextInputAction.next,
+                  isPassword: false,
                 ),
                 const SizedBox(height: 15),
                 // Password
@@ -126,6 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   autofocus: false,
                   focusNode: passwordFocusNode,
                   textInputAction: TextInputAction.next,
+                  isPassword: true,
                 ),
                 const SizedBox(height: 15),
                 // Repeat password
@@ -137,6 +142,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   autofocus: false,
                   focusNode: confirmPasswordFocusNode,
                   textInputAction: TextInputAction.done,
+                  isPassword: true,
                 ),
                 const SizedBox(height: 50),
                 MyButton(
@@ -152,7 +158,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         context);
                   },
                 ),
-                const SizedBox(height: 50,)
+                const SizedBox(
+                  height: 50,
+                )
               ],
             ),
           ),
