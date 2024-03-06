@@ -4,7 +4,8 @@ final ThemeData skalyTheme = ThemeData(
   primaryColor: Color(0xFF009688), // Energetic Teal
   primaryColorDark: Color(0xFF00796B), // Deeper Teal (Slightly darker)
   primaryColorLight: Color(0xFF81d4fa), // Soft Blue
-  colorScheme: ColorScheme.light().copyWith( // Use light theme as base
+  colorScheme: ColorScheme.light().copyWith(
+    // Use light theme as base
     primary: Color(0xFF009688), // Energetic Teal
     secondary: Color(0xFFf45b42), // Warm Orange
     background: Color(0xFFFFFFFF), // Pure White

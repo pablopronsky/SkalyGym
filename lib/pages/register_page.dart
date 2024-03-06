@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/text_field_input.dart';
+import 'package:gym/utils/constants.dart';
 import '../services/auth_service.dart';
 import 'login_page.dart';
 
@@ -35,7 +36,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym/components/list_tile.dart';
+import 'package:gym/utils/constants.dart';
 
 import '../pages/view_model/login_controller.dart';
 
@@ -15,7 +16,7 @@ class MyDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Drawer(
-      backgroundColor: Colors.grey[900],
+      backgroundColor: AppColors.backgroundColor,
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0),
         child: Column(

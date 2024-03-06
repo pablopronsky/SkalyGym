@@ -49,15 +49,22 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                     children: [
                       ListTile(
                         title: Text(
-                            'Día: ${Capitalize.capitalizeFirstLetter(DateFormat('EEEE', 'es_AR').format(reservasDate))}',
-                        style: const TextStyle(
-                          color: AppColors.primary,
-                          fontWeight: FontWeight.bold,
-                        ),),
-                        subtitle: Column( // Use a Column for vertical arrangement
+                          'Día: ${Capitalize.capitalizeFirstLetter(DateFormat('EEEE', 'es_AR').format(reservasDate))}',
+                          style: const TextStyle(
+                            color: AppColors.fontColor,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        subtitle: Column(
+                          // Use a Column for vertical arrangement
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Hora: ${DateFormat('dd-MM-yyyy – hh:mm a').format(reservasDate)}'),
+                            Text(
+                              'Hora: ${DateFormat('dd-MM-yyyy – hh:mm a').format(reservasDate)}',
+                              style: TextStyle(
+                                color: AppColors.fontColor,
+                              ),
+                            ),
                           ],
                         ),
                         trailing: IconButton(

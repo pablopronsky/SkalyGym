@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym/utils/constants.dart';
 
 class TextFieldInput extends StatefulWidget {
   final controller;
@@ -33,6 +34,7 @@ class _TextFieldInputState extends State<TextFieldInput> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: TextFormField(
+        style: const TextStyle(color: Colors.white),
         controller: widget.controller,
         obscureText: widget.isPassword ? _passwordVisible : false,
         autofocus: widget.autofocus,
@@ -43,14 +45,16 @@ class _TextFieldInputState extends State<TextFieldInput> {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         decoration: InputDecoration(
-          enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+          enabledBorder: OutlineInputBorder(
+            borderSide: const BorderSide(color: Colors.grey),
+            borderRadius: BorderRadius.circular(15.0),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.grey.shade400),
+            borderSide: const BorderSide(color: Colors.grey),
+            borderRadius: BorderRadius.circular(15.0),
           ),
           hintText: widget.hintText,
-          fillColor: Colors.grey.shade200,
+          fillColor: AppColors.textFieldColor,
           filled: true,
           hintStyle: TextStyle(color: Colors.grey[500]),
           suffixIcon: widget.isPassword
@@ -58,6 +62,7 @@ class _TextFieldInputState extends State<TextFieldInput> {
                   icon: Icon(_passwordVisible
                       ? Icons.visibility
                       : Icons.visibility_off),
+                  color: Colors.grey,
                   onPressed: () {
                     setState(() {
                       _passwordVisible = !_passwordVisible;

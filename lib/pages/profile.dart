@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/components/my_text_box.dart';
+import 'package:gym/utils/constants.dart';
 
 import '../components/snackbar.dart';
 
@@ -109,7 +110,7 @@ class _PerfilState extends State<Perfil> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+        backgroundColor: AppColors.backgroundColor,
         appBar: const AppBarComponent(),
         body: StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance

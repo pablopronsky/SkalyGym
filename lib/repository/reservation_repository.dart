@@ -140,7 +140,8 @@ class ReservationRepository {
   }
 
   Future<List<Map<String, dynamic>>> calculateFreeSlotsPerMeeting() async {
-    final meetingsCollection = FirebaseFirestore.instance.collection('meetings');
+    final meetingsCollection =
+        FirebaseFirestore.instance.collection('meetings');
     final meetingsSnapshot = await meetingsCollection.get();
 
     List<Map<String, dynamic>> meetingData = [];
@@ -150,10 +151,7 @@ class ReservationRepository {
       final currentAttendees = meetingDoc.data()['userId'] as List<dynamic>;
       final freeSlots = maxMeetingCapacity - currentAttendees.length;
 
-      meetingData.add({
-        'meetingId': meetingDoc.id,
-        'freeSlots': freeSlots
-      });
+      meetingData.add({'meetingId': meetingDoc.id, 'freeSlots': freeSlots});
     }
     print("jajajaja $meetingData");
     return meetingData;

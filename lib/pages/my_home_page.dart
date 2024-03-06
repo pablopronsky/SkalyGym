@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/appbar.dart';
@@ -32,7 +34,7 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+        backgroundColor: AppColors.backgroundColor,
         appBar: const AppBarComponent(),
         drawer: MyDrawer(
           onProfileTap: goToProfilePage,
@@ -64,17 +66,18 @@ class MyHomePageState extends State<MyHomePage> {
                       },
                       child: Container(
                         height: 50,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[800],
+                        decoration: const BoxDecoration(
+                          color: Colors.deepOrangeAccent,
                           borderRadius: BorderRadius.zero,
                         ),
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         child: const Center(
                           child: Text('Ver clases disponibles',
                               style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18,
+                                color: AppColors.fontColor,
+                                fontSize: 20,
                                 letterSpacing: 1,
+                                fontWeight: FontWeight.bold,
                               )),
                         ),
                       ),
@@ -91,8 +94,10 @@ class MyHomePageState extends State<MyHomePage> {
                   children: [
                     Text(
                       'Mis clases esta semana',
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: AppColors.fontColor,
+                      ),
                     ),
                     SizedBox(
                       height: 20,
@@ -107,7 +112,8 @@ class MyHomePageState extends State<MyHomePage> {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  Row( // Introduce a Row
+                  Row(
+                    // Introduce a Row
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       StreamBuilder<int>(
@@ -125,6 +131,7 @@ class MyHomePageState extends State<MyHomePage> {
                                   'Clases disponibles para reservar: ${snapshot.data}',
                                   style: const TextStyle(
                                     fontSize: 16,
+                                    color: AppColors.fontColor,
                                   ),
                                 ),
                               );

@@ -45,24 +45,46 @@ class _CalendarComponentState extends State<CalendarComponent> {
     showDialog(
       context: context,
       builder: (BuildContext buildContext) => AlertDialog(
-        backgroundColor: Colors.grey[100],
+        backgroundColor: Colors.blueGrey,
         contentTextStyle: const TextStyle(color: Colors.black),
-        title: const Text('Reservar clase'),
+        title: const Text(
+          'Reservar clase',
+          style: TextStyle(
+            color: AppColors.fontColor,
+          ),
+        ),
         content: isClassFull
-            ? const Text('La clase esta llena')
+            ? const Text(
+                'La clase esta llena',
+                style: TextStyle(
+                  color: AppColors.fontColor,
+                ),
+              )
             : Text(
-                '¿Confirmar reserva? ${DateFormat('HH:mm').format(meeting.startTime)} - ${DateFormat('HH:mm').format(meeting.endTime)}'),
+                '¿Confirmar reserva? ${DateFormat('HH:mm').format(meeting.startTime)} - ${DateFormat('HH:mm').format(meeting.endTime)}',
+                style: const TextStyle(
+                  color: AppColors.fontColor,
+                ),
+              ),
         actions: <Widget>[
           TextButton(
-              child:
-                  const Text('Cancelar', style: TextStyle(color: Colors.black)),
+              child: const Text(
+                'Cancelar',
+                style: TextStyle(
+                  color: AppColors.fontColor,
+                ),
+              ),
               onPressed: () {
                 Navigator.pop(context);
               }),
           if (!isClassFull)
             TextButton(
-              child:
-                  const Text('Reservar', style: TextStyle(color: Colors.black)),
+              child: const Text(
+                'Reservar',
+                style: TextStyle(
+                  color: AppColors.fontColor,
+                ),
+              ),
               onPressed: () async {
                 bookingService.makeAppointment(
                     context, meeting, newAppointment);
@@ -82,8 +104,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
       hashCode: getHashCode,
     );
     _focusedDay = DateTime.now();
-    _firstDay = DateTime.now().subtract(const Duration(days: 1000));
-    _lastDay = DateTime.now().add(const Duration(days: 1000));
+    _firstDay = DateTime.now().subtract(const Duration(days: 0));
+    _lastDay = DateTime.now().add(const Duration(days: 7));
     _selectedDay = DateTime.now();
     _meetingService.loadFirestoreEvents();
     _subscription = _meetingService.eventsStream.listen((events) {
@@ -108,13 +130,22 @@ class _CalendarComponentState extends State<CalendarComponent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff2c3e50),
+      backgroundColor: AppColors.backgroundColor,
       body: Column(
         children: [
           const SizedBox(
             height: 30,
           ),
           TableCalendar(
+            daysOfWeekStyle: const DaysOfWeekStyle(
+              weekdayStyle: (TextStyle(
+                color: AppColors.fontColor,
+              )),
+              weekendStyle: (TextStyle(
+                color: AppColors.fontColor,
+              )),
+            ),
+            availableGestures: AvailableGestures.none,
             locale: 'es_ES',
             availableCalendarFormats: const {CalendarFormat.week: 'week'},
             calendarFormat: CalendarFormat.week,
@@ -137,24 +168,33 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 _focusedDay = focusedDay;
               });
             },
+            headerStyle: HeaderStyle(
+                decoration: BoxDecoration(
+              //color: AppColors.buttonColor,
+              borderRadius: BorderRadius.circular(3),
+            )),
             calendarStyle: const CalendarStyle(
-              markersMaxCount: 1,
-              markerDecoration: BoxDecoration(
-                color: Colors.redAccent,
-                shape: BoxShape.circle,
-              ),
-              selectedDecoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: AppColors.primary,
-              ),
-              todayTextStyle: TextStyle(
-                color: Colors.white,
-              ),
-              todayDecoration: BoxDecoration(
-                color: AppColors.secondary,
-                shape: BoxShape.circle,
-              )
-            ),
+                defaultTextStyle: TextStyle(color: AppColors.fontColor),
+                markersMaxCount: 1,
+                markerDecoration: BoxDecoration(
+                  color: AppColors.fontColor,
+                  shape: BoxShape.circle,
+                ),
+                selectedDecoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: AppColors.accentColor,
+                ),
+                selectedTextStyle: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: AppColors.fontColor,
+                ),
+                todayTextStyle: TextStyle(
+                  color: Colors.white,
+                ),
+                todayDecoration: BoxDecoration(
+                  color: AppColors.textFieldColor,
+                  shape: BoxShape.circle,
+                )),
             calendarBuilders: CalendarBuilders(
               headerTitleBuilder: (context, day) {
                 String monthName = Capitalize.capitalizeFirstLetter(
@@ -166,7 +206,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 24,
-                      color: AppColors.primary,
+                      color: AppColors.fontColor,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -193,21 +233,28 @@ class _CalendarComponentState extends State<CalendarComponent> {
                       child: ListTile(
                         title: Text(
                           Capitalize.capitalizeFirstLetter(event.subject),
-                          style: const TextStyle(fontSize: 18),
+                          style: const TextStyle(
+                              fontSize: 18, color: AppColors.fontColor),
                         ),
-                        subtitle: Column( // Using a Column for better layout
+                        subtitle: Column(
+                          // Using a Column for better layout
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              DateFormat('dd-MM-yyyy HH:mm').format(event.startTime),
-                              style: const TextStyle(fontSize: 15),
+                              DateFormat('dd-MM-yyyy HH:mm')
+                                  .format(event.startTime),
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: AppColors.fontColor,
+                              ),
                             ),
                             Text(
                               "Cupos libres: ${event.freeSlotsCount}.",
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                ),
-                              ), // Add this line
+                              style: const TextStyle(
+                                fontSize: 15,
+                                color: AppColors.fontColor,
+                              ),
+                            ),
                           ],
                         ),
                       ),
@@ -219,8 +266,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
                       size: 30,
                       color: event.freeSlotsCount > 0
                           ? event.freeSlotsCount == 1
-                          ? Colors.orange
-                          : Colors.lightBlue[200]
+                              ? Colors.orange
+                              : Colors.lightBlue[200]
                           : Colors.grey,
                     ),
                     tooltip: event.freeSlotsCount > 0
@@ -229,13 +276,16 @@ class _CalendarComponentState extends State<CalendarComponent> {
                     enableFeedback: true,
                     onPressed: event.freeSlotsCount > 0
                         ? () {
-                      _showAppointmentDialog(context, event);
-                    }
+                            _showAppointmentDialog(context, event);
+                          }
                         : null,
                   ),
                 ],
               );
-            }, separatorBuilder: (context, index) => const Divider(),
+            },
+            separatorBuilder: (context, index) => const Divider(
+              color: AppColors.accentColor,
+            ),
           )
         ],
       ),

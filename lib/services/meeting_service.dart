@@ -45,5 +45,4 @@ class MeetingService {
   void dispose() {
     _streamController.close();
   }
-
 }

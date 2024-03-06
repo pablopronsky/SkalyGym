@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gym/utils/constants.dart';
 
 class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   const AppBarComponent({Key? key}) : super(key: key);
@@ -15,7 +16,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       centerTitle: true,
-      backgroundColor: Colors.grey[800],
+      backgroundColor: AppColors.backgroundColor,
       iconTheme: const IconThemeData(color: Colors.white),
     );
   }
