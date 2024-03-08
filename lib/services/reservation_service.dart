@@ -73,7 +73,7 @@ class ReservationService {
     if (!confirmDeletion) return;
 
     try {
-      _repository.cancelReservation(reservationId, userId, context);
+      _repository.cancelReservation(reservationId, userId);
       showCustomSnackBar(
         context: context,
         message: 'Reserva eliminada correctamente',

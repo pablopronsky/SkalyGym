@@ -68,45 +68,45 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       appBar: const AppBarComponent(),
-      body: Column(
-        children: [
-          const SizedBox(height: 15,),
-          // logo
-          Image.asset(
-            'lib/assets/logo_skaly.png',
-            width: 150,
-            height: 150,
-              color: AppColors.fontColor
-          ),
-          const SizedBox(height: 25),
-          const Padding(
-            padding: EdgeInsets.all(8.0),
-            child: Text(
-              'Ingresa el mail de recuperación',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                color: AppColors.fontColor,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 35,
+            ),
+            // logo
+            Image.asset('lib/assets/logo_skaly.png',
+                width: 150, height: 150, color: AppColors.fontColor),
+            const SizedBox(height: 25),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
+              child: Text(
+                'Ingresa el mail de recuperación',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: AppColors.fontColor,
+                ),
               ),
             ),
-          ),
-          const SizedBox(height: 25), // mail
-          TextFieldInput(
-            controller: _emailController,
-            hintText: 'Email',
-            obscureText: false,
-            autofocus: true,
-            keyboardType: TextInputType.emailAddress,
-            textInputAction: TextInputAction.send,
-            focusNode: emailFocusNode,
-            isPassword: false,
-          ),
-          const SizedBox(height: 50),
-          MyButton(
-            onTap: () => passwordResetEmail(),
-            text: 'Recuperar contraseña',
+            const SizedBox(height: 25), // mail
+            TextFieldInput(
+              controller: _emailController,
+              hintText: 'Email',
+              obscureText: false,
+              autofocus: true,
+              keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.send,
+              focusNode: emailFocusNode,
+              isPassword: false,
             ),
-        ],
+            const SizedBox(height: 50),
+            MyButton(
+              onTap: () => passwordResetEmail(),
+              text: 'Recuperar contraseña',
+            ),
+          ],
+        ),
       ),
     );
   }

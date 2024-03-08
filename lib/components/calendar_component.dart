@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/repository/reservation_repository.dart';
 import 'package:gym/services/reservation_service.dart';
@@ -45,72 +44,76 @@ class _CalendarComponentState extends State<CalendarComponent> {
     if (!context.mounted) return;
     showDialog(
       context: context,
-      builder: (context) => Container(
-        color: AppColors.textFieldColor,
-        child: CupertinoAlertDialog(
-          title: const Center(
-            child: Padding(
-              padding: EdgeInsets.only(bottom: 5),
-              child: Text(
-                'Reservar clase',
-                style: TextStyle(
-                  color: AppColors.blackColor,
-                  fontWeight: FontWeight.w500,
-                  fontSize: 15,
-                ),
-              ),
+      builder: (BuildContext context) => AlertDialog(
+        titlePadding:
+            const EdgeInsets.only(top: 16.0, bottom: 8.0), // Adjust padding
+        title: const Center(
+          child: Text(
+            'Reservar clase',
+            style: TextStyle(
+              color: AppColors.blackColor,
+              fontWeight: FontWeight.bold, // Bold the title
+              fontSize: 20, // Increase font size
             ),
           ),
-          content: isClassFull
-              ? const Text(
-                  'La clase esta llena',
-                  style: TextStyle(
-                    color: AppColors.blackColor,
+        ),
+        content: SingleChildScrollView(
+          // For potential overflow
+          child: isClassFull
+              ? const Center(
+                  // Center if content fits
+                  child: Text(
+                    'La clase esta llena',
+                    style: TextStyle(color: AppColors.blackColor),
                   ),
                 )
               : Center(
-                child: Text(
+                  child: Text(
                     'Confirmar reserva el día ${DateFormat('dd/MM').format(meeting.startTime)}, ${DateFormat('HH:mm').format(meeting.startTime)}hs',
                     style: const TextStyle(
                       color: AppColors.blackColor,
-                      fontSize: 14,
+                      fontSize: 16,
                     ),
+                    textAlign: TextAlign.center,
                   ),
-              ),
-          actions: <Widget>[
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                CupertinoButton(
-                    child: const Text(
-                      'Cancelar',
-                      style: TextStyle(
-                        color: AppColors.blackColor,
-                        fontSize: 13,
-                      ),
-                    ),
-                    onPressed: () {
-                      Navigator.pop(context);
-                    }),
-                if (!isClassFull)
-                  CupertinoButton(
-                    child: const Text(
-                      'Reservar',
-                      style: TextStyle(
-                        color: AppColors.blackColor,
-                        fontSize: 14,
-                      ),
-                    ),
-                    onPressed: () async {
-                      bookingService.makeAppointment(
-                          context, meeting, newAppointment);
-                      Navigator.pop(context);
-                    },
-                  ),
-              ],
-            ),
-          ],
+                ),
         ),
+        actionsPadding: const EdgeInsets.all(12.0), // Add padding
+        actions: <Widget>[
+          Row(
+            mainAxisAlignment:
+                MainAxisAlignment.spaceAround, // Use spaceBetween
+            children: [
+              TextButton(
+                child: const Text(
+                  'Cancelar',
+                  style: TextStyle(
+                    color: AppColors.blackColor,
+                    fontSize: 18,
+                  ),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+              if (!isClassFull)
+                TextButton(
+                  child: const Text(
+                    'Reservar',
+                    style: TextStyle(
+                      color: AppColors.blackColor,
+                      fontSize: 18,
+                    ),
+                  ),
+                  onPressed: () async {
+                    bookingService.makeAppointment(
+                        context, meeting, newAppointment);
+                    Navigator.pop(context);
+                  },
+                ),
+            ],
+          ),
+        ],
       ),
     );
   }

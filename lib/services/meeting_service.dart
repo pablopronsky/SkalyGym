@@ -41,7 +41,7 @@ class MeetingService {
   List<Meeting> getEventsForTheDay(DateTime day) {
     final events = _events[day] ?? [];
     events.sort((a, b) => a.startTime.compareTo(b.startTime));
-    return events ?? [];
+    return events;
   }
 
   void dispose() {

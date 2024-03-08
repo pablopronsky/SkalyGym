@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:gym/utils/constants.dart';
 
 class TextFieldInput extends StatefulWidget {
-  final controller;
+  final TextEditingController controller;
   final String hintText;
   final bool obscureText;
   final bool autofocus;
-  final keyboardType;
-  final textInputAction;
+  final TextInputType keyboardType;
+  final TextInputAction textInputAction;
   final FocusNode focusNode;
   final bool isPassword;
 
@@ -17,7 +17,7 @@ class TextFieldInput extends StatefulWidget {
     required this.hintText,
     required this.autofocus,
     required this.keyboardType,
-    this.textInputAction,
+    required this.textInputAction,
     required this.focusNode,
     required this.obscureText,
     required this.isPassword,

@@ -40,14 +40,13 @@ class MyApp extends StatelessWidget {
       locale: const Locale('es'),
       routes: {
         '/home_page': (context) => const MyHomePage(),
-        '/profile': (context) => const Perfil(),
+        '/profile': (context) => const ProfilePage(),
         '/calendar': (context) => const Calendar(),
         '/register_page': (context) => const RegisterPage(),
         '/login_page': (context) => const LoginPage(),
         'auth_check': (context) => const AuthChecker(),
       },
       debugShowCheckedModeBanner: false,
-      theme: skalyTheme,
       home: const AuthChecker(),
     );
   }

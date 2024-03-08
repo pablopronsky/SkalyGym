@@ -7,14 +7,14 @@ import 'package:gym/utils/constants.dart';
 
 import '../components/snackbar.dart';
 
-class Perfil extends StatefulWidget {
-  const Perfil({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
 
   @override
-  State<Perfil> createState() => _PerfilState();
+  State<ProfilePage> createState() => _ProfilePageState();
 }
 
-class _PerfilState extends State<Perfil> {
+class _ProfilePageState extends State<ProfilePage> {
   final currentUser = FirebaseAuth.instance.currentUser!;
   final usersCollection = FirebaseFirestore.instance.collection('users');
 
@@ -28,7 +28,7 @@ class _PerfilState extends State<Perfil> {
     await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-              backgroundColor: AppColors.backgroundColor,
+          backgroundColor: AppColors.textFieldColor,
               title: Text(
                 textAlign: TextAlign.center,
                 "Editar $field",
@@ -85,13 +85,13 @@ class _PerfilState extends State<Perfil> {
           // Success
           showCustomSnackBar(
               context: context,
-              message: '$field actualizado correctamente',
+              message: '$field actualizado.',
               backgroundColor: AppColors.successColor);
         }).catchError((error) {
           // Error
           showCustomSnackBar(
             context: context,
-            message: 'Error al actualizar $field',
+            message: 'Error al actualizar $field.',
             backgroundColor: AppColors.errorColor,
           );
         });
@@ -99,8 +99,8 @@ class _PerfilState extends State<Perfil> {
         if (value != null) {
           showCustomSnackBar(
             context: context,
-            message: 'Edición de $field cancelada',
-            backgroundColor: Colors.grey[700],
+            message: 'Edición de $field cancelada.',
+            backgroundColor: AppColors.errorColor,
           );
         }
       }
@@ -129,7 +129,7 @@ class _PerfilState extends State<Perfil> {
                     const Icon(
                       Icons.person,
                       size: 72,
-                        color: AppColors.fontColor,
+                      color: AppColors.fontColor,
                     ),
                     // Email
                     Text(
@@ -155,21 +155,21 @@ class _PerfilState extends State<Perfil> {
                     MyTextBox(
                       text: userData['name'],
                       sectionName: 'Nombre',
-                      onPressed: () => editField('nombre'),
+                      onPressed: ()=>{},
                       showSettingsIcon: false,
                     ),
                     // Last Name
                     MyTextBox(
                       text: userData['lastName'],
                       sectionName: 'Apellido',
-                      onPressed: () => editField('apellido'),
+                      onPressed: ()=>{},
                       showSettingsIcon: false,
                     ),
                     // Email
                     MyTextBox(
                       text: userData['phoneNumber'],
                       sectionName: 'Celular',
-                      onPressed: () => editField('celular'),
+                      onPressed: () => editField('Celular'),
                     ),
                     const SizedBox(
                       height: 50,

@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/appbar.dart';
@@ -26,7 +24,7 @@ class MyHomePageState extends State<MyHomePage> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const Perfil(),
+        builder: (context) => const ProfilePage(),
       ),
     );
   }
@@ -107,38 +105,32 @@ class MyHomePageState extends State<MyHomePage> {
                 ),
               ),
               const SizedBox(
-                height: 50,
+                height: 150,
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  Row(
-                    // Introduce a Row
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      StreamBuilder<int>(
-                          stream: UserService.getUserCreditsStream(
-                              currentStudentEmail!),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return const Text('Error');
-                            } else if (!snapshot.hasData) {
-                              return const CircularProgressIndicator();
-                            } else {
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Text(
-                                  'Clases disponibles para reservar: ${snapshot.data}',
-                                  style: const TextStyle(
-                                    fontSize: 16,
-                                    color: AppColors.fontColor,
-                                  ),
-                                ),
-                              );
-                            }
-                          }),
-                    ],
-                  ),
+                  StreamBuilder<int>(
+                      stream: UserService.getUserCreditsStream(
+                          currentStudentEmail!),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text('Error');
+                        } else if (!snapshot.hasData) {
+                          return const CircularProgressIndicator();
+                        } else {
+                          return Padding(
+                            padding: const EdgeInsets.only(left: 15),
+                            child: Text(
+                              'Clases disponibles para reservar: ${snapshot.data}',
+                              style: const TextStyle(
+                                fontSize: 16,
+                                color: AppColors.fontColor,
+                              ),
+                            ),
+                          );
+                        }
+                      }),
                 ],
               )
             ],

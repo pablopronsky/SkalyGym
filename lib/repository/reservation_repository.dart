@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:gym/utils/constants.dart';
 
 import '../components/snackbar.dart';
 import '../model/meeting.dart';
@@ -25,19 +26,25 @@ class ReservationRepository {
       await _validateAndReserveAppointment(
           context, meeting, currentStudentEmail!);
 
-      if (context.mounted) {
-        Navigator.pop(context);
-      }
-      Navigator.of(context).push(MaterialPageRoute(
-        builder: (context) => const MyHomePage(),
-      ));
       showCustomSnackBar(
         context: context,
-        message: 'Reserva creada con éxito!',
-        backgroundColor: Colors.green[400],
+        message: 'Reserva creada exitosamente.',
+        backgroundColor: AppColors.successColor,
       );
+
+      // Ensure the current widget is still mounted before navigating
+      if (context.mounted) {
+        Navigator.pop(context);
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => const MyHomePage(),
+        ));
+      }
     } catch (e) {
-      print('Error making appointment: $e');
+      showCustomSnackBar(
+        context: context,
+        message: 'Error al crear reserva: $e.',
+        backgroundColor: AppColors.errorColor,
+      );
     }
   }
 
@@ -75,7 +82,7 @@ class ReservationRepository {
     }
 
     if (await _hasExistingReservationInClass(meeting.id, currentStudentEmail)) {
-      _handleError(context, 'Ya tienes una reserva en esta clase');
+      _handleError(context, 'Ya tenes una reserva en esta clase.');
       return;
     }
 
@@ -92,30 +99,33 @@ class ReservationRepository {
     await _createReservation(context, meeting, currentStudentEmail);
   }
 
-  Future<void> cancelReservation(
-      String reservationId, String userId, BuildContext context) async {
-    final reservaDoc = await FirebaseFirestore.instance
-        .collection('reservations')
-        .doc(reservationId)
-        .get();
-    final reservaData = reservaDoc.data();
-    final classId = reservaData?['meetingId'];
+  Future<void> cancelReservation(String reservationId, String userId) async {
+    try {
+      final reservaDoc = await FirebaseFirestore.instance
+          .collection('reservations')
+          .doc(reservationId)
+          .get();
+      final reservaData = reservaDoc.data();
+      final classId = reservaData?['meetingId'];
 
-    await FirebaseFirestore.instance.runTransaction((transaction) async {
-      transaction.delete(reservaDoc.reference);
+      await FirebaseFirestore.instance.runTransaction((transaction) async {
+        transaction.delete(reservaDoc.reference);
 
-      if (classId != null) {
-        final classDocRef =
-            FirebaseFirestore.instance.collection('meetings').doc(classId);
-        transaction.update(classDocRef, {
-          'userId': FieldValue.arrayRemove([userId]),
-        });
-      }
-      final userDocRef =
-          FirebaseFirestore.instance.collection('users').doc(userId);
-      transaction
-          .update(userDocRef, {'weeklyCredits': FieldValue.increment(1)});
-    });
+        if (classId != null) {
+          final classDocRef =
+          FirebaseFirestore.instance.collection('meetings').doc(classId);
+          transaction.update(classDocRef, {
+            'userId': FieldValue.arrayRemove([userId]),
+          });
+        }
+        final userDocRef =
+        FirebaseFirestore.instance.collection('users').doc(userId);
+        transaction
+            .update(userDocRef, {'weeklyCredits': FieldValue.increment(1)});
+      });
+    } catch (e) {
+      return;
+    }
   }
 
   void _handleError(BuildContext context, String message) {
@@ -153,7 +163,6 @@ class ReservationRepository {
 
       meetingData.add({'meetingId': meetingDoc.id, 'freeSlots': freeSlots});
     }
-    print("jajajaja $meetingData");
     return meetingData;
   }
 
@@ -164,7 +173,6 @@ class ReservationRepository {
         .where('meetingId', isEqualTo: meetingId)
         .where('userEmail', isEqualTo: studentEmail)
         .get();
-    print("$meetingId $studentEmail");
 
     return queryResult.size > 0;
   }

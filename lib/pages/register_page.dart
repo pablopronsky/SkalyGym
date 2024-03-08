@@ -55,7 +55,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: Icon(
                           Icons.arrow_back_outlined,
                           size: 40,
-                            color: AppColors.fontColor,
+                          color: AppColors.fontColor,
                         ),
                       ),
                     ),
@@ -67,15 +67,13 @@ class _RegisterPageState extends State<RegisterPage> {
                   'lib/assets/logo_skaly.png',
                   width: 150,
                   height: 150,
-                    color: AppColors.fontColor,
+                  color: AppColors.fontColor,
                 ),
                 const SizedBox(height: 10),
                 // Welcome back
                 const Text(
                   'Crea tu cuenta',
-                  style: TextStyle(
-                      color: AppColors.fontColor,
-                      fontSize: 20),
+                  style: TextStyle(color: AppColors.fontColor, fontSize: 20),
                 ),
                 const SizedBox(height: 25),
                 // Name

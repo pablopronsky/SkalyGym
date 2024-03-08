@@ -45,7 +45,8 @@ class MyTextBox extends StatelessWidget {
               showSettingsIcon
                   ? IconButton(
                       onPressed: onPressed,
-                      icon: const Icon(Icons.settings,
+                      icon: const Icon(
+                        Icons.settings,
                         color: AppColors.fontColor,
                       ),
                     )
@@ -56,10 +57,10 @@ class MyTextBox extends StatelessWidget {
             ],
           ),
           // Section details
-          Text(text,
-          style: const TextStyle(
-              color: AppColors.fontColor
-          ),),
+          Text(
+            text,
+            style: const TextStyle(color: AppColors.fontColor),
+          ),
         ],
       ),
     );

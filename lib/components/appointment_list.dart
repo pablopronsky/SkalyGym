@@ -49,7 +49,8 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                     children: [
                       ListTile(
                         title: Text(
-                          Capitalize.capitalizeFirstLetter(DateFormat('EEEE', 'es_AR').format(reservasDate)),
+                          Capitalize.capitalizeFirstLetter(
+                              DateFormat('EEEE', 'es_AR').format(reservasDate)),
                           style: const TextStyle(
                             color: AppColors.fontColor,
                             fontWeight: FontWeight.bold,
@@ -60,7 +61,7 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Hora: ${DateFormat('dd-MM-yyyy – hh:mm a').format(reservasDate)}',
+                              DateFormat('dd/MM/yyyy – hh:mm a').format(reservasDate),
                               style: const TextStyle(
                                 color: AppColors.fontColor,
                               ),
@@ -88,7 +89,10 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                 },
               ));
         } else {
-          return const Text('No se encontraron reservas');
+          return const Text('No se encontraron reservas',
+            style: TextStyle(
+              color: AppColors.fontColor,
+            ),);
         }
       },
     );

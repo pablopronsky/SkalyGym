@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/text_field_input.dart';
@@ -24,6 +22,21 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final emailFocusNode = FocusNode();
   final passwordFocusNode = FocusNode();
   final buttonFocusNode = FocusNode();
+
+  @override
+  void dispose() {
+    // Dispose controllers
+    emailController.dispose();
+    passwordController.dispose();
+
+    // Dispose focus nodes
+    emailFocusNode.dispose();
+    passwordFocusNode.dispose();
+    buttonFocusNode.dispose();
+
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     ref.listen<LoginState>(loginControllerProvider, ((previous, state) {
@@ -33,16 +46,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
         ));
       }
     }));
-
-    @override
-    void dispose() {
-      emailController.dispose();
-      passwordController.dispose();
-      emailFocusNode.dispose();
-      passwordFocusNode.dispose();
-      buttonFocusNode.dispose();
-      super.dispose();
-    }
 
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
