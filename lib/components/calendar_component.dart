@@ -2,10 +2,12 @@ import 'dart:async';
 import 'dart:collection';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 import 'package:gym/repository/reservation_repository.dart';
 import 'package:gym/services/reservation_service.dart';
-import 'package:gym/utils/constants.dart';
+import 'package:gym/utils/color_constants.dart';
 import 'package:intl/intl.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../model/meeting.dart';
@@ -44,24 +46,22 @@ class _CalendarComponentState extends State<CalendarComponent> {
     if (!context.mounted) return;
     showDialog(
       context: context,
-      builder: (BuildContext context) => AlertDialog(
-        titlePadding:
-            const EdgeInsets.only(top: 16.0, bottom: 8.0), // Adjust padding
+      builder: (BuildContext context) => CupertinoAlertDialog(
         title: const Center(
-          child: Text(
-            'Reservar clase',
-            style: TextStyle(
-              color: AppColors.blackColor,
-              fontWeight: FontWeight.bold, // Bold the title
-              fontSize: 20, // Increase font size
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              'Reservar clase',
+              style: TextStyle(
+                color: AppColors.backgroundColor,
+                fontSize: 20,
+              ),
             ),
           ),
         ),
         content: SingleChildScrollView(
-          // For potential overflow
           child: isClassFull
               ? const Center(
-                  // Center if content fits
                   child: Text(
                     'La clase esta llena',
                     style: TextStyle(color: AppColors.blackColor),
@@ -73,12 +73,13 @@ class _CalendarComponentState extends State<CalendarComponent> {
                     style: const TextStyle(
                       color: AppColors.blackColor,
                       fontSize: 16,
+                      height: 1.5
                     ),
                     textAlign: TextAlign.center,
                   ),
                 ),
         ),
-        actionsPadding: const EdgeInsets.all(12.0), // Add padding
+       // actionsPadding: const EdgeInsets.all(12.0), // Add padding
         actions: <Widget>[
           Row(
             mainAxisAlignment:
@@ -88,7 +89,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 child: const Text(
                   'Cancelar',
                   style: TextStyle(
-                    color: AppColors.blackColor,
+                    color: AppColors.backgroundColor,
                     fontSize: 18,
                   ),
                 ),
@@ -101,7 +102,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
                   child: const Text(
                     'Reservar',
                     style: TextStyle(
-                      color: AppColors.blackColor,
+                      color: AppColors.backgroundColor,
+                      fontWeight: FontWeight.bold,
                       fontSize: 18,
                     ),
                   ),
@@ -161,10 +163,10 @@ class _CalendarComponentState extends State<CalendarComponent> {
           TableCalendar(
             daysOfWeekStyle: const DaysOfWeekStyle(
               weekdayStyle: (TextStyle(
-                color: AppColors.fontColor,
+                color: AppColors.fontColorPrimary,
               )),
               weekendStyle: (TextStyle(
-                color: AppColors.fontColor,
+                color: AppColors.fontColorPrimary,
               )),
             ),
             availableGestures: AvailableGestures.none,
@@ -190,16 +192,24 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 _focusedDay = focusedDay;
               });
             },
-            headerStyle: HeaderStyle(
-                decoration: BoxDecoration(
-              //color: AppColors.buttonColor,
-              borderRadius: BorderRadius.circular(3),
-            )),
+            headerStyle: const HeaderStyle(
+              leftChevronIcon: Icon(
+                Icons.arrow_back_ios_new_outlined,
+                color: Colors.white,
+                size: 20.0,
+              ),
+              rightChevronIcon: Icon(
+                Icons.arrow_forward_ios_outlined,
+                color: Colors.white,
+                size: 20.0,
+              ),
+            ),
             calendarStyle: const CalendarStyle(
-                defaultTextStyle: TextStyle(color: AppColors.fontColor),
+                defaultTextStyle: TextStyle(color: AppColors.fontColorPrimary),
                 markersMaxCount: 1,
+                markerSize: 4,
                 markerDecoration: BoxDecoration(
-                  color: AppColors.fontColor,
+                  color: AppColors.fontColorPrimary,
                   shape: BoxShape.circle,
                 ),
                 selectedDecoration: BoxDecoration(
@@ -208,7 +218,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 ),
                 selectedTextStyle: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: AppColors.fontColor,
+                  color: AppColors.fontColorPrimary,
                 ),
                 todayTextStyle: TextStyle(
                   color: Colors.white,
@@ -228,7 +238,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                     textAlign: TextAlign.center,
                     style: const TextStyle(
                       fontSize: 24,
-                      color: AppColors.fontColor,
+                      color: AppColors.fontColorPrimary,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -239,6 +249,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
           const SizedBox(
             height: 30,
           ),
+          // LISTVIEW
           ListView.separated(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
@@ -256,7 +267,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                         title: Text(
                           Capitalize.capitalizeFirstLetter(event.subject),
                           style: const TextStyle(
-                              fontSize: 18, color: AppColors.fontColor),
+                              fontSize: 18, color: AppColors.fontColorPrimary),
                         ),
                         subtitle: Column(
                           // Using a Column for better layout
@@ -267,14 +278,14 @@ class _CalendarComponentState extends State<CalendarComponent> {
                                   .format(event.startTime),
                               style: const TextStyle(
                                 fontSize: 15,
-                                color: AppColors.fontColor,
+                                color: AppColors.fontColorPrimary,
                               ),
                             ),
                             Text(
                               "Cupos libres: ${event.freeSlotsCount}.",
                               style: const TextStyle(
                                 fontSize: 15,
-                                color: AppColors.fontColor,
+                                color: AppColors.fontColorPrimary,
                               ),
                             ),
                           ],
@@ -283,25 +294,22 @@ class _CalendarComponentState extends State<CalendarComponent> {
                     ),
                   ),
                   IconButton(
-                    icon: Icon(
-                      Icons.event_available,
-                      size: 30,
-                      color: event.freeSlotsCount > 0
-                          ? event.freeSlotsCount == 1
-                              ? Colors.yellowAccent
-                              : Colors.green
-                          : Colors.grey,
-                    ),
+                    icon: event.freeSlotsCount > 0
+                        ? (event.freeSlotsCount == 1
+                        ? Image.asset('assets/icon_half.png', height: 30)
+                        : Image.asset('assets/icon_empty.png', height: 30))
+                        : Image.asset('assets/icon_full.png', height: 30),
                     tooltip: event.freeSlotsCount > 0
                         ? 'Reservar'
                         : 'Clase completa',
                     enableFeedback: true,
                     onPressed: event.freeSlotsCount > 0
                         ? () {
-                            _showAppointmentDialog(context, event);
-                          }
+                      _showAppointmentDialog(context, event);
+                    }
                         : null,
                   ),
+
                 ],
               );
             },

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:gym/utils/constants.dart';
+import 'package:gym/utils/color_constants.dart';
 
 class TextFieldInput extends StatefulWidget {
   final TextEditingController controller;
@@ -46,23 +46,23 @@ class _TextFieldInputState extends State<TextFieldInput> {
         },
         decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey),
+            borderSide: const BorderSide(color: AppColors.borderTextField),
             borderRadius: BorderRadius.circular(15.0),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: Colors.grey),
+            borderSide: const BorderSide(color: AppColors.borderTextField),
             borderRadius: BorderRadius.circular(15.0),
           ),
           hintText: widget.hintText,
           fillColor: AppColors.textFieldColor,
           filled: true,
-          hintStyle: TextStyle(color: Colors.grey[500]),
+          hintStyle: const TextStyle(color: AppColors.textHintColor),
           suffixIcon: widget.isPassword
               ? IconButton(
                   icon: Icon(_passwordVisible
                       ? Icons.visibility
                       : Icons.visibility_off),
-                  color: Colors.grey,
+                  color: AppColors.textHintColor,
                   onPressed: () {
                     setState(() {
                       _passwordVisible = !_passwordVisible;

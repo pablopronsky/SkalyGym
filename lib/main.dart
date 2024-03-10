@@ -7,7 +7,6 @@ import 'package:gym/pages/my_home_page.dart';
 import 'package:gym/pages/profile.dart';
 import 'package:gym/pages/register_page.dart';
 import 'package:gym/pages/view_model/auth_check.dart';
-import 'package:gym/utils/theme_data.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 
@@ -18,8 +17,6 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  //MeetingService meetingService = MeetingService();
-  //meetingService.createMultipleClasses();
   initializeDateFormatting()
       .then((_) => runApp(const ProviderScope(child: MyApp())));
 }

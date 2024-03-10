@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:gym/utils/constants.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:gym/utils/color_constants.dart';
 
 class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   const AppBarComponent({Key? key}) : super(key: key);
@@ -7,9 +8,9 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text(
+      title: Text(
         'Skaly Fitness',
-        style: TextStyle(
+        style: GoogleFonts.robotoSlab(
           color: Colors.white,
           fontSize: 26,
           fontWeight: FontWeight.bold,

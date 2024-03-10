@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/components/my_text_box.dart';
-import 'package:gym/utils/constants.dart';
+import 'package:gym/utils/color_constants.dart';
 
 import '../components/snackbar.dart';
 
@@ -44,9 +44,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: "Ingresa nuevo $field",
-                  hintStyle: const TextStyle(color: AppColors.fontColor),
+                  hintStyle: const TextStyle(color: AppColors.fontColorPrimary),
                   focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.fontColor),
+                    borderSide: BorderSide(color: AppColors.fontColorPrimary),
                   ),
                 ),
                 onChanged: (value) {
@@ -61,7 +61,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextButton(
                       child: const Text(
                         'Cancelar',
-                        style: TextStyle(color: AppColors.fontColor),
+                        style: TextStyle(color: AppColors.fontColorPrimary),
                       ),
                       onPressed: () => Navigator.pop(context),
                     ),
@@ -69,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextButton(
                       child: const Text(
                         'Guardar',
-                        style: TextStyle(color: AppColors.fontColor),
+                        style: TextStyle(color: AppColors.fontColorPrimary),
                       ),
                       onPressed: () => Navigator.of(context).pop(newValue),
                     ),
@@ -129,14 +129,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     const Icon(
                       Icons.person,
                       size: 72,
-                      color: AppColors.fontColor,
+                      color: AppColors.fontColorPrimary,
                     ),
                     // Email
                     Text(
                       currentUser.email!,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        color: AppColors.fontColor,
+                        color: AppColors.fontColorPrimary,
                       ),
                     ),
                     const SizedBox(
@@ -147,7 +147,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Text(
                         'Mis Detalles',
                         style: TextStyle(
-                          color: AppColors.fontColor,
+                          color: AppColors.fontColorPrimary,
                         ),
                       ),
                     ),

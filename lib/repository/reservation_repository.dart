@@ -1,7 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gym/utils/constants.dart';
+import 'package:gym/utils/color_constants.dart';
 
 import '../components/snackbar.dart';
 import '../model/meeting.dart';
@@ -34,10 +34,10 @@ class ReservationRepository {
 
       // Ensure the current widget is still mounted before navigating
       if (context.mounted) {
-        Navigator.pop(context);
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const MyHomePage(),
         ));
+        Navigator.pop(context);
       }
     } catch (e) {
       showCustomSnackBar(

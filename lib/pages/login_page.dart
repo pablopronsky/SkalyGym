@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/text_field_input.dart';
 import 'package:gym/pages/register_page.dart';
@@ -6,7 +7,8 @@ import 'package:gym/pages/view_model/login_controller.dart';
 import 'package:gym/pages/view_model/login_state.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-import '../utils/constants.dart';
+import '../utils/color_constants.dart';
+import '../utils/text_constants.dart';
 import 'forgot_password_page.dart';
 
 class LoginPage extends StatefulHookConsumerWidget {
@@ -55,7 +57,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 50),
                 // logo
                 Image.asset(
                   'lib/assets/logo_skaly.png',
@@ -63,11 +64,14 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   height: 170,
                   color: Colors.white,
                 ),
-                const SizedBox(height: 25),
+                const SizedBox(height: 15),
                 //welcome back
-                const Text(
-                  'Accede a tu cuenta Skaly',
-                  style: TextStyle(color: AppColors.fontColor, fontSize: 24),
+                Text(
+                  TextReplace.loginTitle,
+                  style: GoogleFonts.roboto(
+                      color: AppColors.fontColorPrimary,
+                      fontSize: 24,
+                  ),
                 ),
                 const SizedBox(height: 25),
                 // mail
@@ -75,7 +79,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   controller: emailController,
                   hintText: 'Email',
                   obscureText: false,
-                  autofocus: true,
+                  autofocus: false,
                   keyboardType: TextInputType.emailAddress,
                   focusNode: emailFocusNode,
                   textInputAction: TextInputAction.next,
@@ -95,7 +99,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   textInputAction: TextInputAction.done,
                   isPassword: true,
                 ),
-                const SizedBox(height: 10),
+                const SizedBox(height: 20),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),
                   child: GestureDetector(
@@ -111,9 +115,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         Text(
                           'Recuperar contraseña',
                           style: TextStyle(
-                              color: AppColors.fontLinkColor,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
+                            color: AppColors.textHintColor,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.textHintColor,
+                            fontSize: 15,
+                          ),
                         ),
                       ],
                     ),
@@ -126,21 +132,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     onTap: () => ref
                         .read(loginControllerProvider.notifier)
                         .login(emailController.text, passwordController.text)),
-                const SizedBox(height: 25),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                const SizedBox(height: 35),
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 25.0),
                   child: Row(
                     children: [
                       Expanded(
                           child: Divider(
                         thickness: 0.5,
-                        color: Colors.grey[400],
+                        color: AppColors.textHintColor,
                       )),
-                      Expanded(
-                          child: Divider(
-                        thickness: 0.5,
-                        color: Colors.grey[400],
-                      ))
                     ],
                   ),
                 ),
@@ -150,7 +151,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   children: [
                     const Text(
                       'No tenes cuenta?',
-                      style: TextStyle(color: AppColors.fontColor),
+                      style: TextStyle(
+                          color: AppColors.textHintColor,
+                          fontSize: 15,),
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
@@ -162,8 +165,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       child: const Text(
                         'Registrate',
                         style: TextStyle(
-                          color: AppColors.fontLinkColor,
-                          fontWeight: FontWeight.bold,
+                          color: AppColors.textHintColor,
+                          decoration: TextDecoration.underline,
+                          decorationColor: AppColors.textHintColor,
+                          fontSize: 15,
                         ),
                       ),
                     ),

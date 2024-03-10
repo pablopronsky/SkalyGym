@@ -42,6 +42,7 @@ dependencies:
   cloud_firestore: ^4.15.5
   equatable: ^2.0.5
   hooks_riverpod: ^2.4.10
+  google_fonts: ^6.2.0
 
   flutter_localizations:
     sdk: flutter
@@ -50,6 +51,7 @@ dependencies:
   riverpod_annotation: ^2.3.4
   email_validator: ^2.1.17
   table_calendar: ^3.0.9
+  flutter_svg: ^2.0.10+1
 
 dev_dependencies:
   flutter_test:

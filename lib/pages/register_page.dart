@@ -1,9 +1,11 @@
 // ignore_for_file: unused_import
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/text_field_input.dart';
-import 'package:gym/utils/constants.dart';
+import 'package:gym/utils/color_constants.dart';
 import '../services/auth_service.dart';
 import 'login_page.dart';
 
@@ -51,38 +53,38 @@ class _RegisterPageState extends State<RegisterPage> {
                         Navigator.pushNamed(context, '/login_page');
                       },
                       child: const Padding(
-                        padding: EdgeInsets.all(4.0),
+                        padding: EdgeInsets.all(8.0),
                         child: Icon(
-                          Icons.arrow_back_outlined,
-                          size: 40,
-                          color: AppColors.fontColor,
+                          CupertinoIcons.arrow_left,
+                          size: 45,
+                          color: AppColors.fontColorPrimary,
                         ),
                       ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 10),
-                // logo
+                // LOGO
                 Image.asset(
                   'lib/assets/logo_skaly.png',
-                  width: 150,
-                  height: 150,
-                  color: AppColors.fontColor,
+                  width: 170,
+                  height: 170,
+                  color: AppColors.fontColorPrimary,
+
                 ),
-                const SizedBox(height: 10),
-                // Welcome back
-                const Text(
+                 Text(
                   'Crea tu cuenta',
-                  style: TextStyle(color: AppColors.fontColor, fontSize: 20),
+                  style: GoogleFonts.robotoSlab(color: AppColors.fontColorPrimary,
+                      fontSize: 20,
+                  ),
                 ),
-                const SizedBox(height: 25),
+                const SizedBox(height: 20),
                 // Name
                 TextFieldInput(
                   controller: nameController,
                   hintText: 'Nombre',
                   obscureText: false,
                   keyboardType: TextInputType.name,
-                  autofocus: true,
+                  autofocus: false,
                   focusNode: nameFocusNode,
                   textInputAction: TextInputAction.next,
                   isPassword: false,
@@ -147,9 +149,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   textInputAction: TextInputAction.done,
                   isPassword: true,
                 ),
-                const SizedBox(height: 50),
+                const SizedBox(height: 25),
                 MyButton(
-                  text: 'Registrar',
+                  text: 'Registrarse',
                   onTap: () async {
                     await authService.emailSignUp(
                         nameController.text,
@@ -161,8 +163,30 @@ class _RegisterPageState extends State<RegisterPage> {
                         context);
                   },
                 ),
-                const SizedBox(
-                  height: 50,
+                Padding(
+                  padding: const EdgeInsets.only(top: 20, bottom: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const SizedBox(width: 4),
+                      GestureDetector(
+                        onTap: () => Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const LoginPage()),
+                        ),
+                        child: const Text(
+                          'Abri sesión',
+                          style: TextStyle(
+                            color: AppColors.textHintColor,
+                            decoration: TextDecoration.underline,
+                            decorationColor: AppColors.textHintColor,
+                            fontSize: 15,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 )
               ],
             ),

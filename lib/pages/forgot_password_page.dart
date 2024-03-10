@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/components/button.dart';
-import 'package:gym/utils/constants.dart';
+import 'package:gym/utils/color_constants.dart';
 
 import '../components/text_field_input.dart';
 
@@ -76,7 +76,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
             // logo
             Image.asset('lib/assets/logo_skaly.png',
-                width: 150, height: 150, color: AppColors.fontColor),
+                width: 150, height: 150, color: AppColors.fontColorPrimary),
             const SizedBox(height: 25),
             const Padding(
               padding: EdgeInsets.all(8.0),
@@ -85,7 +85,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
-                  color: AppColors.fontColor,
+                  color: AppColors.fontColorPrimary,
                 ),
               ),
             ),

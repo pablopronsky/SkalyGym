@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../utils/constants.dart';
+import '../utils/color_constants.dart';
 
 class MyTextBox extends StatelessWidget {
   final String text;
@@ -39,7 +39,7 @@ class MyTextBox extends StatelessWidget {
               Text(
                 sectionName,
                 style: const TextStyle(
-                  color: AppColors.fontColor,
+                  color: AppColors.fontColorPrimary,
                 ),
               ),
               showSettingsIcon
@@ -47,7 +47,7 @@ class MyTextBox extends StatelessWidget {
                       onPressed: onPressed,
                       icon: const Icon(
                         Icons.settings,
-                        color: AppColors.fontColor,
+                        color: AppColors.fontColorPrimary,
                       ),
                     )
                   : const SizedBox(
@@ -59,7 +59,7 @@ class MyTextBox extends StatelessWidget {
           // Section details
           Text(
             text,
-            style: const TextStyle(color: AppColors.fontColor),
+            style: const TextStyle(color: AppColors.fontColorPrimary),
           ),
         ],
       ),
