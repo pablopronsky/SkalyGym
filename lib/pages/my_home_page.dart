@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/pages/profile.dart';
@@ -19,7 +20,7 @@ class MyHomePage extends StatefulWidget {
   MyHomePageState createState() => MyHomePageState();
 }
 
-class MyHomePageState extends State<MyHomePage>{
+class MyHomePageState extends State<MyHomePage> {
   final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
 
   void goToProfilePage() {
@@ -35,116 +36,141 @@ class MyHomePageState extends State<MyHomePage>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.backgroundColor,
-        appBar: const AppBarComponent(),
-        drawer: MyDrawer(
-          onProfileTap: goToProfilePage,
-        ),
-        body: SingleChildScrollView(
-          child: Column(
+      backgroundColor: AppColors.backgroundColor,
+      appBar: const AppBarComponent(),
+      drawer: MyDrawer(
+        onProfileTap: goToProfilePage,
+      ),
+      body: Column(
+        children: <Widget>[
+          Flexible(
+            fit: FlexFit.tight,
+            flex: 0,
+            child: FractionallySizedBox(
+              widthFactor: 0.5,
+              child: SingleChildScrollView(
+                child: Container(
+                  height: 150.0,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/bg.jpg'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // TITLE
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
-              //FOTO
-              Container(
-                height: 150.0,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage('assets/bg.jpg'),
-                    fit: BoxFit.cover,
+              Expanded(
+                child: Container(
+                  height: 50,
+                  decoration: const BoxDecoration(
+                    color: AppColors.backgroundColor,
+                    borderRadius: BorderRadius.zero,
                   ),
-                ),
-              ),
-              // TITLE
-              const SizedBox(height: 20,),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  Expanded(
-                    child: Container(
-                      height: 50,
-                      decoration: const BoxDecoration(
-                        color: AppColors.backgroundColor,
-                        borderRadius: BorderRadius.zero,
-                      ),
-                      padding: const EdgeInsets.symmetric(horizontal: 20),
-                      child:  Center(
-                        child: Text(
-                          TextReplace.mainTitle,
-                          style: GoogleFonts.lexend(
-                            color: AppColors.fontColorPrimary,
-                            fontSize: 24,
-                          ),
-                        ),
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Center(
+                    child: Text(
+                      TextReplace.mainTitle,
+                      style: GoogleFonts.lexend(
+                        color: AppColors.fontColorPrimary,
+                        fontSize: 24,
                       ),
                     ),
                   ),
-                ],
-              ),
-              const SizedBox(
-                height: 50,
-              ),
-              // APPOINTMENT LIST
-              const AppointmentsListComponent(),
-                SizedBox(
-                  height: 200,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                  Padding(
-                  padding: const EdgeInsets.only(right: 24.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => const Calendar(),
-                        ),
-                      );
-
-                    },
-                    child: const Icon(
-                      CupertinoIcons.calendar_circle,
-                      size: 100,
-                      color: AppColors.accentColor,
-                    ),
-                  ),),
-                    ],
-                  ),
                 ),
-                // ICON NAVIGATOR
-              // BOTTOM TEXT
-              Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      StreamBuilder<int>(
-                          stream: UserService.getUserCreditsStream(
-                              currentStudentEmail!),
-                          builder: (context, snapshot) {
-                            if (snapshot.hasError) {
-                              return const Text('Error');
-                            } else if (!snapshot.hasData) {
-                              return const CircularProgressIndicator();
-                            } else {
-                              return Padding(
-                                padding: const EdgeInsets.only(left: 15),
-                                child: Text(
-                                  '${TextReplace.mainBottom} ${snapshot.data}',
-                                  style: GoogleFonts.lexend(
-                                    fontSize: 16,
-                                    color: AppColors.fontColorPrimary,
-                                  ),
-                                ),
-                              );
-                            }
-                          }),
-                    ],
-                  ),
-                ],
-              )
+              ),
             ],
           ),
-        ));
+          const SizedBox(
+            height: 50,
+          ),
+          const Expanded(
+              child: AppointmentsListComponent()
+          ),
+          Flexible(
+            flex: 0,
+            fit: FlexFit.tight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 50.0, right: 30),
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const Calendar(),
+                            ),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                          minimumSize: const Size(150, 50),
+                          backgroundColor: AppColors.accentColor,
+                        ),
+                        child: Row(
+                          children: [
+                            const Icon(
+                              CupertinoIcons.add,
+                              color: AppColors.fontColorPrimary,
+                            ),
+                            Text(
+                              'Reservar',
+                              style: GoogleFonts.lexend(
+                                color: AppColors.fontColorPrimary,
+                                fontSize: 15,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    StreamBuilder<int>(
+                      stream: UserService.getUserCreditsStream(
+                          currentStudentEmail!),
+                      builder: (context, snapshot) {
+                        if (snapshot.hasError) {
+                          return const Text('Error');
+                        } else if (!snapshot.hasData) {
+                          return const CircularProgressIndicator();
+                        } else {
+                          return Padding(
+                            padding:
+                                const EdgeInsets.only(left: 40, bottom: 15),
+                            child: Text(
+                              '${TextReplace.mainBottom} ${snapshot.data}',
+                              style: GoogleFonts.lexend(
+                                fontSize: 16,
+                                color: AppColors.fontColorPrimary,
+                              ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }

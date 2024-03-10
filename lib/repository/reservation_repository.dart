@@ -113,13 +113,13 @@ class ReservationRepository {
 
         if (classId != null) {
           final classDocRef =
-          FirebaseFirestore.instance.collection('meetings').doc(classId);
+              FirebaseFirestore.instance.collection('meetings').doc(classId);
           transaction.update(classDocRef, {
             'userId': FieldValue.arrayRemove([userId]),
           });
         }
         final userDocRef =
-        FirebaseFirestore.instance.collection('users').doc(userId);
+            FirebaseFirestore.instance.collection('users').doc(userId);
         transaction
             .update(userDocRef, {'weeklyCredits': FieldValue.increment(1)});
       });

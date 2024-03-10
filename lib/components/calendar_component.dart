@@ -71,15 +71,12 @@ class _CalendarComponentState extends State<CalendarComponent> {
                   child: Text(
                     'Confirmar reserva el día ${DateFormat('dd/MM').format(meeting.startTime)}, ${DateFormat('HH:mm').format(meeting.startTime)}hs',
                     style: const TextStyle(
-                      color: AppColors.blackColor,
-                      fontSize: 16,
-                      height: 1.5
-                    ),
+                        color: AppColors.blackColor, fontSize: 16, height: 1.5),
                     textAlign: TextAlign.center,
                   ),
                 ),
         ),
-       // actionsPadding: const EdgeInsets.all(12.0), // Add padding
+        // actionsPadding: const EdgeInsets.all(12.0), // Add padding
         actions: <Widget>[
           Row(
             mainAxisAlignment:
@@ -296,8 +293,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
                   IconButton(
                     icon: event.freeSlotsCount > 0
                         ? (event.freeSlotsCount == 1
-                        ? Image.asset('assets/icon_half.png', height: 30)
-                        : Image.asset('assets/icon_empty.png', height: 30))
+                            ? Image.asset('assets/icon_half.png', height: 30)
+                            : Image.asset('assets/icon_empty.png', height: 30))
                         : Image.asset('assets/icon_full.png', height: 30),
                     tooltip: event.freeSlotsCount > 0
                         ? 'Reservar'
@@ -305,11 +302,10 @@ class _CalendarComponentState extends State<CalendarComponent> {
                     enableFeedback: true,
                     onPressed: event.freeSlotsCount > 0
                         ? () {
-                      _showAppointmentDialog(context, event);
-                    }
+                            _showAppointmentDialog(context, event);
+                          }
                         : null,
                   ),
-
                 ],
               );
             },

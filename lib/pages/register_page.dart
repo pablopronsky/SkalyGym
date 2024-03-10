@@ -69,12 +69,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   width: 170,
                   height: 170,
                   color: AppColors.fontColorPrimary,
-
                 ),
-                 Text(
+                Text(
                   'Crea tu cuenta',
-                  style: GoogleFonts.robotoSlab(color: AppColors.fontColorPrimary,
-                      fontSize: 20,
+                  style: GoogleFonts.robotoSlab(
+                    color: AppColors.fontColorPrimary,
+                    fontSize: 20,
                   ),
                 ),
                 const SizedBox(height: 20),

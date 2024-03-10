@@ -7,7 +7,6 @@ import '../components/calendar_component.dart';
 class Calendar extends StatelessWidget {
   const Calendar({super.key});
 
-
   void signOut() {
     FirebaseAuth.instance.signOut();
   }
@@ -15,14 +14,14 @@ class Calendar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        appBar: AppBarComponent(),
-        body: Column(
-          children: [
-            Expanded(
-              child: CalendarComponent(),
-            ),
-          ],
-        ),
-      );
+      appBar: AppBarComponent(),
+      body: Column(
+        children: [
+          Expanded(
+            child: CalendarComponent(),
+          ),
+        ],
+      ),
+    );
   }
 }

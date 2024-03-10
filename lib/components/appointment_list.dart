@@ -37,67 +37,68 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
         }
 
         if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
-          return SizedBox(
-              height: 250,
-              child: ListView.builder(
-                itemCount: snapshot.data!.docs.length,
-                itemBuilder: (context, index) {
-                  final reservaClaseData =
-                      snapshot.data!.docs[index].data() as Map<String, dynamic>;
-                  final reservasDate = Meeting.timeStampToDateTime(
-                      reservaClaseData['meetingDate']);
-                  return Column(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.only(left: 20, right: 20),
-                        child: ListTile(
-                          title: Text(
-                            Capitalize.capitalizeFirstLetter(
-                                DateFormat('EEEE', 'es_AR').format(reservasDate)),
-                            style: GoogleFonts.lexend(
-                              color: AppColors.fontColorPrimary,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          subtitle: Column(
-                            // Use a Column for vertical arrangement
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                DateFormat('dd/MM/yyyy – hh:mm a').format(reservasDate),
-                                  style: GoogleFonts.lexend(
-                                  color: AppColors.fontColorSecondary,
-                                ),
-                              ),
-                            ],
-                          ),
-                          trailing: IconButton(
-                            tooltip: 'Cancelar',
-                            icon: const Icon(
-                              CupertinoIcons.delete,
-                              color: AppColors.fontColorSecondary,
-                              size: 24,
-                            ),
-                            onPressed: () => reservaServicio.cancelarReserva(
-                                snapshot.data!.docs[index].id, userId!, context),
-                          ),
+          return ListView.builder(
+            itemCount: snapshot.data!.docs.length,
+            itemBuilder: (context, index) {
+              final reservaClaseData =
+                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
+              final reservasDate =
+                  Meeting.timeStampToDateTime(reservaClaseData['meetingDate']);
+              return Column(
+                children: [
+                  Container(
+                    margin: const EdgeInsets.only(left: 20, right: 20),
+                    child: ListTile(
+                      title: Text(
+                        Capitalize.capitalizeFirstLetter(
+                            DateFormat('EEEE', 'es_AR').format(reservasDate)),
+                        style: GoogleFonts.lexend(
+                          color: AppColors.fontColorPrimary,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
-                      if (index < snapshot.data!.docs.length - 1)
-                        Divider(
-                          thickness: 0.5,
-                          color: Colors.grey[400],
-                        )
-                    ],
-                  );
-                },
-              ));
+                      subtitle: Column(
+                        // Use a Column for vertical arrangement
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            DateFormat('dd/MM/yyyy – hh:mm a')
+                                .format(reservasDate),
+                            style: GoogleFonts.lexend(
+                              color: AppColors.fontColorSecondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                      trailing: IconButton(
+                        tooltip: 'Cancelar',
+                        icon: const Icon(
+                          CupertinoIcons.delete,
+                          color: AppColors.fontColorSecondary,
+                          size: 24,
+                        ),
+                        onPressed: () => reservaServicio.cancelarReserva(
+                            snapshot.data!.docs[index].id, userId!, context),
+                      ),
+                    ),
+                  ),
+                  if (index < snapshot.data!.docs.length - 1)
+                    Divider(
+                      thickness: 0.5,
+                      color: Colors.grey[400],
+                    )
+                ],
+              );
+            },
+          );
         } else {
-          return Text('No se encontraron reservas',
+          return Text(
+            'No se encontraron reservas',
             style: GoogleFonts.lexend(
               color: AppColors.fontColorPrimary,
               fontSize: 16,
-            ),);
+            ),
+          );
         }
       },
     );

@@ -28,7 +28,7 @@ class _ProfilePageState extends State<ProfilePage> {
     await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          backgroundColor: AppColors.textFieldColor,
+              backgroundColor: AppColors.textFieldColor,
               title: Text(
                 textAlign: TextAlign.center,
                 "Editar $field",
@@ -155,14 +155,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     MyTextBox(
                       text: userData['name'],
                       sectionName: 'Nombre',
-                      onPressed: ()=>{},
+                      onPressed: () => {},
                       showSettingsIcon: false,
                     ),
                     // Last Name
                     MyTextBox(
                       text: userData['lastName'],
                       sectionName: 'Apellido',
-                      onPressed: ()=>{},
+                      onPressed: () => {},
                       showSettingsIcon: false,
                     ),
                     // Email

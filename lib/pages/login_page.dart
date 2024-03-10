@@ -68,9 +68,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 //welcome back
                 Text(
                   TextReplace.loginTitle,
-                  style: GoogleFonts.roboto(
-                      color: AppColors.fontColorPrimary,
-                      fontSize: 24,
+                  style: GoogleFonts.lexend(
+                    color: AppColors.fontColorPrimary,
+                    fontSize: 24,
                   ),
                 ),
                 const SizedBox(height: 25),
@@ -152,8 +152,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                     const Text(
                       'No tenes cuenta?',
                       style: TextStyle(
-                          color: AppColors.textHintColor,
-                          fontSize: 15,),
+                        color: AppColors.textHintColor,
+                        fontSize: 15,
+                      ),
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(

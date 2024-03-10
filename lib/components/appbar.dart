@@ -10,7 +10,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         'Skaly Fitness',
-        style: GoogleFonts.robotoSlab(
+        style: GoogleFonts.lexend(
           color: Colors.white,
           fontSize: 26,
           fontWeight: FontWeight.bold,
