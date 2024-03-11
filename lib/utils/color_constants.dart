@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const backgroundColor = Color.fromRGBO(20, 20, 20, 1);
+  static const backgroundColor = Color.fromRGBO(25, 25, 25, 1);
   static const textFieldColor = Color.fromRGBO(27, 32, 40, 1.0);
   static const accentColor = Color.fromRGBO(53, 158, 254, 1);
   static const fontColorPrimary = Colors.white;

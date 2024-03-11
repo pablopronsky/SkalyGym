@@ -11,7 +11,7 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       title: Text(
         TextReplace.appBarTitle,
-        style: GoogleFonts.lexend(
+        style: GoogleFonts.inter(
           color: AppColors.fontColorPrimary,
           fontSize: 27,
           fontWeight: FontWeight.bold,

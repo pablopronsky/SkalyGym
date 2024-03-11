@@ -1,12 +1,15 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/utils/color_constants.dart';
 
 import '../components/text_field_input.dart';
+import '../utils/text_constants.dart';
 
 class ForgotPasswordPage extends StatefulWidget {
   const ForgotPasswordPage({super.key});
@@ -36,7 +39,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         builder: (context) {
           return const AlertDialog(
             content: Text(
-                "Si existe el usuario, se ha enviado un email de recuperacion."),
+                TextReplace.forgotPasswordEmailSent),
           );
         },
       );
@@ -44,8 +47,18 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       showDialog(
         context: context,
         builder: (context) {
-          return AlertDialog(
-            content: Text(_handleAuthExceptionMessage(error)),
+          return CupertinoAlertDialog(
+            title: Text(
+              TextReplace.forgotPasswordError, style: GoogleFonts.inter(
+              fontSize: 17,
+            )
+            ),
+            content: Text(_handleAuthExceptionMessage(error),
+              style: GoogleFonts.inter(
+                color: AppColors.backgroundColor,
+                fontSize: 15,
+              ),
+            ),
           );
         },
       );
@@ -81,7 +94,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             const Padding(
               padding: EdgeInsets.all(8.0),
               child: Text(
-                'Ingresa el mail de recuperación',
+                TextReplace.forgotPasswordTitle,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
@@ -103,7 +116,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             const SizedBox(height: 50),
             MyButton(
               onTap: () => passwordResetEmail(),
-              text: 'Recuperar contraseña',
+              text: TextReplace.forgotPasswordButton,
             ),
           ],
         ),

@@ -17,6 +17,11 @@ class TextReplace {
   static const String loginButton = "Inicia sesión";
   static const String loginRegisterFirst = "No tenes cuenta?";
   static const String loginRegisterSecond = "Registrate";
+  // FORGOT PASSWORD
+  static const String forgotPasswordTitle = "Ingresa el mail de recuperacion";
+  static const String forgotPasswordButton = "Recuperar contraseña";
+  static const String forgotPasswordEmailSent = "Si existe un email asociado, se enviará un link de recuperación.";
+  static const String forgotPasswordError = "Error";
   // AppBar
   static const String appBarTitle = "Skaly Fitness";
   // Home

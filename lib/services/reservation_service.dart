@@ -93,13 +93,13 @@ class ReservationService {
       showCustomSnackBar(
         context: context,
         message: 'Reserva eliminada correctamente',
-        backgroundColor: Colors.green[400],
+        backgroundColor: AppColors.accentColor,
       );
     } catch (error) {
       showCustomSnackBar(
         context: context,
         message: 'Error al eliminar la reserva}',
-        backgroundColor: Colors.red[400],
+        backgroundColor: AppColors.errorColor,
       );
     }
   }

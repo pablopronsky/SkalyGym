@@ -21,7 +21,8 @@ class MyTextBox extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         color: AppColors.textFieldColor,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: AppColors.textHintColor, width: 0.4)
       ),
       padding: const EdgeInsets.only(left: 15, bottom: 15),
       margin: const EdgeInsets.only(
@@ -46,8 +47,8 @@ class MyTextBox extends StatelessWidget {
                   ? IconButton(
                       onPressed: onPressed,
                       icon: const Icon(
-                        Icons.settings,
-                        color: AppColors.fontColorPrimary,
+                        Icons.edit_outlined,
+                        color: AppColors.textHintColor,
                       ),
                     )
                   : const SizedBox(

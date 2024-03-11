@@ -29,7 +29,7 @@ class ReservationRepository {
       showCustomSnackBar(
         context: context,
         message: 'Reserva creada exitosamente.',
-        backgroundColor: AppColors.successColor,
+        backgroundColor: AppColors.accentColor,
       );
       if (context.mounted) {
         Navigator.pop(context);
@@ -131,7 +131,7 @@ class ReservationRepository {
     showCustomSnackBar(
       context: context,
       message: message,
-      backgroundColor: Colors.red[400],
+      backgroundColor: AppColors.errorColor,
     );
   }
 
