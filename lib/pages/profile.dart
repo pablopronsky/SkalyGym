@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/components/my_text_box.dart';
 import 'package:gym/utils/color_constants.dart';
@@ -143,12 +144,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(
                       height: 50,
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(left: 25.0),
+                     Padding(
+                      padding: const EdgeInsets.only(left: 25.0),
                       child: Text(
                         TextReplace.profileMyDetails,
-                        style: TextStyle(
+                        style: GoogleFonts.inter(
                           color: AppColors.fontColorPrimary,
+                          fontSize: 28,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),

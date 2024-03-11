@@ -24,7 +24,7 @@ class TextReplace {
   static const String homeFooter = 'Clases disponibles para reservar:';
   static const String homeGoToButton = "Ver calendario";
   // Drawer
-  static const String drawerFirst = "H o m e";
+  static const String drawerFirst = "H O M E";
   static const String drawerSecond = "P E R F I L";
   static const String drawerLast = "C E R R A R  S E S I O N";
   // Profile
