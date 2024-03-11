@@ -40,19 +40,31 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              final reservaClaseData = snapshot.data!.docs[index].data() as Map<String, dynamic>;
-              final reservasDate = Meeting.timeStampToDateTime(reservaClaseData['meetingDate']);
+              final reservations = snapshot.data!.docs
+                  .map((doc) => doc.data() as Map<String, dynamic>)
+                  .toList();
+              reservations.sort((a, b) {
+                DateTime dateTimeA =
+                    Meeting.timeStampToDateTime(a['meetingDate']);
+                DateTime dateTimeB =
+                    Meeting.timeStampToDateTime(b['meetingDate']);
+                return dateTimeA.compareTo(dateTimeB);
+              });
+              final reservaClaseData = reservations[index];
+              final reservasDate =
+                  Meeting.timeStampToDateTime(reservaClaseData['meetingDate']);
               return Column(
                 children: [
                   Container(
-                    margin: const EdgeInsets.only(left: 20, right: 20),
+                    margin: const EdgeInsets.only(left: 5, right: 20),
                     child: Row(
                       children: [
                         Expanded(
                           child: ListTile(
                             title: Text(
                               Capitalize.capitalizeFirstLetter(
-                                DateFormat('EEEE', 'es_AR').format(reservasDate),
+                                DateFormat('EEEE', 'es_AR')
+                                    .format(reservasDate),
                               ),
                               style: GoogleFonts.inter(
                                 color: AppColors.fontColorPrimary,
@@ -63,7 +75,8 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  DateFormat('dd/MM/yyyy – hh:mm a').format(reservasDate),
+                                  DateFormat('dd/MM/yyyy – hh:mm a')
+                                      .format(reservasDate),
                                   style: GoogleFonts.lexend(
                                     color: AppColors.fontColorSecondary,
                                   ),

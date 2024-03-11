@@ -85,7 +85,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
         actions: <Widget>[
           Row(
             mainAxisAlignment:
-                MainAxisAlignment.spaceAround, // Use spaceBetween
+                MainAxisAlignment.spaceAround,
             children: [
               TextButton(
                 child: Text(
@@ -135,7 +135,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
     _meetingService.loadFirestoreEvents();
     _subscription = _meetingService.eventsStream.listen((events) {
       setState(() {
-        _events = events; // Update your State variable
+        _events = events;
       });
     });
     _repository.calculateFreeSlotsPerMeeting();
@@ -242,7 +242,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 return Text(
                   monthName,
                   textAlign: TextAlign.center,
-                  style:  GoogleFonts.inter(
+                  style: GoogleFonts.inter(
                     fontSize: 26,
                     color: AppColors.fontColorPrimary,
                     fontWeight: FontWeight.bold,
@@ -260,13 +260,55 @@ class _CalendarComponentState extends State<CalendarComponent> {
             child: ListView.separated(
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
-              itemCount: _meetingService.getEventsForTheDay(_selectedDay).length,
+              itemCount:
+                  _meetingService.getEventsForTheDay(_selectedDay).length,
               itemBuilder: (context, index) {
                 final event =
                     _meetingService.getEventsForTheDay(_selectedDay)[index];
                 return Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
+                    Expanded(
+                      child: InkWell(
+                        onTap: event.freeSlotsCount > 0
+                            ? () {
+                                _showAppointmentDialog(context, event);
+                              }
+                            : null,
+                        child: Material(
+                          color: AppColors.backgroundColor,
+                          child: ListTile(
+                            title: Text(
+                              Capitalize.capitalizeFirstLetter(event.subject),
+                              style: const TextStyle(
+                                fontSize: 18,
+                                color: AppColors.fontColorPrimary,
+                              ),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  DateFormat('dd-MM-yyyy HH:mm')
+                                      .format(event.startTime),
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: AppColors.fontColorPrimary,
+                                  ),
+                                ),
+                                Text(
+                                  "${TextReplace.calendarFreeSlot}${event.freeSlotsCount}.",
+                                  style: const TextStyle(
+                                    fontSize: 15,
+                                    color: AppColors.fontColorPrimary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
                     Container(
                       margin: const EdgeInsets.only(left: 13.0),
                       padding: const EdgeInsets.all(20),
@@ -274,60 +316,14 @@ class _CalendarComponentState extends State<CalendarComponent> {
                         color: AppColors.borderTextField,
                         borderRadius: BorderRadius.circular(8.0),
                       ),
-                      child: const Icon(
-                        Icons.calendar_month_outlined,
-                        color: AppColors.fontColorPrimary,
-                        size: 25,
-                      ),
-                    ),
-                    Expanded(
-                      child: Material(
-                        color: AppColors.backgroundColor,
-                        child: ListTile(
-                          title: Text(
-                            Capitalize.capitalizeFirstLetter(event.subject),
-                            style: const TextStyle(
-                                fontSize: 18, color: AppColors.fontColorPrimary,
-                            ),
-                          ),
-                          subtitle: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                DateFormat('dd-MM-yyyy HH:mm')
-                                    .format(event.startTime),
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: AppColors.fontColorPrimary,
-                                ),
-                              ),
-                              Text(
-                                "${TextReplace.calendarFreeSlot}${event.freeSlotsCount}.",
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                  color: AppColors.fontColorPrimary,
-                                ),
-                              ),
-                            ],
-                          ),
+                      child: Opacity(
+                        opacity: (event.freeSlotsCount < 1) ? 0.5 : 1.0, // Condition here
+                        child: const Icon(
+                          Icons.calendar_month_outlined,
+                          color: AppColors.fontColorPrimary,
+                          size: 24,
                         ),
                       ),
-                    ),
-                    IconButton(
-                      icon: event.freeSlotsCount > 0
-                          ? (event.freeSlotsCount == 1
-                          ? const Icon(Icons.arrow_forward_ios_outlined, size: 24,color: AppColors.textHintColor,)
-                          : const Icon(Icons.arrow_forward_ios_outlined, size: 24,color: AppColors.textHintColor,))
-                          : const Icon(CupertinoIcons.arrow_right_square, size: 24),
-                      tooltip: event.freeSlotsCount > 0
-                          ? 'Reservar'
-                          : 'Clase completa',
-                      enableFeedback: true,
-                      onPressed: event.freeSlotsCount > 0
-                          ? () {
-                        _showAppointmentDialog(context, event);
-                      }
-                          : null,
                     ),
                   ],
                 );
@@ -337,7 +333,9 @@ class _CalendarComponentState extends State<CalendarComponent> {
               ),
             ),
           ),
-              const SizedBox(height: 20,)
+          const SizedBox(
+            height: 20,
+          )
         ],
       ),
     );

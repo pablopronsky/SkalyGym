@@ -2,7 +2,7 @@ class TextReplace {
   // Register
   static const String registerTitle = "Crea tu cuenta";
   static const String registerTxtName = "Nombre";
-  static const String registerTxtLastName= "Apellido";
+  static const String registerTxtLastName = "Apellido";
   static const String registerTxtPhoneNumber = "Celular";
   static const String registerTxtEmail = "Email";
   static const String registerTxtPassword = "Contraseña";
@@ -29,9 +29,9 @@ class TextReplace {
   static const String drawerLast = "C E R R A R  S E S I O N";
   // Profile
   static const String profileMyDetails = "Mis detalles";
-  static const String profileName  = "Nombre";
-  static const String profileLastName  = "Apellido";
-  static const String profilePhoneNumber  = "Celular";
+  static const String profileName = "Nombre";
+  static const String profileLastName = "Apellido";
+  static const String profilePhoneNumber = "Celular";
   // Calendar
   static const String calendarFreeSlot = "Cupos libres: ";
 }

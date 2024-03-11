@@ -52,7 +52,7 @@ class MyHomePageState extends State<MyHomePage> {
                   height: 180.0,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/bg.jpg'),
+                      image: AssetImage('assets/home_background.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -81,7 +81,8 @@ class MyHomePageState extends State<MyHomePage> {
                       TextReplace.homeTitle,
                       style: GoogleFonts.inter(
                         color: AppColors.fontColorPrimary,
-                        fontSize: 24,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -90,7 +91,7 @@ class MyHomePageState extends State<MyHomePage> {
             ],
           ),
           const SizedBox(
-            height: 50,
+            height: 40,
           ),
           // LIST OF APPOINTMENTS
           const Expanded(child: AppointmentsListComponent()),
