@@ -38,8 +38,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         context: context,
         builder: (context) {
           return const AlertDialog(
-            content: Text(
-                TextReplace.forgotPasswordEmailSent),
+            content: Text(TextReplace.forgotPasswordEmailSent),
           );
         },
       );
@@ -48,12 +47,12 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
         context: context,
         builder: (context) {
           return CupertinoAlertDialog(
-            title: Text(
-              TextReplace.forgotPasswordError, style: GoogleFonts.inter(
-              fontSize: 17,
-            )
-            ),
-            content: Text(_handleAuthExceptionMessage(error),
+            title: Text(TextReplace.forgotPasswordError,
+                style: GoogleFonts.inter(
+                  fontSize: 17,
+                )),
+            content: Text(
+              _handleAuthExceptionMessage(error),
               style: GoogleFonts.inter(
                 color: AppColors.backgroundColor,
                 fontSize: 15,

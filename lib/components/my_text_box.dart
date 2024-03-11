@@ -20,10 +20,9 @@ class MyTextBox extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: AppColors.textFieldColor,
-        borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: AppColors.textHintColor, width: 0.4)
-      ),
+          color: AppColors.textFieldColor,
+          borderRadius: BorderRadius.circular(15),
+          border: Border.all(color: AppColors.textHintColor, width: 0.4)),
       padding: const EdgeInsets.only(left: 15, bottom: 15),
       margin: const EdgeInsets.only(
         left: 20,

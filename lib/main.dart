@@ -7,6 +7,7 @@ import 'package:gym/pages/my_home_page.dart';
 import 'package:gym/pages/profile.dart';
 import 'package:gym/pages/register_page.dart';
 import 'package:gym/pages/view_model/auth_check.dart';
+import 'package:gym/providers/theme_provider.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 
@@ -21,10 +22,11 @@ void main() async {
       .then((_) => runApp(const ProviderScope(child: MyApp())));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends ConsumerWidget {
   const MyApp({super.key});
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final themeMode = ref.watch(themeModeProvider.notifier);
     return MaterialApp(
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
@@ -44,6 +46,9 @@ class MyApp extends StatelessWidget {
         'auth_check': (context) => const AuthChecker(),
       },
       debugShowCheckedModeBanner: false,
+      theme: ThemeData.light(),
+      darkTheme: ThemeData.dark(),
+      themeMode: themeMode.state,
       home: const AuthChecker(),
     );
   }

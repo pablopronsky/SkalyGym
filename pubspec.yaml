@@ -52,6 +52,7 @@ dependencies:
   email_validator: ^2.1.17
   table_calendar: ^3.0.9
   flutter_svg: ^2.0.10+1
+  shared_preferences: ^2.2.2
 
 dev_dependencies:
   flutter_test:

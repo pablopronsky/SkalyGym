@@ -84,8 +84,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
               ),
         actions: <Widget>[
           Row(
-            mainAxisAlignment:
-                MainAxisAlignment.spaceAround,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               TextButton(
                 child: Text(
@@ -272,56 +271,49 @@ class _CalendarComponentState extends State<CalendarComponent> {
                       child: InkWell(
                         onTap: event.freeSlotsCount > 0
                             ? () {
-                                _showAppointmentDialog(context, event);
-                              }
+                          _showAppointmentDialog(context, event);
+                        }
                             : null,
                         child: Material(
                           color: AppColors.backgroundColor,
                           child: ListTile(
                             title: Text(
                               Capitalize.capitalizeFirstLetter(event.subject),
-                              style: const TextStyle(
+                              style: GoogleFonts.inter(
                                 fontSize: 18,
                                 color: AppColors.fontColorPrimary,
                               ),
                             ),
-                            subtitle: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            trailing: Row(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  DateFormat('dd-MM-yyyy HH:mm')
-                                      .format(event.startTime),
-                                  style: const TextStyle(
+                                  DateFormat('dd-MM-yyyy HH:mm').format(event.startTime),
+                                  style: GoogleFonts.inter(
                                     fontSize: 15,
                                     color: AppColors.fontColorPrimary,
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                Text(
-                                  "${TextReplace.calendarFreeSlot}${event.freeSlotsCount}.",
-                                  style: const TextStyle(
-                                    fontSize: 15,
+                                const SizedBox(width: 20.0),
+                                Opacity(
+                                  opacity: (event.freeSlotsCount < 1) ? 0.2 : 0.7,
+                                  child: const Icon(
+                                    Icons.calendar_month_outlined,
                                     color: AppColors.fontColorPrimary,
+                                    size: 26,
                                   ),
                                 ),
                               ],
                             ),
+                            subtitle: Text(
+                              "${TextReplace.calendarFreeSlot}${event.freeSlotsCount}.",
+                              style: GoogleFonts.inter(
+                                fontSize: 15,
+                                color: AppColors.fontColorPrimary,
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(left: 13.0),
-                      padding: const EdgeInsets.all(20),
-                      decoration: BoxDecoration(
-                        color: AppColors.borderTextField,
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                      child: Opacity(
-                        opacity: (event.freeSlotsCount < 1) ? 0.5 : 1.0, // Condition here
-                        child: const Icon(
-                          Icons.calendar_month_outlined,
-                          color: AppColors.fontColorPrimary,
-                          size: 24,
                         ),
                       ),
                     ),
@@ -329,7 +321,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 );
               },
               separatorBuilder: (context, index) => const Divider(
-                color: AppColors.textFieldColor,
+                color: AppColors.borderTextField,
               ),
             ),
           ),

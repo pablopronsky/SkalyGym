@@ -20,7 +20,8 @@ class TextReplace {
   // FORGOT PASSWORD
   static const String forgotPasswordTitle = "Ingresa el mail de recuperacion";
   static const String forgotPasswordButton = "Recuperar contraseña";
-  static const String forgotPasswordEmailSent = "Si existe un email asociado, se enviará un link de recuperación.";
+  static const String forgotPasswordEmailSent =
+      "Si existe un email asociado, se enviará un link de recuperación.";
   static const String forgotPasswordError = "Error";
   // AppBar
   static const String appBarTitle = "Skaly Fitness";

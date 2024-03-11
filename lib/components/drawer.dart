@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym/components/list_tile.dart';
 import 'package:gym/utils/color_constants.dart';
 import 'package:gym/utils/text_constants.dart';
+import 'package:gym/providers/theme_provider.dart';
 
 import '../pages/view_model/login_controller.dart';
 
@@ -16,6 +17,7 @@ class MyDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final tSwitchProvider = ref.watch(themeSwitchProvider);
     return Drawer(
       backgroundColor: AppColors.textFieldColor,
       child: Padding(
@@ -55,6 +57,12 @@ class MyDrawer extends ConsumerWidget {
                     ref.read(loginControllerProvider.notifier).signOut(),
               ),
             ),
+            Switch(
+              value: tSwitchProvider,
+              onChanged: (value) {
+                ref.read(themeSwitchProvider.notifier).state = value;
+              },
+            )
           ],
         ),
       ),
