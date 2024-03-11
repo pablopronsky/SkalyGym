@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/components/my_text_box.dart';
 import 'package:gym/utils/color_constants.dart';
+import 'package:gym/utils/text_constants.dart';
 
 import '../components/snackbar.dart';
 
@@ -145,7 +146,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     const Padding(
                       padding: EdgeInsets.only(left: 25.0),
                       child: Text(
-                        'Mis Detalles',
+                        TextReplace.profileMyDetails,
                         style: TextStyle(
                           color: AppColors.fontColorPrimary,
                         ),
@@ -154,22 +155,22 @@ class _ProfilePageState extends State<ProfilePage> {
                     // Name
                     MyTextBox(
                       text: userData['name'],
-                      sectionName: 'Nombre',
+                      sectionName: TextReplace.profileName,
                       onPressed: () => {},
                       showSettingsIcon: false,
                     ),
                     // Last Name
                     MyTextBox(
                       text: userData['lastName'],
-                      sectionName: 'Apellido',
+                      sectionName: TextReplace.profileLastName,
                       onPressed: () => {},
                       showSettingsIcon: false,
                     ),
                     // Email
                     MyTextBox(
                       text: userData['phoneNumber'],
-                      sectionName: 'Celular',
-                      onPressed: () => editField('Celular'),
+                      sectionName: TextReplace.profilePhoneNumber,
+                      onPressed: () => editField('celular'),
                     ),
                     const SizedBox(
                       height: 50,

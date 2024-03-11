@@ -7,6 +7,7 @@ import 'package:gym/components/button.dart';
 import 'package:gym/components/text_field_input.dart';
 import 'package:gym/utils/color_constants.dart';
 import '../services/auth_service.dart';
+import '../utils/text_constants.dart';
 import 'login_page.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -71,17 +72,17 @@ class _RegisterPageState extends State<RegisterPage> {
                   color: AppColors.fontColorPrimary,
                 ),
                 Text(
-                  'Crea tu cuenta',
-                  style: GoogleFonts.robotoSlab(
+                  TextReplace.registerTitle,
+                  style: GoogleFonts.lexend(
                     color: AppColors.fontColorPrimary,
-                    fontSize: 20,
+                    fontSize: 24,
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 35),
                 // Name
                 TextFieldInput(
                   controller: nameController,
-                  hintText: 'Nombre',
+                  hintText: TextReplace.registerTxtName,
                   obscureText: false,
                   keyboardType: TextInputType.name,
                   autofocus: false,
@@ -93,7 +94,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 // Last name
                 TextFieldInput(
                   controller: lastnameController,
-                  hintText: 'Apellido',
+                  hintText: TextReplace.registerTxtLastName,
                   obscureText: false,
                   keyboardType: TextInputType.name,
                   autofocus: false,
@@ -105,7 +106,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 // Phone number
                 TextFieldInput(
                   controller: phoneNumberController,
-                  hintText: 'Celular',
+                  hintText: TextReplace.registerTxtPhoneNumber,
                   obscureText: false,
                   keyboardType: TextInputType.phone,
                   autofocus: false,
@@ -117,7 +118,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 // Email
                 TextFieldInput(
                   controller: emailController,
-                  hintText: 'Email',
+                  hintText: TextReplace.registerTxtEmail,
                   obscureText: false,
                   keyboardType: TextInputType.emailAddress,
                   autofocus: false,
@@ -129,7 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 // Password
                 TextFieldInput(
                   controller: passwordController,
-                  hintText: 'Contraseña',
+                  hintText: TextReplace.registerTxtPassword,
                   obscureText: true,
                   keyboardType: TextInputType.text,
                   autofocus: false,
@@ -141,7 +142,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 // Repeat password
                 TextFieldInput(
                   controller: confirmPasswordController,
-                  hintText: 'Confirmar contraseña',
+                  hintText: TextReplace.registerTxtConfirmPassword,
                   obscureText: true,
                   keyboardType: TextInputType.text,
                   autofocus: false,
@@ -151,7 +152,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 const SizedBox(height: 25),
                 MyButton(
-                  text: 'Registrarse',
+                  text: TextReplace.registerButton,
                   onTap: () async {
                     await authService.emailSignUp(
                         nameController.text,
@@ -176,7 +177,7 @@ class _RegisterPageState extends State<RegisterPage> {
                               builder: (context) => const LoginPage()),
                         ),
                         child: const Text(
-                          'Abri sesión',
+                          TextReplace.registerLoginPage,
                           style: TextStyle(
                             color: AppColors.textHintColor,
                             decoration: TextDecoration.underline,

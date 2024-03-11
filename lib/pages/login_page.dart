@@ -68,7 +68,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 //welcome back
                 Text(
                   TextReplace.loginTitle,
-                  style: GoogleFonts.lexend(
+                  style: GoogleFonts.inter(
                     color: AppColors.fontColorPrimary,
                     fontSize: 24,
                   ),
@@ -77,7 +77,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 // mail
                 TextFieldInput(
                   controller: emailController,
-                  hintText: 'Email',
+                  hintText: TextReplace.loginTxtEmail,
                   obscureText: false,
                   autofocus: false,
                   keyboardType: TextInputType.emailAddress,
@@ -91,7 +91,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 // contraseña
                 TextFieldInput(
                   controller: passwordController,
-                  hintText: 'Contraseña',
+                  hintText: TextReplace.loginTxtPw,
                   obscureText: true,
                   autofocus: false,
                   keyboardType: TextInputType.visiblePassword,
@@ -113,7 +113,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
-                          'Recuperar contraseña',
+                          TextReplace.loginPwRecovery,
                           style: TextStyle(
                             color: AppColors.textHintColor,
                             decoration: TextDecoration.underline,
@@ -128,7 +128,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 const SizedBox(height: 25),
                 // boton de abrir sesion
                 MyButton(
-                    text: 'Abrir sesion',
+                    text: TextReplace.loginButton,
                     onTap: () => ref
                         .read(loginControllerProvider.notifier)
                         .login(emailController.text, passwordController.text)),
@@ -150,7 +150,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      'No tenes cuenta?',
+                      TextReplace.loginRegisterFirst,
                       style: TextStyle(
                         color: AppColors.textHintColor,
                         fontSize: 15,
@@ -164,7 +164,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                             builder: (context) => const RegisterPage()),
                       ),
                       child: const Text(
-                        'Registrate',
+                        TextReplace.loginRegisterSecond,
                         style: TextStyle(
                           color: AppColors.textHintColor,
                           decoration: TextDecoration.underline,

@@ -1,7 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/pages/profile.dart';
@@ -43,14 +41,15 @@ class MyHomePageState extends State<MyHomePage> {
       ),
       body: Column(
         children: <Widget>[
+          // IMAGE
           Flexible(
             fit: FlexFit.tight,
             flex: 0,
             child: FractionallySizedBox(
-              widthFactor: 0.5,
+              widthFactor: 1,
               child: SingleChildScrollView(
                 child: Container(
-                  height: 150.0,
+                  height: 180.0,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/bg.jpg'),
@@ -65,6 +64,7 @@ class MyHomePageState extends State<MyHomePage> {
           const SizedBox(
             height: 20,
           ),
+          // TITLE
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
@@ -78,8 +78,8 @@ class MyHomePageState extends State<MyHomePage> {
                   padding: const EdgeInsets.symmetric(horizontal: 20),
                   child: Center(
                     child: Text(
-                      TextReplace.mainTitle,
-                      style: GoogleFonts.lexend(
+                      TextReplace.homeTitle,
+                      style: GoogleFonts.inter(
                         color: AppColors.fontColorPrimary,
                         fontSize: 24,
                       ),
@@ -92,9 +92,9 @@ class MyHomePageState extends State<MyHomePage> {
           const SizedBox(
             height: 50,
           ),
-          const Expanded(
-              child: AppointmentsListComponent()
-          ),
+          // LIST OF APPOINTMENTS
+          const Expanded(child: AppointmentsListComponent()),
+          // BUTTON TO CALENDAR PAGE
           Flexible(
             flex: 0,
             fit: FlexFit.tight,
@@ -105,7 +105,7 @@ class MyHomePageState extends State<MyHomePage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(bottom: 50.0, right: 30),
+                      padding: const EdgeInsets.only(bottom: 50.0, right: 40),
                       child: ElevatedButton(
                         onPressed: () {
                           Navigator.push(
@@ -118,18 +118,16 @@ class MyHomePageState extends State<MyHomePage> {
                         style: ElevatedButton.styleFrom(
                           minimumSize: const Size(150, 50),
                           backgroundColor: AppColors.accentColor,
+                          enableFeedback: true,
                         ),
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            const Icon(
-                              CupertinoIcons.add,
-                              color: AppColors.fontColorPrimary,
-                            ),
                             Text(
-                              'Reservar',
+                              TextReplace.homeGoToButton,
                               style: GoogleFonts.lexend(
-                                color: AppColors.fontColorPrimary,
-                                fontSize: 15,
+                                color: Colors.white,
+                                fontSize: 18,
                               ),
                             ),
                           ],
@@ -138,6 +136,7 @@ class MyHomePageState extends State<MyHomePage> {
                     ),
                   ],
                 ),
+                // REMAINING CLASSES
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
@@ -152,9 +151,9 @@ class MyHomePageState extends State<MyHomePage> {
                         } else {
                           return Padding(
                             padding:
-                                const EdgeInsets.only(left: 40, bottom: 15),
+                                const EdgeInsets.only(left: 20, bottom: 15),
                             child: Text(
-                              '${TextReplace.mainBottom} ${snapshot.data}',
+                              '${TextReplace.homeFooter} ${snapshot.data}',
                               style: GoogleFonts.lexend(
                                 fontSize: 16,
                                 color: AppColors.fontColorPrimary,

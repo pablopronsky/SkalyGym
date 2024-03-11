@@ -4,7 +4,7 @@ import 'dart:collection';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/painting.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/repository/reservation_repository.dart';
 import 'package:gym/services/reservation_service.dart';
 import 'package:gym/utils/color_constants.dart';
@@ -14,6 +14,7 @@ import '../model/meeting.dart';
 import '../model/reservation.dart';
 import '../services/meeting_service.dart';
 import '../utils/capitalize.dart';
+import '../utils/text_constants.dart';
 
 class CalendarComponent extends StatefulWidget {
   const CalendarComponent({super.key});
@@ -22,16 +23,16 @@ class CalendarComponent extends StatefulWidget {
 }
 
 class _CalendarComponentState extends State<CalendarComponent> {
-  Color meetingColor = Colors.transparent;
   late DateTime _focusedDay;
   late DateTime _firstDay;
   late DateTime _lastDay;
   late DateTime _selectedDay;
   late Map<DateTime, List<Meeting>> _events;
-  final MeetingService _meetingService = MeetingService();
   late StreamSubscription _subscription;
-  ReservationService bookingService = ReservationService();
+  final MeetingService _meetingService = MeetingService();
   final ReservationRepository _repository = ReservationRepository();
+  ReservationService bookingService = ReservationService();
+  DateTime today = DateTime.now();
 
   void _showAppointmentDialog(BuildContext context, Meeting meeting) async {
     /// This is the appointment that is sent to appointmentService.createAppointment
@@ -47,47 +48,51 @@ class _CalendarComponentState extends State<CalendarComponent> {
     showDialog(
       context: context,
       builder: (BuildContext context) => CupertinoAlertDialog(
-        title: const Center(
+        title: Center(
           child: Padding(
-            padding: EdgeInsets.all(8.0),
+            padding: const EdgeInsets.only(bottom: 18.0),
             child: Text(
               'Reservar clase',
-              style: TextStyle(
+              style: GoogleFonts.lexend(
                 color: AppColors.backgroundColor,
-                fontSize: 20,
+                fontSize: 22,
               ),
             ),
           ),
         ),
-        content: SingleChildScrollView(
-          child: isClassFull
-              ? const Center(
-                  child: Text(
-                    'La clase esta llena',
-                    style: TextStyle(color: AppColors.blackColor),
-                  ),
-                )
-              : Center(
-                  child: Text(
-                    'Confirmar reserva el día ${DateFormat('dd/MM').format(meeting.startTime)}, ${DateFormat('HH:mm').format(meeting.startTime)}hs',
-                    style: const TextStyle(
-                        color: AppColors.blackColor, fontSize: 16, height: 1.5),
-                    textAlign: TextAlign.center,
+        content: isClassFull
+            ? Center(
+                child: Text(
+                  'La clase esta llena',
+                  style: GoogleFonts.lexend(
+                    color: AppColors.backgroundColor,
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-        ),
-        // actionsPadding: const EdgeInsets.all(12.0), // Add padding
+              )
+            : Center(
+                child: Text(
+                  'Confirmar reserva el día ${DateFormat('dd/MM').format(meeting.startTime)}, ${DateFormat('HH:mm').format(meeting.startTime)}hs',
+                  style: GoogleFonts.lexend(
+                    color: AppColors.backgroundColor,
+                    fontSize: 15,
+                    height: 1.5,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
         actions: <Widget>[
           Row(
             mainAxisAlignment:
                 MainAxisAlignment.spaceAround, // Use spaceBetween
             children: [
               TextButton(
-                child: const Text(
+                child: Text(
                   'Cancelar',
-                  style: TextStyle(
-                    color: AppColors.backgroundColor,
-                    fontSize: 18,
+                  style: GoogleFonts.lexend(
+                    color: AppColors.textFieldColor,
+                    fontSize: 17,
                   ),
                 ),
                 onPressed: () {
@@ -96,18 +101,17 @@ class _CalendarComponentState extends State<CalendarComponent> {
               ),
               if (!isClassFull)
                 TextButton(
-                  child: const Text(
+                  child: Text(
                     'Reservar',
-                    style: TextStyle(
+                    style: GoogleFonts.lexend(
                       color: AppColors.backgroundColor,
+                      fontSize: 17,
                       fontWeight: FontWeight.bold,
-                      fontSize: 18,
                     ),
                   ),
                   onPressed: () async {
                     bookingService.makeAppointment(
                         context, meeting, newAppointment);
-                    Navigator.pop(context);
                   },
                 ),
             ],
@@ -158,6 +162,13 @@ class _CalendarComponentState extends State<CalendarComponent> {
             height: 30,
           ),
           TableCalendar(
+            enabledDayPredicate: (day) {
+              final now = DateTime.now();
+              final todayDate = DateTime(now.year, now.month, now.day);
+              final lastEnabledDate = todayDate.add(const Duration(days: 5));
+              return day.isAfter(todayDate.subtract(const Duration(days: 1))) &&
+                  day.isBefore(lastEnabledDate.add(const Duration(days: 1)));
+            },
             daysOfWeekStyle: const DaysOfWeekStyle(
               weekdayStyle: (TextStyle(
                 color: AppColors.fontColorPrimary,
@@ -168,8 +179,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
             ),
             availableGestures: AvailableGestures.none,
             locale: 'es_ES',
-            availableCalendarFormats: const {CalendarFormat.week: 'week'},
-            calendarFormat: CalendarFormat.week,
+            availableCalendarFormats: const {CalendarFormat.month: 'month'},
+            calendarFormat: CalendarFormat.month,
             eventLoader: (day) => _meetingService.getEventsForTheDay(day),
             focusedDay: _focusedDay,
             firstDay: _firstDay,
@@ -192,12 +203,12 @@ class _CalendarComponentState extends State<CalendarComponent> {
             headerStyle: const HeaderStyle(
               leftChevronIcon: Icon(
                 Icons.arrow_back_ios_new_outlined,
-                color: Colors.white,
+                color: AppColors.fontColorPrimary,
                 size: 20.0,
               ),
               rightChevronIcon: Icon(
                 Icons.arrow_forward_ios_outlined,
-                color: Colors.white,
+                color: AppColors.fontColorPrimary,
                 size: 20.0,
               ),
             ),
@@ -228,16 +239,13 @@ class _CalendarComponentState extends State<CalendarComponent> {
               headerTitleBuilder: (context, day) {
                 String monthName = Capitalize.capitalizeFirstLetter(
                     DateFormat.MMMM('es_ES').format(day));
-                return Container(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    monthName,
-                    textAlign: TextAlign.center,
-                    style: const TextStyle(
-                      fontSize: 24,
-                      color: AppColors.fontColorPrimary,
-                      fontWeight: FontWeight.bold,
-                    ),
+                return Text(
+                  monthName,
+                  textAlign: TextAlign.center,
+                  style:  GoogleFonts.inter(
+                    fontSize: 26,
+                    color: AppColors.fontColorPrimary,
+                    fontWeight: FontWeight.bold,
                   ),
                 );
               },
@@ -247,72 +255,89 @@ class _CalendarComponentState extends State<CalendarComponent> {
             height: 30,
           ),
           // LISTVIEW
-          ListView.separated(
-            scrollDirection: Axis.vertical,
-            shrinkWrap: true,
-            itemCount: _meetingService.getEventsForTheDay(_selectedDay).length,
-            itemBuilder: (context, index) {
-              final event =
-                  _meetingService.getEventsForTheDay(_selectedDay)[index];
-              return Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: Material(
-                      color: meetingColor,
-                      child: ListTile(
-                        title: Text(
-                          Capitalize.capitalizeFirstLetter(event.subject),
-                          style: const TextStyle(
-                              fontSize: 18, color: AppColors.fontColorPrimary),
-                        ),
-                        subtitle: Column(
-                          // Using a Column for better layout
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              DateFormat('dd-MM-yyyy HH:mm')
-                                  .format(event.startTime),
-                              style: const TextStyle(
-                                fontSize: 15,
-                                color: AppColors.fontColorPrimary,
-                              ),
+          Expanded(
+            flex: 1,
+            child: ListView.separated(
+              scrollDirection: Axis.vertical,
+              shrinkWrap: true,
+              itemCount: _meetingService.getEventsForTheDay(_selectedDay).length,
+              itemBuilder: (context, index) {
+                final event =
+                    _meetingService.getEventsForTheDay(_selectedDay)[index];
+                return Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(left: 13.0),
+                      padding: const EdgeInsets.all(20),
+                      decoration: BoxDecoration(
+                        color: AppColors.borderTextField,
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: const Icon(
+                        Icons.calendar_month_outlined,
+                        color: AppColors.fontColorPrimary,
+                        size: 25,
+                      ),
+                    ),
+                    Expanded(
+                      child: Material(
+                        color: AppColors.backgroundColor,
+                        child: ListTile(
+                          title: Text(
+                            Capitalize.capitalizeFirstLetter(event.subject),
+                            style: const TextStyle(
+                                fontSize: 18, color: AppColors.fontColorPrimary,
                             ),
-                            Text(
-                              "Cupos libres: ${event.freeSlotsCount}.",
-                              style: const TextStyle(
-                                fontSize: 15,
-                                color: AppColors.fontColorPrimary,
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                DateFormat('dd-MM-yyyy HH:mm')
+                                    .format(event.startTime),
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: AppColors.fontColorPrimary,
+                                ),
                               ),
-                            ),
-                          ],
+                              Text(
+                                "${TextReplace.calendarFreeSlot}${event.freeSlotsCount}.",
+                                style: const TextStyle(
+                                  fontSize: 15,
+                                  color: AppColors.fontColorPrimary,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                  IconButton(
-                    icon: event.freeSlotsCount > 0
-                        ? (event.freeSlotsCount == 1
-                            ? Image.asset('assets/icon_half.png', height: 30)
-                            : Image.asset('assets/icon_empty.png', height: 30))
-                        : Image.asset('assets/icon_full.png', height: 30),
-                    tooltip: event.freeSlotsCount > 0
-                        ? 'Reservar'
-                        : 'Clase completa',
-                    enableFeedback: true,
-                    onPressed: event.freeSlotsCount > 0
-                        ? () {
-                            _showAppointmentDialog(context, event);
-                          }
-                        : null,
-                  ),
-                ],
-              );
-            },
-            separatorBuilder: (context, index) => const Divider(
-              color: AppColors.accentColor,
+                    IconButton(
+                      icon: event.freeSlotsCount > 0
+                          ? (event.freeSlotsCount == 1
+                          ? const Icon(Icons.arrow_forward_ios_outlined, size: 24,color: AppColors.textHintColor,)
+                          : const Icon(Icons.arrow_forward_ios_outlined, size: 24,color: AppColors.textHintColor,))
+                          : const Icon(CupertinoIcons.arrow_right_square, size: 24),
+                      tooltip: event.freeSlotsCount > 0
+                          ? 'Reservar'
+                          : 'Clase completa',
+                      enableFeedback: true,
+                      onPressed: event.freeSlotsCount > 0
+                          ? () {
+                        _showAppointmentDialog(context, event);
+                      }
+                          : null,
+                    ),
+                  ],
+                );
+              },
+              separatorBuilder: (context, index) => const Divider(
+                color: AppColors.textFieldColor,
+              ),
             ),
-          )
+          ),
+              const SizedBox(height: 20,)
         ],
       ),
     );

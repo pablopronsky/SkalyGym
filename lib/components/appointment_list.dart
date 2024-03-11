@@ -40,46 +40,52 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
           return ListView.builder(
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
-              final reservaClaseData =
-                  snapshot.data!.docs[index].data() as Map<String, dynamic>;
-              final reservasDate =
-                  Meeting.timeStampToDateTime(reservaClaseData['meetingDate']);
+              final reservaClaseData = snapshot.data!.docs[index].data() as Map<String, dynamic>;
+              final reservasDate = Meeting.timeStampToDateTime(reservaClaseData['meetingDate']);
               return Column(
                 children: [
                   Container(
                     margin: const EdgeInsets.only(left: 20, right: 20),
-                    child: ListTile(
-                      title: Text(
-                        Capitalize.capitalizeFirstLetter(
-                            DateFormat('EEEE', 'es_AR').format(reservasDate)),
-                        style: GoogleFonts.lexend(
-                          color: AppColors.fontColorPrimary,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      subtitle: Column(
-                        // Use a Column for vertical arrangement
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            DateFormat('dd/MM/yyyy – hh:mm a')
-                                .format(reservasDate),
-                            style: GoogleFonts.lexend(
-                              color: AppColors.fontColorSecondary,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: ListTile(
+                            title: Text(
+                              Capitalize.capitalizeFirstLetter(
+                                DateFormat('EEEE', 'es_AR').format(reservasDate),
+                              ),
+                              style: GoogleFonts.inter(
+                                color: AppColors.fontColorPrimary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  DateFormat('dd/MM/yyyy – hh:mm a').format(reservasDate),
+                                  style: GoogleFonts.lexend(
+                                    color: AppColors.fontColorSecondary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            trailing: IconButton(
+                              tooltip: 'Cancelar',
+                              icon: const Icon(
+                                CupertinoIcons.delete,
+                                color: AppColors.fontColorSecondary,
+                                size: 20,
+                              ),
+                              onPressed: () => reservaServicio.cancelarReserva(
+                                snapshot.data!.docs[index].id,
+                                userId!,
+                                context,
+                              ),
                             ),
                           ),
-                        ],
-                      ),
-                      trailing: IconButton(
-                        tooltip: 'Cancelar',
-                        icon: const Icon(
-                          CupertinoIcons.delete,
-                          color: AppColors.fontColorSecondary,
-                          size: 24,
                         ),
-                        onPressed: () => reservaServicio.cancelarReserva(
-                            snapshot.data!.docs[index].id, userId!, context),
-                      ),
+                      ],
                     ),
                   ),
                   if (index < snapshot.data!.docs.length - 1)

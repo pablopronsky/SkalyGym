@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:gym/components/list_tile.dart';
 import 'package:gym/utils/color_constants.dart';
+import 'package:gym/utils/text_constants.dart';
 
 import '../pages/view_model/login_controller.dart';
 
@@ -16,7 +17,7 @@ class MyDrawer extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Drawer(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.textFieldColor,
       child: Padding(
         padding: const EdgeInsets.only(left: 10.0),
         child: Column(
@@ -33,13 +34,13 @@ class MyDrawer extends ConsumerWidget {
                 // home list
                 MyListTile(
                   icon: Icons.home,
-                  text: 'H O M E',
+                  text: TextReplace.drawerFirst,
                   onTap: () => Navigator.pop(context),
                 ),
                 // profile
                 MyListTile(
                   icon: Icons.person,
-                  text: 'P E R F I L',
+                  text: TextReplace.drawerSecond,
                   onTap: onProfileTap,
                 ),
               ],
@@ -49,7 +50,7 @@ class MyDrawer extends ConsumerWidget {
               padding: const EdgeInsets.only(bottom: 25.0),
               child: MyListTile(
                 icon: Icons.logout,
-                text: 'C E R R A R  S E S I O N',
+                text: TextReplace.drawerLast,
                 onTap: () =>
                     ref.read(loginControllerProvider.notifier).signOut(),
               ),

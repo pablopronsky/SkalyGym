@@ -26,7 +26,7 @@ class MyButton extends StatelessWidget {
           child: Center(
             child: Text(
               text,
-              style: GoogleFonts.robotoSlab(
+              style: GoogleFonts.inter(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,

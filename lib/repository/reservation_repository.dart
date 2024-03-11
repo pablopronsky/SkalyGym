@@ -31,13 +31,11 @@ class ReservationRepository {
         message: 'Reserva creada exitosamente.',
         backgroundColor: AppColors.successColor,
       );
-
-      // Ensure the current widget is still mounted before navigating
       if (context.mounted) {
+        Navigator.pop(context);
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => const MyHomePage(),
         ));
-        Navigator.pop(context);
       }
     } catch (e) {
       showCustomSnackBar(

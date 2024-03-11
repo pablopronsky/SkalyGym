@@ -1,10 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../components/snackbar.dart';
 import '../model/reservation.dart';
 import '../model/meeting.dart';
 import '../repository/reservation_repository.dart';
+import '../utils/color_constants.dart';
 
 class ReservationService {
   final ReservationRepository _repository = ReservationRepository();
@@ -31,36 +34,49 @@ class ReservationService {
     bool confirmDeletion = await showDialog(
             context: context,
             builder: (BuildContext context) {
-              return AlertDialog(
-                title: const Center(
+              return CupertinoAlertDialog(
+                title: Center(
                     child: Text(
-                  'Cancelar clase',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
+                  'Cancelar reserva',
+                  style: GoogleFonts.lexend(
+                    color: AppColors.backgroundColor,
+                    fontSize: 19,
                     fontWeight: FontWeight.bold,
                   ),
                 )),
+                content: Padding(
+                  padding: const EdgeInsets.only(top: 10),
+                  child: Text(
+                    'Si cancelas no podrás asistir a la clase',
+                    style: GoogleFonts.lexend(
+                      height: 1.5,
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
                 actions: [
                   Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextButton(
-                        child: const Text(
-                          'No',
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 18,
+                        child: Text(
+                          'Cerrar',
+                          style: GoogleFonts.lexend(
+                            color: AppColors.textFieldColor,
+                            fontSize: 17,
                           ),
                         ),
                         onPressed: () => Navigator.of(context).pop(false),
                       ),
                       TextButton(
-                        child: const Text('Si',
-                            style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 18,
-                            )),
+                        child: Text(
+                          'Confirmar',
+                          style: GoogleFonts.lexend(
+                            color: AppColors.backgroundColor,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         onPressed: () => Navigator.of(context).pop(true),
                       ),
                     ],
