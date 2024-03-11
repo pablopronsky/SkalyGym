@@ -39,7 +39,7 @@ class ReservationService {
                     child: Text(
                   'Cancelar reserva',
                   style: GoogleFonts.lexend(
-                    color: AppColors.backgroundColor,
+                    color: AppColors.backgroundColorDark,
                     fontSize: 19,
                     fontWeight: FontWeight.bold,
                   ),
@@ -72,7 +72,7 @@ class ReservationService {
                         child: Text(
                           'Confirmar',
                           style: GoogleFonts.lexend(
-                            color: AppColors.backgroundColor,
+                            color: AppColors.backgroundColorDark,
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),
@@ -93,7 +93,7 @@ class ReservationService {
       showCustomSnackBar(
         context: context,
         message: 'Reserva eliminada correctamente',
-        backgroundColor: AppColors.accentColor,
+        backgroundColor: AppColors.successColor,
       );
     } catch (error) {
       showCustomSnackBar(

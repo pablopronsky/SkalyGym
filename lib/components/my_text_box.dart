@@ -39,7 +39,7 @@ class MyTextBox extends StatelessWidget {
               Text(
                 sectionName,
                 style: const TextStyle(
-                  color: AppColors.fontColorPrimary,
+                  color: AppColors.fontColorPrimaryLightMode,
                 ),
               ),
               showSettingsIcon
@@ -59,7 +59,7 @@ class MyTextBox extends StatelessWidget {
           // Section details
           Text(
             text,
-            style: const TextStyle(color: AppColors.fontColorPrimary),
+            style: const TextStyle(color: AppColors.fontColorPrimaryDarkMode),
           ),
         ],
       ),

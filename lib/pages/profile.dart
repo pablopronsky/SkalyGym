@@ -46,9 +46,9 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: "Ingresa nuevo $field",
-                  hintStyle: const TextStyle(color: AppColors.fontColorPrimary),
+                  hintStyle: const TextStyle(color: AppColors.fontColorPrimaryDarkMode),
                   focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.fontColorPrimary),
+                    borderSide: BorderSide(color: AppColors.fontColorPrimaryDarkMode),
                   ),
                 ),
                 onChanged: (value) {
@@ -63,7 +63,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextButton(
                       child: const Text(
                         'Cancelar',
-                        style: TextStyle(color: AppColors.fontColorPrimary),
+                        style: TextStyle(color: AppColors.fontColorPrimaryDarkMode),
                       ),
                       onPressed: () => Navigator.pop(context),
                     ),
@@ -71,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextButton(
                       child: const Text(
                         'Guardar',
-                        style: TextStyle(color: AppColors.fontColorPrimary),
+                        style: TextStyle(color: AppColors.fontColorPrimaryDarkMode),
                       ),
                       onPressed: () => Navigator.of(context).pop(newValue),
                     ),
@@ -112,7 +112,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.backgroundColor,
+        backgroundColor: AppColors.backgroundColorDark,
         appBar: const AppBarComponent(),
         body: StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance
@@ -131,14 +131,14 @@ class _ProfilePageState extends State<ProfilePage> {
                     const Icon(
                       Icons.person,
                       size: 72,
-                      color: AppColors.fontColorPrimary,
+                      color: AppColors.fontColorPrimaryDarkMode,
                     ),
                     // Email
                     Text(
                       currentUser.email!,
                       textAlign: TextAlign.center,
                       style: const TextStyle(
-                        color: AppColors.fontColorPrimary,
+                        color: AppColors.fontColorPrimaryDarkMode,
                       ),
                     ),
                     const SizedBox(
@@ -149,7 +149,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Text(
                         TextReplace.profileMyDetails,
                         style: GoogleFonts.inter(
-                          color: AppColors.fontColorPrimary,
+                          color: AppColors.fontColorPrimaryDarkMode,
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                         ),

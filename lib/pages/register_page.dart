@@ -39,7 +39,7 @@ class _RegisterPageState extends State<RegisterPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorDark,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -58,7 +58,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: Icon(
                           CupertinoIcons.arrow_left,
                           size: 45,
-                          color: AppColors.fontColorPrimary,
+                          color: AppColors.fontColorPrimaryDarkMode,
                         ),
                       ),
                     ),
@@ -69,12 +69,12 @@ class _RegisterPageState extends State<RegisterPage> {
                   'lib/assets/logo_skaly.png',
                   width: 170,
                   height: 170,
-                  color: AppColors.fontColorPrimary,
+                  color: AppColors.fontColorPrimaryDarkMode,
                 ),
                 Text(
                   TextReplace.registerTitle,
                   style: GoogleFonts.lexend(
-                    color: AppColors.fontColorPrimary,
+                    color: AppColors.fontColorPrimaryDarkMode,
                     fontSize: 24,
                   ),
                 ),

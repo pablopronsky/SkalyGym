@@ -50,7 +50,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     }));
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorDark,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -69,7 +69,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 Text(
                   TextReplace.loginTitle,
                   style: GoogleFonts.inter(
-                    color: AppColors.fontColorPrimary,
+                    color: AppColors.fontColorPrimaryDarkMode,
                     fontSize: 24,
                   ),
                 ),

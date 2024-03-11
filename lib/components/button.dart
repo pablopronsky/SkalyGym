@@ -27,7 +27,7 @@ class MyButton extends StatelessWidget {
             child: Text(
               text,
               style: GoogleFonts.inter(
-                color: Colors.white,
+                color: AppColors.fontColorPrimaryDarkMode,
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),

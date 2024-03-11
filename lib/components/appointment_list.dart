@@ -67,7 +67,7 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                                     .format(reservasDate),
                               ),
                               style: GoogleFonts.inter(
-                                color: AppColors.fontColorPrimary,
+                                color: AppColors.fontColorPrimaryDarkMode,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
@@ -114,7 +114,7 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
           return Text(
             'No se encontraron reservas',
             style: GoogleFonts.lexend(
-              color: AppColors.fontColorPrimary,
+              color: AppColors.fontColorPrimaryDarkMode,
               fontSize: 16,
             ),
           );

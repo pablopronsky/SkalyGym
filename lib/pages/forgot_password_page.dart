@@ -54,7 +54,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             content: Text(
               _handleAuthExceptionMessage(error),
               style: GoogleFonts.inter(
-                color: AppColors.backgroundColor,
+                color: AppColors.backgroundColorDark,
                 fontSize: 15,
               ),
             ),
@@ -78,7 +78,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorDark,
       appBar: const AppBarComponent(),
       body: SingleChildScrollView(
         child: Column(
@@ -88,7 +88,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
             ),
             // logo
             Image.asset('lib/assets/logo_skaly.png',
-                width: 150, height: 150, color: AppColors.fontColorPrimary),
+                width: 150, height: 150, color: AppColors.fontColorPrimaryDarkMode),
             const SizedBox(height: 25),
             const Padding(
               padding: EdgeInsets.all(8.0),
@@ -97,7 +97,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 20,
-                  color: AppColors.fontColorPrimary,
+                  color: AppColors.fontColorPrimaryDarkMode,
                 ),
               ),
             ),

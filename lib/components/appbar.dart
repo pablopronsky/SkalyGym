@@ -12,15 +12,15 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
       title: Text(
         TextReplace.appBarTitle,
         style: GoogleFonts.inter(
-          color: AppColors.fontColorPrimary,
+          color: AppColors.fontColorPrimaryDarkMode,
           fontSize: 27,
           fontWeight: FontWeight.bold,
         ),
       ),
       centerTitle: true,
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorDark,
       iconTheme: const IconThemeData(
-        color: AppColors.fontColorPrimary,
+        color: AppColors.fontColorPrimaryDarkMode,
       ),
     );
   }

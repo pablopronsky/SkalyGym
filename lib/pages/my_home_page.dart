@@ -34,7 +34,7 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
+      backgroundColor: AppColors.backgroundColorDark,
       appBar: const AppBarComponent(),
       drawer: MyDrawer(
         onProfileTap: goToProfilePage,
@@ -72,7 +72,7 @@ class MyHomePageState extends State<MyHomePage> {
                 child: Container(
                   height: 50,
                   decoration: const BoxDecoration(
-                    color: AppColors.backgroundColor,
+                    color: AppColors.backgroundColorDark,
                     borderRadius: BorderRadius.zero,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -80,7 +80,7 @@ class MyHomePageState extends State<MyHomePage> {
                     child: Text(
                       TextReplace.homeTitle,
                       style: GoogleFonts.inter(
-                        color: AppColors.fontColorPrimary,
+                        color: AppColors.fontColorPrimaryDarkMode,
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
                       ),
@@ -157,7 +157,7 @@ class MyHomePageState extends State<MyHomePage> {
                               '${TextReplace.homeFooter} ${snapshot.data}',
                               style: GoogleFonts.lexend(
                                 fontSize: 16,
-                                color: AppColors.fontColorPrimary,
+                                color: Theme.of(context).primaryColorLight,
                               ),
                             ),
                           );
