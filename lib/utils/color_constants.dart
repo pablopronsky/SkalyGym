@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const backgroundColorDark = Color.fromRGBO(25, 25, 25, 1);
-  static const backgroundColorLight = Colors.white;
+  static const backgroundColorDarkMode = Color.fromRGBO(25, 25, 25, 1);
+  static const backgroundColorLightMode = Colors.white;
   static const textFieldColor = Color.fromRGBO(27, 32, 40, 1.0);
   static const accentColor = Color.fromRGBO(53, 158, 254, 1);
   static const fontColorPrimaryDarkMode = Colors.white;

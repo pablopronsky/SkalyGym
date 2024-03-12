@@ -8,6 +8,7 @@ import 'package:gym/pages/profile.dart';
 import 'package:gym/pages/register_page.dart';
 import 'package:gym/pages/view_model/auth_check.dart';
 import 'package:gym/providers/theme_provider.dart';
+import 'package:gym/theme/theme.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 
@@ -46,10 +47,11 @@ class MyApp extends ConsumerWidget {
         'auth_check': (context) => const AuthChecker(),
       },
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.light(),
-      darkTheme: ThemeData.dark(),
-      themeMode: themeMode.state,
       home: const AuthChecker(),
+      theme: themeMode.state == ThemeMode.light
+          ? AppTheme.lightTheme
+          : AppTheme.darkTheme,
+      themeMode: themeMode.state,
     );
   }
 }

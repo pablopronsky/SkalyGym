@@ -34,7 +34,7 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColorDark,
+      backgroundColor: AppColors.backgroundColorDarkMode,
       appBar: const AppBarComponent(),
       drawer: MyDrawer(
         onProfileTap: goToProfilePage,
@@ -72,7 +72,7 @@ class MyHomePageState extends State<MyHomePage> {
                 child: Container(
                   height: 50,
                   decoration: const BoxDecoration(
-                    color: AppColors.backgroundColorDark,
+                    color: AppColors.backgroundColorDarkMode,
                     borderRadius: BorderRadius.zero,
                   ),
                   padding: const EdgeInsets.symmetric(horizontal: 20),

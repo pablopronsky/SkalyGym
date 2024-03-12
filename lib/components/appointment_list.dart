@@ -75,11 +75,8 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  DateFormat('dd/MM/yyyy – hh:mm a')
-                                      .format(reservasDate),
-                                  style: GoogleFonts.lexend(
-                                    color: AppColors.fontColorSecondary,
-                                  ),
+                                  DateFormat('dd/MM/yyyy – hh:mm a').format(reservasDate),
+                                  style: Theme.of(context).textTheme.titleSmall,
                                 ),
                               ],
                             ),

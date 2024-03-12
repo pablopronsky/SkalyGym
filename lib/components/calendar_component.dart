@@ -54,7 +54,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
             child: Text(
               'Reservar clase',
               style: GoogleFonts.lexend(
-                color: AppColors.backgroundColorDark,
+                color: AppColors.backgroundColorDarkMode,
                 fontSize: 22,
               ),
             ),
@@ -65,7 +65,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 child: Text(
                   'La clase esta llena',
                   style: GoogleFonts.lexend(
-                    color: AppColors.backgroundColorDark,
+                    color: AppColors.backgroundColorDarkMode,
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
                   ),
@@ -75,7 +75,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 child: Text(
                   'Confirmar reserva el día ${DateFormat('dd/MM').format(meeting.startTime)}, ${DateFormat('HH:mm').format(meeting.startTime)}hs',
                   style: GoogleFonts.lexend(
-                    color: AppColors.backgroundColorDark,
+                    color: AppColors.backgroundColorDarkMode,
                     fontSize: 15,
                     height: 1.5,
                   ),
@@ -103,7 +103,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                   child: Text(
                     'Reservar',
                     style: GoogleFonts.lexend(
-                      color: AppColors.backgroundColorDark,
+                      color: AppColors.backgroundColorDarkMode,
                       fontSize: 17,
                       fontWeight: FontWeight.bold,
                     ),
@@ -154,7 +154,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColorDark,
+      backgroundColor: AppColors.backgroundColorDarkMode,
       body: Column(
         children: [
           const SizedBox(
@@ -212,7 +212,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
               ),
             ),
             calendarStyle: const CalendarStyle(
-                defaultTextStyle: TextStyle(color: AppColors.fontColorPrimaryDarkMode),
+                defaultTextStyle:
+                    TextStyle(color: AppColors.fontColorPrimaryDarkMode),
                 markersMaxCount: 1,
                 markerSize: 4,
                 markerDecoration: BoxDecoration(
@@ -271,11 +272,11 @@ class _CalendarComponentState extends State<CalendarComponent> {
                       child: InkWell(
                         onTap: event.freeSlotsCount > 0
                             ? () {
-                          _showAppointmentDialog(context, event);
-                        }
+                                _showAppointmentDialog(context, event);
+                              }
                             : null,
                         child: Material(
-                          color: AppColors.backgroundColorDark,
+                          color: AppColors.backgroundColorDarkMode,
                           child: ListTile(
                             title: Text(
                               Capitalize.capitalizeFirstLetter(event.subject),
@@ -288,7 +289,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 Text(
-                                  DateFormat('dd-MM-yyyy HH:mm').format(event.startTime),
+                                  DateFormat('dd-MM-yyyy HH:mm')
+                                      .format(event.startTime),
                                   style: GoogleFonts.inter(
                                     fontSize: 15,
                                     color: AppColors.fontColorPrimaryDarkMode,
@@ -297,7 +299,8 @@ class _CalendarComponentState extends State<CalendarComponent> {
                                 ),
                                 const SizedBox(width: 20.0),
                                 Opacity(
-                                  opacity: (event.freeSlotsCount < 1) ? 0.2 : 0.7,
+                                  opacity:
+                                      (event.freeSlotsCount < 1) ? 0.2 : 0.7,
                                   child: const Icon(
                                     Icons.calendar_month_outlined,
                                     color: AppColors.fontColorPrimaryDarkMode,

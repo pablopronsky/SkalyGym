@@ -50,7 +50,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     }));
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundColorDark,
+      backgroundColor: AppColors.backgroundColorDarkMode,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(

@@ -33,6 +33,8 @@ class TextReplace {
   static const String drawerFirst = "H O M E";
   static const String drawerSecond = "P E R F I L";
   static const String drawerLast = "C E R R A R  S E S I O N";
+  static const String drawerThemeModeDark = 'M O D O  O S C U R O';
+  static const String drawerThemeModeLight = 'M O D O  C L A R O';
   // Profile
   static const String profileMyDetails = "Mis detalles";
   static const String profileName = "Nombre";

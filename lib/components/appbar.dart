@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/utils/color_constants.dart';
 import 'package:gym/utils/text_constants.dart';
+import 'package:gym/theme/custom_theme/text_theme.dart';
 
 class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   const AppBarComponent({Key? key}) : super(key: key);
@@ -9,19 +10,13 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       title: Text(
         TextReplace.appBarTitle,
-        style: GoogleFonts.inter(
-          color: AppColors.fontColorPrimaryDarkMode,
-          fontSize: 27,
-          fontWeight: FontWeight.bold,
-        ),
+        style: Theme.of(context).textTheme.titleLarge,
       ),
       centerTitle: true,
-      backgroundColor: AppColors.backgroundColorDark,
-      iconTheme: const IconThemeData(
-        color: AppColors.fontColorPrimaryDarkMode,
-      ),
+      iconTheme: Theme.of(context).appBarTheme.iconTheme,
     );
   }
 

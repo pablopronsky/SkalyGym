@@ -39,7 +39,7 @@ class ReservationService {
                     child: Text(
                   'Cancelar reserva',
                   style: GoogleFonts.lexend(
-                    color: AppColors.backgroundColorDark,
+                    color: AppColors.backgroundColorDarkMode,
                     fontSize: 19,
                     fontWeight: FontWeight.bold,
                   ),
@@ -72,7 +72,7 @@ class ReservationService {
                         child: Text(
                           'Confirmar',
                           style: GoogleFonts.lexend(
-                            color: AppColors.backgroundColorDark,
+                            color: AppColors.backgroundColorDarkMode,
                             fontSize: 17,
                             fontWeight: FontWeight.bold,
                           ),

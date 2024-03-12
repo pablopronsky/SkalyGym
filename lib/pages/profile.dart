@@ -46,9 +46,11 @@ class _ProfilePageState extends State<ProfilePage> {
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   hintText: "Ingresa nuevo $field",
-                  hintStyle: const TextStyle(color: AppColors.fontColorPrimaryDarkMode),
+                  hintStyle: const TextStyle(
+                      color: AppColors.fontColorPrimaryDarkMode),
                   focusedBorder: const UnderlineInputBorder(
-                    borderSide: BorderSide(color: AppColors.fontColorPrimaryDarkMode),
+                    borderSide:
+                        BorderSide(color: AppColors.fontColorPrimaryDarkMode),
                   ),
                 ),
                 onChanged: (value) {
@@ -63,7 +65,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextButton(
                       child: const Text(
                         'Cancelar',
-                        style: TextStyle(color: AppColors.fontColorPrimaryDarkMode),
+                        style: TextStyle(
+                            color: AppColors.fontColorPrimaryDarkMode),
                       ),
                       onPressed: () => Navigator.pop(context),
                     ),
@@ -71,7 +74,8 @@ class _ProfilePageState extends State<ProfilePage> {
                     TextButton(
                       child: const Text(
                         'Guardar',
-                        style: TextStyle(color: AppColors.fontColorPrimaryDarkMode),
+                        style: TextStyle(
+                            color: AppColors.fontColorPrimaryDarkMode),
                       ),
                       onPressed: () => Navigator.of(context).pop(newValue),
                     ),
@@ -112,7 +116,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: AppColors.backgroundColorDark,
+        backgroundColor: AppColors.backgroundColorDarkMode,
         appBar: const AppBarComponent(),
         body: StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance
