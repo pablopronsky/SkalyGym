@@ -66,17 +66,15 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                                 DateFormat('EEEE', 'es_AR')
                                     .format(reservasDate),
                               ),
-                              style: GoogleFonts.inter(
-                                color: AppColors.fontColorPrimaryDarkMode,
-                                fontWeight: FontWeight.bold,
-                              ),
+                              style: Theme.of(context).textTheme.bodyMedium,
                             ),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  DateFormat('dd/MM/yyyy – hh:mm a').format(reservasDate),
-                                  style: Theme.of(context).textTheme.titleSmall,
+                                  DateFormat('dd/MM/yyyy – hh:mm a')
+                                      .format(reservasDate),
+                                  style: Theme.of(context).textTheme.bodySmall,
                                 ),
                               ],
                             ),
@@ -84,9 +82,8 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                               tooltip: 'Cancelar',
                               icon: const Icon(
                                 CupertinoIcons.delete,
-                                color: AppColors.fontColorSecondary,
                                 size: 20,
-                              ),
+                              ),color: Theme.of(context).iconTheme.color,
                               onPressed: () => reservaServicio.cancelarReserva(
                                 snapshot.data!.docs[index].id,
                                 userId!,
@@ -110,10 +107,7 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
         } else {
           return Text(
             'No se encontraron reservas',
-            style: GoogleFonts.lexend(
-              color: AppColors.fontColorPrimaryDarkMode,
-              fontSize: 16,
-            ),
+            style: Theme.of(context).textTheme.bodyLarge,
           );
         }
       },

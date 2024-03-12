@@ -17,7 +17,6 @@ class MyDrawer extends ConsumerWidget {
     required this.onProfileTap,
   });
 
-
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tSwitchProvider = ref.watch(themeSwitchProvider);
@@ -51,19 +50,18 @@ class MyDrawer extends ConsumerWidget {
               ],
             ),
             // Expanded to push content towards the top
-            Expanded(
-                child: Container()
-            ),
+            Expanded(child: Container()),
             //Logout
             Column(
               children: [
                 // Theme switch
                 Padding(
-                  padding: const EdgeInsets.only(left: 20.0, right: 10, bottom: 20),
+                  padding:
+                      const EdgeInsets.only(left: 20.0, right: 10, bottom: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                     /* Text(
+                      /* Text(
                         ref.watch(themeSwitchProvider) ? TextReplace.drawerThemeModeLight : TextReplace.drawerThemeModeDark,
                         style: TextStyle(fontSize: 15,),
                       ),*/
@@ -72,11 +70,19 @@ class MyDrawer extends ConsumerWidget {
                         child: FlutterSwitch(
                           value: tSwitchProvider,
                           onToggle: (value) {
-                            ref.read(themeSwitchProvider.notifier).state = value;
+                            ref.read(themeSwitchProvider.notifier).state =
+                                value;
                           },
-                          activeIcon: Icon(Icons.dark_mode_outlined,color: AppColors.fontColorPrimaryDarkMode, weight: 13,),
+                          activeIcon: Icon(
+                            Icons.dark_mode_outlined,
+                            color: AppColors.fontColorPrimaryDarkMode,
+                            weight: 13,
+                          ),
                           activeColor: AppColors.accentColor,
-                          inactiveIcon:Icon(Icons.light_mode_outlined,color: AppColors.fontColorPrimaryDarkMode,),
+                          inactiveIcon: Icon(
+                            Icons.light_mode_outlined,
+                            color: AppColors.fontColorPrimaryDarkMode,
+                          ),
                           inactiveColor: AppColors.accentColor,
                           toggleColor: Theme.of(context).disabledColor,
                         ),
