@@ -65,8 +65,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
                 // LOGO
-                Image.asset(
-                  'assets/logo_skaly.png',
+                Image.asset('lib/assets/logo_skaly.png',
                   width: 170,
                   height: 170,
                   color: AppColors.fontColorPrimaryDarkMode,
@@ -179,9 +178,9 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: const Text(
                           TextReplace.registerLoginPage,
                           style: TextStyle(
-                            color: AppColors.textHintColor,
+                            color: AppColors.textHintColorDarkMode,
                             decoration: TextDecoration.underline,
-                            decorationColor: AppColors.textHintColor,
+                            decorationColor: AppColors.textHintColorDarkMode,
                             fontSize: 15,
                           ),
                         ),

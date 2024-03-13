@@ -28,10 +28,13 @@ class MyDrawer extends ConsumerWidget {
             // Other Drawer Content
             Column(
               children: [
-                const DrawerHeader(
-                    child: Icon(
-                  Icons.person,
-                  size: 64,
+                DrawerHeader(
+                    child: IconTheme(
+                  data: Theme.of(context).iconTheme,
+                  child: const Icon(
+                    Icons.person,
+                    size: 64,
+                  ),
                 )),
                 // home list
                 MyListTile(
@@ -68,7 +71,9 @@ class MyDrawer extends ConsumerWidget {
                         child: FlutterSwitch(
                           value: ref.watch(themeNotifierProvider).isDarkMode,
                           onToggle: (value) {
-                            ref.read(themeNotifierProvider.notifier).toggleThemeMode();
+                            ref
+                                .read(themeNotifierProvider.notifier)
+                                .toggleThemeMode();
                           },
                           activeIcon: const Icon(
                             Icons.dark_mode_outlined,

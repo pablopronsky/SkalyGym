@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/button.dart';
 import 'package:gym/components/text_field_input.dart';
 import 'package:gym/pages/register_page.dart';
@@ -24,6 +23,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   final emailFocusNode = FocusNode();
   final passwordFocusNode = FocusNode();
   final buttonFocusNode = FocusNode();
+  late ThemeData currentTheme;
 
   @override
   void dispose() {
@@ -41,6 +41,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+      currentTheme = Theme.of(context);
     ref.listen<LoginState>(loginControllerProvider, ((previous, state) {
       if (state is LoginStateError) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -50,7 +51,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
     }));
 
     return Scaffold(
-      backgroundColor: AppColors.backgroundColorDarkMode,
+      backgroundColor: currentTheme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -58,22 +59,26 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // logo
-                Image.asset(
-                  'assets/logo_skaly.png',
-                  width: 170,
-                  height: 170,
-                  color: Colors.white,
+                ColorFiltered(
+                  colorFilter: ColorFilter.mode(
+                    currentTheme.brightness == Brightness.light
+                        ? AppColors.blackColor
+                        : AppColors.fontColorPrimaryLightMode,
+                    BlendMode.modulate,
+                  ),
+                  child: Image.asset(
+                    'lib/assets/logo_skaly.png',
+                    width: 170,
+                    height: 170,
+                  ),
                 ),
                 const SizedBox(height: 15),
                 //welcome back
                 Text(
                   TextReplace.loginTitle,
-                  style: GoogleFonts.inter(
-                    color: AppColors.fontColorPrimaryDarkMode,
-                    fontSize: 24,
-                  ),
+                  style: currentTheme.textTheme.titleLarge,
                 ),
-                const SizedBox(height: 25),
+                const SizedBox(height: 45),
                 // mail
                 TextFieldInput(
                   controller: emailController,
@@ -109,17 +114,12 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         return const ForgotPasswordPage();
                       }));
                     },
-                    child: const Row(
+                    child:  Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(
                           TextReplace.loginPwRecovery,
-                          style: TextStyle(
-                            color: AppColors.textHintColor,
-                            decoration: TextDecoration.underline,
-                            decorationColor: AppColors.textHintColor,
-                            fontSize: 15,
-                          ),
+                          style: currentTheme.textTheme.displaySmall,
                         ),
                       ],
                     ),
@@ -140,7 +140,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       Expanded(
                           child: Divider(
                         thickness: 0.5,
-                        color: AppColors.textHintColor,
+                        color: AppColors.textHintColorDarkMode,
                       )),
                     ],
                   ),
@@ -149,12 +149,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Text(
+                    Text(
                       TextReplace.loginRegisterFirst,
-                      style: TextStyle(
-                        color: AppColors.textHintColor,
-                        fontSize: 15,
-                      ),
+                      style: currentTheme.textTheme.displaySmall,
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(
@@ -163,14 +160,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         MaterialPageRoute(
                             builder: (context) => const RegisterPage()),
                       ),
-                      child: const Text(
+                      child: Text(
                         TextReplace.loginRegisterSecond,
-                        style: TextStyle(
-                          color: AppColors.textHintColor,
-                          decoration: TextDecoration.underline,
-                          decorationColor: AppColors.textHintColor,
-                          fontSize: 15,
-                        ),
+                        style: currentTheme.textTheme.displaySmall,
                       ),
                     ),
                   ],

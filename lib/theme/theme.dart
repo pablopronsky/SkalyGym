@@ -16,10 +16,11 @@ class AppTheme {
       foregroundColor: AppColors.fontColorPrimaryLightMode,
     ),
     textTheme: TTextTheme.lightModeTextTheme,
-    iconTheme: const IconThemeData(color: AppColors.dividerGrey),
+    iconTheme: const IconThemeData(color: AppColors.fontColorPrimaryLightMode),
     dividerColor: AppColors.dividerGrey,
-    dialogBackgroundColor: AppColors.textHintColor,
-    hintColor: AppColors.textHintColor,
+    dialogBackgroundColor: AppColors.fontColorPrimaryLightMode,
+    hintColor: AppColors.textHintColorDarkMode,
+
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -33,9 +34,9 @@ class AppTheme {
       foregroundColor: AppColors.fontColorPrimaryDarkMode,
     ),
     textTheme: TTextTheme.darkModeTextTheme,
-    iconTheme: const IconThemeData(color: AppColors.fontLinkColor),
+    iconTheme: const IconThemeData(color: AppColors.fontColorPrimaryDarkMode),
     dividerColor: AppColors.dividerGrey,
-    dialogBackgroundColor: AppColors.textHintColor,
-    hintColor: AppColors.textHintColor,
+    dialogBackgroundColor: AppColors.textFieldColor,
+    hintColor: AppColors.textHintColorLightMode,
   );
 }

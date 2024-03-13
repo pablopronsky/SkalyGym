@@ -36,7 +36,6 @@ class MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
-
     currentTheme = Theme.of(context);
     return Scaffold(
       backgroundColor: currentTheme.scaffoldBackgroundColor,

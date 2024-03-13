@@ -13,6 +13,7 @@ class AppColors {
   static const errorColor = Colors.red;
   static const blackColor = Colors.black;
   static const borderTextField = Color.fromRGBO(51, 57, 62, 1);
-  static const textHintColor = Color.fromRGBO(144, 152, 160, 0.7);
+  static const textHintColorDarkMode = Color.fromRGBO(144, 152, 160, 0.7);
+  static const textHintColorLightMode = Color.fromRGBO(80,80,80, 0.8);
   static const dividerGrey = Colors.blueGrey;
 }

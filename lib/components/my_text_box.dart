@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../utils/color_constants.dart';
 
-class MyTextBox extends StatelessWidget {
+class MyTextBox extends StatefulWidget {
   final String text;
   final String sectionName;
   final void Function()? onPressed;
@@ -17,12 +17,19 @@ class MyTextBox extends StatelessWidget {
   });
 
   @override
+  State<MyTextBox> createState() => _MyTextBoxState();
+}
+
+class _MyTextBoxState extends State<MyTextBox> {
+  late ThemeData currentTheme;
+  @override
   Widget build(BuildContext context) {
+    currentTheme = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
-          color: AppColors.textFieldColor,
+          color: currentTheme.dialogBackgroundColor,
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: AppColors.textHintColor, width: 0.4)),
+          border: Border.all(color: currentTheme.hintColor, width: 0.4)),
       padding: const EdgeInsets.only(left: 15, bottom: 15),
       margin: const EdgeInsets.only(
         left: 20,
@@ -37,17 +44,17 @@ class MyTextBox extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                sectionName,
+                widget.sectionName,
                 style: const TextStyle(
                   color: AppColors.fontColorPrimaryLightMode,
                 ),
               ),
-              showSettingsIcon
+              widget.showSettingsIcon
                   ? IconButton(
-                      onPressed: onPressed,
+                      onPressed: widget.onPressed,
                       icon: const Icon(
                         Icons.edit_outlined,
-                        color: AppColors.textHintColor,
+                        color: AppColors.textHintColorDarkMode,
                       ),
                     )
                   : const SizedBox(
@@ -58,7 +65,7 @@ class MyTextBox extends StatelessWidget {
           ),
           // Section details
           Text(
-            text,
+            widget.text,
             style: const TextStyle(color: AppColors.fontColorPrimaryDarkMode),
           ),
         ],

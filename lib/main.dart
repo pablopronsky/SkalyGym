@@ -13,6 +13,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 
 import 'firebase_options.dart';
+
 final themeNotifierProvider = ChangeNotifierProvider((ref) => ThemeNotifier());
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

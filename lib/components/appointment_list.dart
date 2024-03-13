@@ -29,8 +29,8 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(
-              child: Text('Error al cargar reservas: ${snapshot.error}',
-                  style: currentTheme.textTheme.bodyLarge),
+            child: Text('Error al cargar reservas: ${snapshot.error}',
+                style: currentTheme.textTheme.bodyLarge),
           );
         }
 

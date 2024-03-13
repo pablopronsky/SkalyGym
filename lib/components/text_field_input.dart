@@ -29,12 +29,14 @@ class TextFieldInput extends StatefulWidget {
 
 class _TextFieldInputState extends State<TextFieldInput> {
   bool _passwordVisible = true;
+  late ThemeData currentTheme;
   @override
   Widget build(BuildContext context) {
+    currentTheme = Theme.of(context);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 25.0),
       child: TextFormField(
-        style: const TextStyle(color: Colors.white),
+        style: currentTheme.textTheme.labelMedium,
         controller: widget.controller,
         obscureText: widget.isPassword ? _passwordVisible : false,
         autofocus: widget.autofocus,
@@ -54,15 +56,15 @@ class _TextFieldInputState extends State<TextFieldInput> {
             borderRadius: BorderRadius.circular(15.0),
           ),
           hintText: widget.hintText,
-          fillColor: AppColors.textFieldColor,
+          fillColor: currentTheme.scaffoldBackgroundColor,
           filled: true,
-          hintStyle: const TextStyle(color: AppColors.textHintColor),
+          hintStyle: currentTheme.textTheme.labelSmall,
           suffixIcon: widget.isPassword
               ? IconButton(
                   icon: Icon(_passwordVisible
                       ? Icons.visibility
                       : Icons.visibility_off),
-                  color: AppColors.textHintColor,
+                  color: AppColors.textHintColorDarkMode,
                   onPressed: () {
                     setState(() {
                       _passwordVisible = !_passwordVisible;

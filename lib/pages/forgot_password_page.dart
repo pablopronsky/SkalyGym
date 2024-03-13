@@ -87,7 +87,7 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               height: 35,
             ),
             // logo
-            Image.asset('assets/logo_skaly.png',
+            Image.asset('lib/assets/logo_skaly.png',
                 width: 150,
                 height: 150,
                 color: AppColors.fontColorPrimaryDarkMode),

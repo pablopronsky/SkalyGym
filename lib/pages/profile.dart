@@ -1,8 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/components/my_text_box.dart';
 import 'package:gym/utils/color_constants.dart';
@@ -45,14 +43,16 @@ class _ProfilePageState extends State<ProfilePage> {
             textCapitalization: TextCapitalization.words,
             autofocus: true,
             textAlign: TextAlign.center,
-            style: dialogTheme.textTheme.labelSmall?.copyWith(color: Colors.white),
+            style:
+                dialogTheme.textTheme.labelSmall?.copyWith(color: Colors.white),
             decoration: InputDecoration(
               hintText: "${TextReplace.hintEditDialog}$field",
               hintStyle: TextStyle(
                 color: dialogTheme.hintColor,
               ),
               focusedBorder: const UnderlineInputBorder(
-                borderSide: BorderSide(color: AppColors.fontColorPrimaryDarkMode),
+                borderSide:
+                    BorderSide(color: AppColors.fontColorPrimaryDarkMode),
               ),
             ),
             onChanged: (value) {
@@ -121,8 +121,9 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    currentTheme = Theme.of(context);
     return Scaffold(
-        backgroundColor: AppColors.backgroundColorDarkMode,
+        backgroundColor: currentTheme.scaffoldBackgroundColor,
         appBar: const AppBarComponent(),
         body: StreamBuilder<DocumentSnapshot>(
             stream: FirebaseFirestore.instance
@@ -138,18 +139,18 @@ class _ProfilePageState extends State<ProfilePage> {
                       height: 50,
                     ),
                     // Person Icon
-                    const Icon(
-                      Icons.person,
-                      size: 72,
-                      color: AppColors.fontColorPrimaryDarkMode,
+                    IconTheme(
+                      data: currentTheme.iconTheme,
+                      child: const Icon(
+                        Icons.person,
+                        size: 72,
+                      ),
                     ),
                     // Email
                     Text(
                       currentUser.email!,
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                        color: AppColors.fontColorPrimaryDarkMode,
-                      ),
+                      style: currentTheme.textTheme.titleSmall,
                     ),
                     const SizedBox(
                       height: 50,
@@ -158,11 +159,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       padding: const EdgeInsets.only(left: 25.0),
                       child: Text(
                         TextReplace.profileMyDetails,
-                        style: GoogleFonts.inter(
-                          color: AppColors.fontColorPrimaryDarkMode,
-                          fontSize: 28,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: currentTheme.textTheme.titleLarge,
                       ),
                     ),
                     // Name
@@ -192,7 +189,10 @@ class _ProfilePageState extends State<ProfilePage> {
                 );
               } else if (snapshot.hasError) {
                 return Center(
-                  child: Text('Error${snapshot.error}'),
+                  child: Text(
+                    'Error${snapshot.error}',
+                    style: currentTheme.textTheme.titleMedium,
+                  ),
                 );
               }
               return const Center(
