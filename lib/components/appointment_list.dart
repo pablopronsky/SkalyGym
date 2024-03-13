@@ -2,13 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/services/reservation_service.dart';
 import 'package:gym/utils/capitalize.dart';
 import 'package:intl/intl.dart';
 
 import '../model/meeting.dart';
-import '../utils/color_constants.dart';
 
 class AppointmentsListComponent extends StatefulWidget {
   const AppointmentsListComponent({Key? key}) : super(key: key);
@@ -21,15 +19,19 @@ class AppointmentsListComponent extends StatefulWidget {
 class AppointmentsListComponentState extends State<AppointmentsListComponent> {
   final userId = FirebaseAuth.instance.currentUser?.email;
   ReservationService reservaServicio = ReservationService();
+  late ThemeData currentTheme;
 
   @override
   Widget build(BuildContext context) {
+    currentTheme = Theme.of(context);
     return StreamBuilder<QuerySnapshot>(
       stream: reservaServicio.fetchReservations(userId!),
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(
-              child: Text('Error al cargar reservas: ${snapshot.error}'));
+              child: Text('Error al cargar reservas: ${snapshot.error}',
+                  style: currentTheme.textTheme.bodyLarge),
+          );
         }
 
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -66,7 +68,7 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                                 DateFormat('EEEE', 'es_AR')
                                     .format(reservasDate),
                               ),
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: currentTheme.textTheme.bodyMedium,
                             ),
                             subtitle: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +76,7 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                                 Text(
                                   DateFormat('dd/MM/yyyy – hh:mm a')
                                       .format(reservasDate),
-                                  style: Theme.of(context).textTheme.bodySmall,
+                                  style: currentTheme.textTheme.bodySmall,
                                 ),
                               ],
                             ),
@@ -83,7 +85,8 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                               icon: const Icon(
                                 CupertinoIcons.delete,
                                 size: 20,
-                              ),color: Theme.of(context).iconTheme.color,
+                              ),
+                              color: currentTheme.iconTheme.color,
                               onPressed: () => reservaServicio.cancelarReserva(
                                 snapshot.data!.docs[index].id,
                                 userId!,
@@ -97,8 +100,8 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                   ),
                   if (index < snapshot.data!.docs.length - 1)
                     Divider(
-                      thickness: 0.5,
-                      color: Colors.grey[400],
+                      thickness: 0.4,
+                      color: currentTheme.dividerColor,
                     )
                 ],
               );
@@ -107,7 +110,7 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
         } else {
           return Text(
             'No se encontraron reservas',
-            style: Theme.of(context).textTheme.bodyLarge,
+            style: currentTheme.textTheme.bodyMedium,
           );
         }
       },

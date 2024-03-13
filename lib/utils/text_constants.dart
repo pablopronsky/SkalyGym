@@ -40,6 +40,7 @@ class TextReplace {
   static const String profileName = "Nombre";
   static const String profileLastName = "Apellido";
   static const String profilePhoneNumber = "Celular";
+  static const String hintEditDialog = 'Ingresa nuevo ';
   // Calendar
   static const String calendarFreeSlot = "Cupos libres: ";
 }

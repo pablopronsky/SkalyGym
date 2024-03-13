@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/appbar.dart';
@@ -19,6 +20,7 @@ class ProfilePage extends StatefulWidget {
 class _ProfilePageState extends State<ProfilePage> {
   final currentUser = FirebaseAuth.instance.currentUser!;
   final usersCollection = FirebaseFirestore.instance.collection('users');
+  late ThemeData currentTheme;
 
   @override
   void initState() {
@@ -28,61 +30,65 @@ class _ProfilePageState extends State<ProfilePage> {
   Future<void> editField(String field) async {
     String newValue = "";
     await showDialog(
-        context: context,
-        builder: (context) => AlertDialog(
-              backgroundColor: AppColors.textFieldColor,
-              title: Text(
-                textAlign: TextAlign.center,
-                "Editar $field",
-                style: const TextStyle(
-                  color: Colors.white,
-                ),
+      context: context,
+      builder: (dialogContext) {
+        final dialogTheme = Theme.of(dialogContext);
+        return AlertDialog(
+          backgroundColor: dialogTheme.scaffoldBackgroundColor,
+          title: Text(
+            textAlign: TextAlign.center,
+            "Editar $field",
+            style: currentTheme.textTheme.titleMedium,
+          ),
+          content: TextField(
+            cursorHeight: 0,
+            textCapitalization: TextCapitalization.words,
+            autofocus: true,
+            textAlign: TextAlign.center,
+            style: dialogTheme.textTheme.labelSmall?.copyWith(color: Colors.white),
+            decoration: InputDecoration(
+              hintText: "${TextReplace.hintEditDialog}$field",
+              hintStyle: TextStyle(
+                color: dialogTheme.hintColor,
               ),
-              content: TextField(
-                cursorHeight: 0,
-                textCapitalization: TextCapitalization.words,
-                autofocus: true,
-                textAlign: TextAlign.center,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  hintText: "Ingresa nuevo $field",
-                  hintStyle: const TextStyle(
-                      color: AppColors.fontColorPrimaryDarkMode),
-                  focusedBorder: const UnderlineInputBorder(
-                    borderSide:
-                        BorderSide(color: AppColors.fontColorPrimaryDarkMode),
+              focusedBorder: const UnderlineInputBorder(
+                borderSide: BorderSide(color: AppColors.fontColorPrimaryDarkMode),
+              ),
+            ),
+            onChanged: (value) {
+              newValue = value;
+            },
+          ),
+          actions: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                // Cancelar
+                TextButton(
+                  child: const Text(
+                    'Cancelar',
+                    style: TextStyle(
+                      color: AppColors.fontColorPrimaryDarkMode,
+                    ),
                   ),
+                  onPressed: () => Navigator.pop(dialogContext),
                 ),
-                onChanged: (value) {
-                  newValue = value;
-                },
-              ),
-              actions: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    // Cancelar
-                    TextButton(
-                      child: const Text(
-                        'Cancelar',
-                        style: TextStyle(
-                            color: AppColors.fontColorPrimaryDarkMode),
-                      ),
-                      onPressed: () => Navigator.pop(context),
+                // Guardar
+                TextButton(
+                  child: const Text(
+                    'Guardar',
+                    style: TextStyle(
+                      color: AppColors.fontColorPrimaryDarkMode,
                     ),
-                    // Guardar
-                    TextButton(
-                      child: const Text(
-                        'Guardar',
-                        style: TextStyle(
-                            color: AppColors.fontColorPrimaryDarkMode),
-                      ),
-                      onPressed: () => Navigator.of(context).pop(newValue),
-                    ),
-                  ],
+                  ),
+                  onPressed: () => Navigator.of(dialogContext).pop(newValue),
                 ),
               ],
-            )).then((value) {
+            ),
+          ],
+        );
+      },
+    ).then((value) {
       if (value != null && value.toString().trim().isNotEmpty) {
         newValue = value.toString();
         usersCollection

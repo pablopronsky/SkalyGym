@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/pages/profile.dart';
@@ -20,6 +21,7 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
+  late ThemeData currentTheme;
 
   void goToProfilePage() {
     Navigator.pop(context);
@@ -33,8 +35,11 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+    SystemChannels.textInput.invokeMethod('TextInput.hide');
+
+    currentTheme = Theme.of(context);
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: currentTheme.scaffoldBackgroundColor,
       appBar: const AppBarComponent(),
       drawer: MyDrawer(
         onProfileTap: goToProfilePage,
@@ -52,7 +57,7 @@ class MyHomePageState extends State<MyHomePage> {
                   height: 180.0,
                   decoration: const BoxDecoration(
                     image: DecorationImage(
-                      image: AssetImage('assets/home_background.jpg'),
+                      image: AssetImage('lib/assets/home_background.jpg'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -75,7 +80,7 @@ class MyHomePageState extends State<MyHomePage> {
                   child: Center(
                     child: Text(
                       TextReplace.homeTitle,
-                      style: Theme.of(context).textTheme.headlineLarge,
+                      style: currentTheme.textTheme.headlineLarge,
                     ),
                   ),
                 ),
@@ -147,7 +152,7 @@ class MyHomePageState extends State<MyHomePage> {
                                 const EdgeInsets.only(left: 20, bottom: 15),
                             child: Text(
                               '${TextReplace.homeFooter} ${snapshot.data}',
-                              style: Theme.of(context).textTheme.bodyMedium,
+                              style: currentTheme.textTheme.bodyMedium,
                             ),
                           );
                         }

@@ -59,7 +59,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               children: [
                 // logo
                 Image.asset(
-                  'lib/assets/logo_skaly.png',
+                  'assets/logo_skaly.png',
                   width: 170,
                   height: 170,
                   color: Colors.white,

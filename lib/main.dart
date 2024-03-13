@@ -13,7 +13,7 @@ import 'package:intl/date_symbol_data_local.dart';
 import "package:flutter_localizations/flutter_localizations.dart";
 
 import 'firebase_options.dart';
-
+final themeNotifierProvider = ChangeNotifierProvider((ref) => ThemeNotifier());
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
@@ -27,7 +27,7 @@ class MyApp extends ConsumerWidget {
   const MyApp({super.key});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(themeModeProvider.notifier);
+    final themeMode = ref.watch(themeNotifierProvider).themeMode;
     return MaterialApp(
       localizationsDelegates: const [
         GlobalCupertinoLocalizations.delegate,
@@ -48,10 +48,10 @@ class MyApp extends ConsumerWidget {
       },
       debugShowCheckedModeBanner: false,
       home: const AuthChecker(),
-      theme: themeMode.state == ThemeMode.light
+      theme: themeMode == ThemeMode.light
           ? AppTheme.lightTheme
           : AppTheme.darkTheme,
-      themeMode: themeMode.state,
+      themeMode: themeMode,
     );
   }
 }

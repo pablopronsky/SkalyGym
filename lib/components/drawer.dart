@@ -1,10 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:gym/components/list_tile.dart';
+import 'package:gym/main.dart';
 import 'package:gym/utils/text_constants.dart';
-import 'package:gym/providers/theme_provider.dart';
 
 import '../pages/view_model/login_controller.dart';
 import '../utils/color_constants.dart';
@@ -19,7 +18,6 @@ class MyDrawer extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tSwitchProvider = ref.watch(themeSwitchProvider);
     return Drawer(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       child: Padding(
@@ -68,18 +66,17 @@ class MyDrawer extends ConsumerWidget {
                       Transform.scale(
                         scale: 0.95,
                         child: FlutterSwitch(
-                          value: tSwitchProvider,
+                          value: ref.watch(themeNotifierProvider).isDarkMode,
                           onToggle: (value) {
-                            ref.read(themeSwitchProvider.notifier).state =
-                                value;
+                            ref.read(themeNotifierProvider.notifier).toggleThemeMode();
                           },
-                          activeIcon: Icon(
+                          activeIcon: const Icon(
                             Icons.dark_mode_outlined,
                             color: AppColors.fontColorPrimaryDarkMode,
                             weight: 13,
                           ),
                           activeColor: AppColors.accentColor,
-                          inactiveIcon: Icon(
+                          inactiveIcon: const Icon(
                             Icons.light_mode_outlined,
                             color: AppColors.fontColorPrimaryDarkMode,
                           ),

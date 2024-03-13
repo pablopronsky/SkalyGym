@@ -66,7 +66,7 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 // LOGO
                 Image.asset(
-                  'lib/assets/logo_skaly.png',
+                  'assets/logo_skaly.png',
                   width: 170,
                   height: 170,
                   color: AppColors.fontColorPrimaryDarkMode,
