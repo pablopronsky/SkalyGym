@@ -65,10 +65,18 @@ class _RegisterPageState extends State<RegisterPage> {
                   ],
                 ),
                 // LOGO
-                Image.asset('lib/assets/logo_skaly.png',
-                  width: 170,
-                  height: 170,
-                  color: AppColors.fontColorPrimaryDarkMode,
+                ColorFiltered(
+                  colorFilter: ColorFilter.mode(
+                    Theme.of(context).brightness == Brightness.light
+                        ? Colors.black
+                        : Colors.white,
+                    BlendMode.modulate,
+                  ),
+                  child: Image.asset(
+                    'lib/assets/logo_skaly.png',
+                    width: 170,
+                    height: 170,
+                  ),
                 ),
                 Text(
                   TextReplace.registerTitle,

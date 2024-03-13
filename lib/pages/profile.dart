@@ -160,6 +160,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       child: Text(
                         TextReplace.profileMyDetails,
                         style: currentTheme.textTheme.titleLarge,
+                        textAlign: TextAlign.center,
                       ),
                     ),
                     // Name
