@@ -9,8 +9,7 @@ class TextReplace {
   static const String registerTxtConfirmPassword = "Confirmar contraseña";
   static const String registerButton = "Registrate";
   static const String registerLoginPageFirst = "Ya tenes cuenta?";
-  static const String registerLoginPageSecond = " Abrí sesión.";
-
+  static const String registerLoginPageSecond = "Inicia sesión";
   // Login
   static const String loginTitle = "Accede a tu cuenta Skaly";
   static const String loginTxtEmail = "Email";
@@ -20,8 +19,8 @@ class TextReplace {
   static const String loginRegisterFirst = "No tenes cuenta?";
   static const String loginRegisterSecond = "Registrate";
   // FORGOT PASSWORD
-  static const String forgotPasswordTitle = "Ingresa el mail de recuperacion";
-  static const String forgotPasswordButton = "Recuperar contraseña";
+  static const String forgotPasswordTitle = "Restablece tu contraseña";
+  static const String forgotPasswordButton = "Enviar solicitud";
   static const String forgotPasswordEmailSent =
       "Si existe un email asociado, se enviará un link de recuperación.";
   static const String forgotPasswordError = "Error";

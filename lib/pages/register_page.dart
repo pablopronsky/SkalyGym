@@ -60,7 +60,7 @@ class _RegisterPageState extends State<RegisterPage> {
                         child: IconTheme(
                           data: currentTheme.iconTheme,
                           child: const Icon(
-                            CupertinoIcons.arrow_left,
+                            Icons.arrow_back_rounded,
                             size: 45,
                           ),
                         ),
