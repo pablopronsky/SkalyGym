@@ -90,7 +90,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 child: Text(
                   'Cancelar',
                   style: GoogleFonts.lexend(
-                    color: AppColors.textFieldColor,
+                    color: AppColors.textFieldColorDarkMode,
                     fontSize: 17,
                   ),
                 ),
@@ -232,7 +232,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                   color: Colors.white,
                 ),
                 todayDecoration: BoxDecoration(
-                  color: AppColors.textFieldColor,
+                  color: AppColors.textFieldColorDarkMode,
                   shape: BoxShape.circle,
                 )),
             calendarBuilders: CalendarBuilders(
@@ -324,7 +324,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 );
               },
               separatorBuilder: (context, index) => const Divider(
-                color: AppColors.borderTextField,
+                color: AppColors.borderTextFieldDarkMode,
               ),
             ),
           ),

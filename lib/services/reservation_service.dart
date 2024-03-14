@@ -62,7 +62,7 @@ class ReservationService {
                         child: Text(
                           'Cerrar',
                           style: GoogleFonts.lexend(
-                            color: AppColors.textFieldColor,
+                            color: AppColors.textFieldColorDarkMode,
                             fontSize: 17,
                           ),
                         ),

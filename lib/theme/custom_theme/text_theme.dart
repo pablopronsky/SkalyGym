@@ -8,7 +8,6 @@ class TTextTheme {
   static TextStyle fontInter = GoogleFonts.inter();
 
   /// <-------------------- LIGHT THEME -------------------->
-
   static final TextTheme lightModeTextTheme = TextTheme(
 
       // <-------------------- TITLE LIGHT -------------------->
@@ -60,12 +59,15 @@ class TTextTheme {
         fontWeight: FontWeight.w900,
         color: AppColors.fontColorPrimaryLightMode,
       ),
+
+      // <-------------------- DISPLAY LIGHT -------------------->
       displaySmall:fontInter.copyWith(
       fontSize: 14,
       color: AppColors.fontColorPrimaryLightMode,
       decoration: TextDecoration.underline,
       decorationColor: AppColors.textHintColorDarkMode,
-    ),);
+      ),
+  );
 
 
   /// <-------------------- DARK THEME -------------------->
@@ -90,7 +92,7 @@ class TTextTheme {
       // <-------------------- BODY DARK -------------------->
       bodySmall: fontInter.copyWith(
         fontSize: 13,
-        color: AppColors.fontColorPrimaryDarkMode,
+        color: AppColors.fontColorSecondary,
       ),
       bodyMedium: fontInter.copyWith(
         fontSize: 16,
@@ -121,10 +123,13 @@ class TTextTheme {
         fontWeight: FontWeight.w900,
         color: AppColors.fontColorPrimaryDarkMode,
       ),
+
+      // <-------------------- DISPLAY DARK -------------------->
       displaySmall:fontInter.copyWith(
         fontSize: 14,
         color: AppColors.fontColorPrimaryDarkMode,
         decoration: TextDecoration.underline,
         decorationColor: AppColors.textHintColorDarkMode,
-      ));
+      ),
+  );
 }

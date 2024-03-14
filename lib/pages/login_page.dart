@@ -42,7 +42,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   @override
   Widget build(BuildContext context) {
       currentTheme = Theme.of(context);
-    ref.listen<LoginState>(loginControllerProvider, ((previous, state) {
+
+      ref.listen<LoginState>(loginControllerProvider, ((previous, state) {
       if (state is LoginStateError) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(state.error),
@@ -59,18 +60,11 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 // logo
-                ColorFiltered(
-                  colorFilter: ColorFilter.mode(
-                    currentTheme.brightness == Brightness.light
-                        ? AppColors.blackColor
-                        : AppColors.fontColorPrimaryLightMode,
-                    BlendMode.modulate,
-                  ),
-                  child: Image.asset(
-                    'lib/assets/logo_skaly.png',
-                    width: 170,
-                    height: 170,
-                  ),
+                Image.asset(
+                  'lib/assets/logo_skaly.png',
+                  width: 170,
+                  height: 170,
+                  color: currentTheme.brightness == Brightness.dark ? AppColors.whiteColor : AppColors.blackColor,
                 ),
                 const SizedBox(height: 15),
                 //welcome back
@@ -151,7 +145,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   children: [
                     Text(
                       TextReplace.loginRegisterFirst,
-                      style: currentTheme.textTheme.displaySmall,
+                      style: currentTheme.textTheme.bodySmall,
                     ),
                     const SizedBox(width: 4),
                     GestureDetector(

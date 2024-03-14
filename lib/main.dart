@@ -49,10 +49,15 @@ class MyApp extends ConsumerWidget {
       },
       debugShowCheckedModeBanner: false,
       home: const AuthChecker(),
-      theme: themeMode == ThemeMode.light
-          ? AppTheme.lightTheme
-          : AppTheme.darkTheme,
-      themeMode: themeMode,
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+      themeMode: ThemeMode.system,
     );
   }
 }
+/*
+theme: themeMode == ThemeMode.light
+          ? AppTheme.lightTheme
+          : AppTheme.darkTheme,
+      themeMode: themeMode,
+*/

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:gym/theme/custom_theme/text_theme.dart';
 
 import '../utils/color_constants.dart';
+import 'custom_theme/text_theme.dart';
 
 class AppTheme {
   AppTheme._();
@@ -19,8 +19,21 @@ class AppTheme {
     iconTheme: const IconThemeData(color: AppColors.fontColorPrimaryLightMode),
     dividerColor: AppColors.dividerGrey,
     dialogBackgroundColor: AppColors.fontColorPrimaryLightMode,
-    hintColor: AppColors.textHintColorDarkMode,
-
+    hintColor: AppColors.textHintColorLightMode,
+    inputDecorationTheme: InputDecorationTheme(
+      enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          color: AppColors.borderTextFieldLightMode,
+        ),
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          color: AppColors.borderTextFieldLightModeSelected,
+        ),
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+    ),
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -36,7 +49,21 @@ class AppTheme {
     textTheme: TTextTheme.darkModeTextTheme,
     iconTheme: const IconThemeData(color: AppColors.fontColorPrimaryDarkMode),
     dividerColor: AppColors.dividerGrey,
-    dialogBackgroundColor: AppColors.textFieldColor,
-    hintColor: AppColors.textHintColorLightMode,
+    dialogBackgroundColor: AppColors.textFieldColorDarkMode,
+    hintColor: AppColors.textHintColorDarkMode,
+    inputDecorationTheme: InputDecorationTheme(
+      enabledBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          color: AppColors.borderTextFieldDarkMode,
+        ),
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      focusedBorder: OutlineInputBorder(
+        borderSide: const BorderSide(
+          color: AppColors.borderTextFieldDarkModeSelected,
+        ),
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+    ),
   );
 }

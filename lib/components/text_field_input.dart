@@ -47,14 +47,8 @@ class _TextFieldInputState extends State<TextFieldInput> {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         decoration: InputDecoration(
-          enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: AppColors.borderTextField),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: AppColors.borderTextField),
-            borderRadius: BorderRadius.circular(15.0),
-          ),
+          enabledBorder:  currentTheme.inputDecorationTheme.enabledBorder,
+          focusedBorder: currentTheme.inputDecorationTheme.focusedBorder,
           hintText: widget.hintText,
           fillColor: currentTheme.scaffoldBackgroundColor,
           filled: true,
