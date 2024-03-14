@@ -35,11 +35,13 @@ class _RegisterPageState extends State<RegisterPage> {
   final signUpFocusNode = FocusNode();
 
   AuthService authService = AuthService();
+  late ThemeData currentTheme;
 
   @override
   Widget build(BuildContext context) {
+    currentTheme = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColors.backgroundColorDarkMode,
+      backgroundColor: currentTheme.scaffoldBackgroundColor,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -53,37 +55,29 @@ class _RegisterPageState extends State<RegisterPage> {
                       onTap: () {
                         Navigator.pushNamed(context, '/login_page');
                       },
-                      child: const Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          CupertinoIcons.arrow_left,
-                          size: 45,
-                          color: AppColors.fontColorPrimaryDarkMode,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: IconTheme(
+                          data: currentTheme.iconTheme,
+                          child: const Icon(
+                            CupertinoIcons.arrow_left,
+                            size: 45,
+                          ),
                         ),
                       ),
                     ),
                   ],
                 ),
                 // LOGO
-                ColorFiltered(
-                  colorFilter: ColorFilter.mode(
-                    Theme.of(context).brightness == Brightness.light
-                        ? Colors.black
-                        : Colors.white,
-                    BlendMode.modulate,
-                  ),
-                  child: Image.asset(
-                    'lib/assets/logo_skaly.png',
-                    width: 170,
-                    height: 170,
-                  ),
+                Image.asset(
+                  'lib/assets/logo_skaly.png',
+                  width: 170,
+                  height: 170,
+                  color: currentTheme.brightness == Brightness.dark ? AppColors.whiteColor : AppColors.blackColor,
                 ),
                 Text(
                   TextReplace.registerTitle,
-                  style: GoogleFonts.lexend(
-                    color: AppColors.fontColorPrimaryDarkMode,
-                    fontSize: 24,
-                  ),
+                  style: currentTheme.textTheme.titleLarge,
                 ),
                 const SizedBox(height: 35),
                 // Name
@@ -173,9 +167,13 @@ class _RegisterPageState extends State<RegisterPage> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(top: 20, bottom: 20),
-                  child: Row(
+                  child:  Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
+                      Text(
+                        TextReplace.registerLoginPageFirst,
+                        style: currentTheme.textTheme.bodySmall,
+                      ),
                       const SizedBox(width: 4),
                       GestureDetector(
                         onTap: () => Navigator.push(
@@ -183,18 +181,13 @@ class _RegisterPageState extends State<RegisterPage> {
                           MaterialPageRoute(
                               builder: (context) => const LoginPage()),
                         ),
-                        child: const Text(
-                          TextReplace.registerLoginPage,
-                          style: TextStyle(
-                            color: AppColors.textHintColorDarkMode,
-                            decoration: TextDecoration.underline,
-                            decorationColor: AppColors.textHintColorDarkMode,
-                            fontSize: 15,
-                          ),
+                        child: Text(
+                          TextReplace.registerLoginPageSecond,
+                          style: currentTheme.textTheme.displaySmall,
                         ),
                       ),
                     ],
-                  ),
+                  )
                 )
               ],
             ),

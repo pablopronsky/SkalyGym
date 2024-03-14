@@ -8,7 +8,9 @@ class TextReplace {
   static const String registerTxtPassword = "Contraseña";
   static const String registerTxtConfirmPassword = "Confirmar contraseña";
   static const String registerButton = "Registrate";
-  static const String registerLoginPage = "Ya tenes cuenta? Abrí sesión.";
+  static const String registerLoginPageFirst = "Ya tenes cuenta?";
+  static const String registerLoginPageSecond = " Abrí sesión.";
+
   // Login
   static const String loginTitle = "Accede a tu cuenta Skaly";
   static const String loginTxtEmail = "Email";
