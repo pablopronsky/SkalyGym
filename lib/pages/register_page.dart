@@ -1,6 +1,5 @@
 // ignore_for_file: unused_import
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/button.dart';
@@ -73,7 +72,9 @@ class _RegisterPageState extends State<RegisterPage> {
                   'lib/assets/logo_skaly.png',
                   width: 170,
                   height: 170,
-                  color: currentTheme.brightness == Brightness.dark ? AppColors.whiteColor : AppColors.blackColor,
+                  color: currentTheme.brightness == Brightness.dark
+                      ? AppColors.whiteColor
+                      : AppColors.blackColor,
                 ),
                 Text(
                   TextReplace.registerTitle,
@@ -166,29 +167,28 @@ class _RegisterPageState extends State<RegisterPage> {
                   },
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(top: 20, bottom: 20),
-                  child:  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        TextReplace.registerLoginPageFirst,
-                        style: currentTheme.textTheme.bodySmall,
-                      ),
-                      const SizedBox(width: 4),
-                      GestureDetector(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const LoginPage()),
+                    padding: const EdgeInsets.only(top: 20, bottom: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          TextReplace.registerLoginPageFirst,
+                          style: currentTheme.textTheme.bodySmall,
                         ),
-                        child: Text(
-                          TextReplace.registerLoginPageSecond,
-                          style: currentTheme.textTheme.displaySmall,
+                        const SizedBox(width: 4),
+                        GestureDetector(
+                          onTap: () => Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          ),
+                          child: Text(
+                            TextReplace.registerLoginPageSecond,
+                            style: currentTheme.textTheme.displaySmall,
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                )
+                      ],
+                    ))
               ],
             ),
           ),

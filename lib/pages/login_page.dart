@@ -41,9 +41,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-      currentTheme = Theme.of(context);
+    currentTheme = Theme.of(context);
 
-      ref.listen<LoginState>(loginControllerProvider, ((previous, state) {
+    ref.listen<LoginState>(loginControllerProvider, ((previous, state) {
       if (state is LoginStateError) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(state.error),
@@ -64,7 +64,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                   'lib/assets/logo_skaly.png',
                   width: 170,
                   height: 170,
-                  color: currentTheme.brightness == Brightness.dark ? AppColors.whiteColor : AppColors.blackColor,
+                  color: currentTheme.brightness == Brightness.dark
+                      ? AppColors.whiteColor
+                      : AppColors.blackColor,
                 ),
                 const SizedBox(height: 15),
                 //welcome back
@@ -108,7 +110,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         return const ForgotPasswordPage();
                       }));
                     },
-                    child:  Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         Text(

@@ -17,7 +17,7 @@ class AppTheme {
     ),
     textTheme: TTextTheme.lightModeTextTheme,
     iconTheme: const IconThemeData(color: AppColors.fontColorPrimaryLightMode),
-    dividerColor: AppColors.dividerGrey,
+    dividerColor: AppColors.dividerBlueGrey,
     dialogBackgroundColor: AppColors.fontColorPrimaryLightMode,
     hintColor: AppColors.textHintColorLightMode,
     inputDecorationTheme: InputDecorationTheme(
@@ -48,7 +48,7 @@ class AppTheme {
     ),
     textTheme: TTextTheme.darkModeTextTheme,
     iconTheme: const IconThemeData(color: AppColors.fontColorPrimaryDarkMode),
-    dividerColor: AppColors.dividerGrey,
+    dividerColor: AppColors.dividerBlueGrey,
     dialogBackgroundColor: AppColors.textFieldColorDarkMode,
     hintColor: AppColors.textHintColorDarkMode,
     inputDecorationTheme: InputDecorationTheme(

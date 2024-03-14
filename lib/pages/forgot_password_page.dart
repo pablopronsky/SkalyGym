@@ -1,6 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
 
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +83,9 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(height: 35,),
+            const SizedBox(
+              height: 35,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -110,16 +111,16 @@ class _ForgotPasswordPageState extends State<ForgotPasswordPage> {
               'lib/assets/logo_skaly.png',
               width: 170,
               height: 170,
-              color: currentTheme.brightness == Brightness.dark ? AppColors.whiteColor : AppColors.blackColor,
+              color: currentTheme.brightness == Brightness.dark
+                  ? AppColors.whiteColor
+                  : AppColors.blackColor,
             ),
             const SizedBox(height: 25),
-             Padding(
+            Padding(
               padding: const EdgeInsets.all(8.0),
-              child: Text(
-                TextReplace.forgotPasswordTitle,
-                textAlign: TextAlign.center,
-                style: currentTheme.textTheme.titleLarge
-              ),
+              child: Text(TextReplace.forgotPasswordTitle,
+                  textAlign: TextAlign.center,
+                  style: currentTheme.textTheme.titleLarge),
             ),
             const SizedBox(height: 25), // mail
             TextFieldInput(

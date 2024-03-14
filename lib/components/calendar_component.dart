@@ -33,6 +33,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
   final ReservationRepository _repository = ReservationRepository();
   ReservationService bookingService = ReservationService();
   DateTime today = DateTime.now();
+  late ThemeData currentTheme;
 
   void _showAppointmentDialog(BuildContext context, Meeting meeting) async {
     /// This is the appointment that is sent to appointmentService.createAppointment
@@ -153,8 +154,9 @@ class _CalendarComponentState extends State<CalendarComponent> {
 
   @override
   Widget build(BuildContext context) {
+    currentTheme = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColors.backgroundColorDarkMode,
+      backgroundColor: currentTheme.scaffoldBackgroundColor,
       body: Column(
         children: [
           const SizedBox(
@@ -168,13 +170,11 @@ class _CalendarComponentState extends State<CalendarComponent> {
               return day.isAfter(todayDate.subtract(const Duration(days: 1))) &&
                   day.isBefore(lastEnabledDate.add(const Duration(days: 1)));
             },
-            daysOfWeekStyle: const DaysOfWeekStyle(
-              weekdayStyle: (TextStyle(
-                color: AppColors.fontColorPrimaryDarkMode,
-              )),
-              weekendStyle: (TextStyle(
-                color: AppColors.fontColorPrimaryDarkMode,
-              )),
+            daysOfWeekStyle: DaysOfWeekStyle(
+              weekdayStyle: (currentTheme.textTheme.bodyMedium) ??
+                  const TextStyle(color: AppColors.fillGreyAmbiguousColor),
+              weekendStyle: (currentTheme.textTheme.bodyMedium) ??
+                  const TextStyle(color: AppColors.fillGreyAmbiguousColor),
             ),
             availableGestures: AvailableGestures.none,
             locale: 'es_ES',
@@ -202,37 +202,34 @@ class _CalendarComponentState extends State<CalendarComponent> {
             headerStyle: const HeaderStyle(
               leftChevronIcon: Icon(
                 Icons.arrow_back_ios_new_outlined,
-                color: AppColors.fontColorPrimaryDarkMode,
+                color: AppColors.fillGreyAmbiguousColor,
                 size: 20.0,
               ),
               rightChevronIcon: Icon(
                 Icons.arrow_forward_ios_outlined,
-                color: AppColors.fontColorPrimaryDarkMode,
+                color: AppColors.fillGreyAmbiguousColor,
                 size: 20.0,
               ),
             ),
-            calendarStyle: const CalendarStyle(
-                defaultTextStyle:
-                    TextStyle(color: AppColors.fontColorPrimaryDarkMode),
+            calendarStyle: CalendarStyle(
+                defaultTextStyle: (currentTheme.textTheme.bodyMedium) ??
+                     const TextStyle(color: AppColors.dividerGrey),
                 markersMaxCount: 1,
                 markerSize: 4,
                 markerDecoration: BoxDecoration(
-                  color: AppColors.fontColorPrimaryDarkMode,
+                  color: currentTheme.brightness == Brightness.dark
+                      ? AppColors.fontColorPrimaryDarkMode
+                      : AppColors.fontColorPrimaryLightMode,
                   shape: BoxShape.circle,
                 ),
-                selectedDecoration: BoxDecoration(
+                selectedDecoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: AppColors.accentColor,
                 ),
-                selectedTextStyle: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.fontColorPrimaryDarkMode,
-                ),
-                todayTextStyle: TextStyle(
-                  color: Colors.white,
-                ),
-                todayDecoration: BoxDecoration(
-                  color: AppColors.textFieldColorDarkMode,
+                selectedTextStyle: currentTheme.textTheme.titleMedium ?? const TextStyle(color: AppColors.dividerGrey),
+                todayTextStyle: currentTheme.textTheme.bodyMedium ?? const TextStyle(color: AppColors.whiteColor),
+                todayDecoration: const BoxDecoration(
+                  color: AppColors.fillGreyAmbiguousColorLight,
                   shape: BoxShape.circle,
                 )),
             calendarBuilders: CalendarBuilders(
@@ -276,14 +273,11 @@ class _CalendarComponentState extends State<CalendarComponent> {
                               }
                             : null,
                         child: Material(
-                          color: AppColors.backgroundColorDarkMode,
+                          color: currentTheme.scaffoldBackgroundColor,
                           child: ListTile(
                             title: Text(
                               Capitalize.capitalizeFirstLetter(event.subject),
-                              style: GoogleFonts.inter(
-                                fontSize: 18,
-                                color: AppColors.fontColorPrimaryDarkMode,
-                              ),
+                              style: currentTheme.textTheme.displayMedium,
                             ),
                             trailing: Row(
                               mainAxisSize: MainAxisSize.min,
@@ -291,30 +285,26 @@ class _CalendarComponentState extends State<CalendarComponent> {
                                 Text(
                                   DateFormat('dd-MM-yyyy HH:mm')
                                       .format(event.startTime),
-                                  style: GoogleFonts.inter(
-                                    fontSize: 15,
-                                    color: AppColors.fontColorPrimaryDarkMode,
-                                  ),
+                                  style: currentTheme.textTheme.titleSmall,
                                   textAlign: TextAlign.center,
                                 ),
                                 const SizedBox(width: 20.0),
                                 Opacity(
                                   opacity:
                                       (event.freeSlotsCount < 1) ? 0.2 : 0.7,
-                                  child: const Icon(
-                                    Icons.calendar_month_outlined,
-                                    color: AppColors.fontColorPrimaryDarkMode,
-                                    size: 26,
+                                  child: IconTheme(
+                                    data: currentTheme.iconTheme,
+                                    child: const Icon(
+                                      Icons.calendar_month_outlined,
+                                      size: 26,
+                                    ),
                                   ),
                                 ),
                               ],
                             ),
                             subtitle: Text(
                               "${TextReplace.calendarFreeSlot}${event.freeSlotsCount}.",
-                              style: GoogleFonts.inter(
-                                fontSize: 15,
-                                color: AppColors.fontColorPrimaryDarkMode,
-                              ),
+                              style: currentTheme.textTheme.titleSmall,
                             ),
                           ),
                         ),
@@ -324,7 +314,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 );
               },
               separatorBuilder: (context, index) => const Divider(
-                color: AppColors.borderTextFieldDarkMode,
+                color: AppColors.dividerGrey,
               ),
             ),
           ),

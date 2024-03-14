@@ -47,7 +47,7 @@ class _TextFieldInputState extends State<TextFieldInput> {
           FocusManager.instance.primaryFocus?.unfocus();
         },
         decoration: InputDecoration(
-          enabledBorder:  currentTheme.inputDecorationTheme.enabledBorder,
+          enabledBorder: currentTheme.inputDecorationTheme.enabledBorder,
           focusedBorder: currentTheme.inputDecorationTheme.focusedBorder,
           hintText: widget.hintText,
           fillColor: currentTheme.scaffoldBackgroundColor,

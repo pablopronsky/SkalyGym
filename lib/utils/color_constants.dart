@@ -13,7 +13,6 @@ class AppColors {
   static const fontColorPrimaryDarkMode = Color.fromRGBO(255, 255, 255, 1.0);
   static const fontColorPrimaryLightMode = Color.fromRGBO(0, 0, 0, 0.87);
   static const fontColorSecondary = Color.fromRGBO(238, 238, 238, 0.8);
-  static const fontLinkColor = Color.fromRGBO(71, 76, 84, 1);
   // <------------------------ FeedbackColors ------------------------>
   static const successColor = Color.fromRGBO(0, 128, 0, 1.0); // Green
   static const errorColor = Color.fromRGBO(255, 0, 0, 1.0); // Red
@@ -21,14 +20,18 @@ class AppColors {
   static const borderTextFieldDarkMode = Color.fromRGBO(51, 57, 66, 1);
   static const borderTextFieldLightMode = Color.fromRGBO(191, 189, 188, 1.0);
   static const borderTextFieldDarkModeSelected = Color.fromRGBO(75, 75, 80, 1);
-  static const borderTextFieldLightModeSelected = Color.fromRGBO(130, 130, 140, 1.0);
+  static const borderTextFieldLightModeSelected =
+      Color.fromRGBO(130, 130, 140, 1.0);
   // <------------------------ TextHintColors ------------------------>
   static const textHintColorDarkMode = Color.fromRGBO(144, 152, 160, 0.7);
-  static const textHintColorLightMode = Color.fromRGBO(80,80,80, 0.8);
+  static const textHintColorLightMode = Color.fromRGBO(80, 80, 80, 0.8);
   // <------------------------ DividerColors ------------------------>
-  static const dividerGrey = Colors.blueGrey;
+  static const dividerBlueGrey = Colors.blueGrey;
+  static const dividerGrey = Colors.grey;
 // <------------------------ Black&White ------------------------>
   static const blackColor = Color.fromRGBO(0, 0, 0, 1.0);
   static const whiteColor = Color.fromRGBO(255, 255, 255, 1.0);
-// <------------------------ EMPTY ------------------------>
+// <------------------------ Extra colors ------------------------>
+  static const fillGreyAmbiguousColorLight = Color.fromRGBO(71, 76, 84, 0.7);
+  static const fillGreyAmbiguousColor = Color.fromRGBO(71, 76, 84, 0.7);
 }

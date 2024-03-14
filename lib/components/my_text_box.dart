@@ -25,56 +25,54 @@ class _MyTextBoxState extends State<MyTextBox> {
   @override
   Widget build(BuildContext context) {
     currentTheme = Theme.of(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 25),
-          child: Text(
-            widget.sectionName,
-            style: currentTheme.textTheme.titleMedium,
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        color: currentTheme.brightness == Brightness.dark
+            ? AppColors.backgroundColorDarkMode
+            : AppColors.backgroundColorLightMode,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          color: AppColors.fillGreyAmbiguousColor,
         ),
-        Container(
-          decoration: BoxDecoration(
-              color: currentTheme.dialogBackgroundColor,
-              borderRadius: BorderRadius.circular(15),
-              border: Border.all(color: currentTheme.hintColor, width: 0.4),
-          ),
-          padding: const EdgeInsets.only(left: 15, bottom: 15),
-          margin: const EdgeInsets.only(
-            left: 20,
-            right: 20,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+      padding: const EdgeInsets.only(left: 15, bottom: 15),
+      margin: const EdgeInsets.only(
+        left: 20,
+        right: 20,
+        top: 20,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Section name
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  widget.showSettingsIcon
-                      ? IconButton(
-                    onPressed: widget.onPressed,
-                    icon: const Icon(
-                      Icons.edit_outlined,
-                      color: AppColors.textHintColorDarkMode,
-                    ),
-                  )
-                      : const SizedBox(
-                    width: 48,
-                    height: 48,
-                  ),
-                ],
-              ),
               Text(
-                widget.text,
-                style: const TextStyle(color: AppColors.fontColorPrimaryDarkMode),
+                widget.sectionName,
+                style: currentTheme.textTheme.labelMedium,
               ),
+              widget.showSettingsIcon
+                  ? IconButton(
+                      onPressed: widget.onPressed,
+                      icon: const Icon(
+                        Icons.edit,
+                        color: AppColors.fillGreyAmbiguousColor,
+                      ),
+                    )
+                  : const SizedBox(
+                      width: 48,
+                      height: 48,
+                    ),
             ],
           ),
-        ),
-        const SizedBox(height: 10),
-      ],
+          // Section details
+          Text(
+            widget.text,
+            style: currentTheme.textTheme.bodySmall,
+          ),
+        ],
+      ),
     );
   }
 }

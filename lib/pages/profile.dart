@@ -155,13 +155,13 @@ class _ProfilePageState extends State<ProfilePage> {
                     const SizedBox(
                       height: 50,
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 25.0),
-                      child: Text(
-                        TextReplace.profileMyDetails,
-                        style: currentTheme.textTheme.titleLarge,
-                        textAlign: TextAlign.center,
-                      ),
+                    Text(
+                      TextReplace.profileMyDetails,
+                      style: currentTheme.textTheme.titleLarge,
+                      textAlign: TextAlign.center,
+                    ),
+                    const SizedBox(
+                      height: 50,
                     ),
                     // Name
                     MyTextBox(
