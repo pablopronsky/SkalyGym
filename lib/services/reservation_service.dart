@@ -1,13 +1,11 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 
 import '../components/snackbar.dart';
 import '../model/reservation.dart';
 import '../model/meeting.dart';
 import '../repository/reservation_repository.dart';
-import '../utils/color_constants.dart';
 
 class ReservationService {
   final ReservationRepository _repository = ReservationRepository();
@@ -36,22 +34,18 @@ class ReservationService {
             builder: (BuildContext context) {
               return CupertinoAlertDialog(
                 title: Center(
-                    child: Text(
-                  'Cancelar reserva',
-                  style: GoogleFonts.lexend(
-                    color: AppColors.backgroundColorDarkMode,
-                    fontSize: 19,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )),
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 6.0),
+                      child: Text(
+                                        'Cancelar reserva',
+                                        style: Theme.of(context).textTheme.bodyLarge,
+                                      ),
+                    )),
                 content: Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Text(
-                    'Si cancelas no podrás asistir a la clase',
-                    style: GoogleFonts.lexend(
-                      height: 1.5,
-                      fontSize: 15,
-                    ),
+                    'No podrás asistir a la clase',
+                    style: Theme.of(context).textTheme.titleSmall,
                   ),
                 ),
                 actions: [
@@ -59,11 +53,11 @@ class ReservationService {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextButton(
-                        child: Text(
-                          'Cerrar',
-                          style: GoogleFonts.lexend(
-                            color: AppColors.textFieldColorDarkMode,
-                            fontSize: 17,
+                        child: Opacity(
+                          opacity: 0.9,
+                          child: Text(
+                            'Cerrar',
+                            style: Theme.of(context).textTheme.titleSmall
                           ),
                         ),
                         onPressed: () => Navigator.of(context).pop(false),
@@ -71,11 +65,7 @@ class ReservationService {
                       TextButton(
                         child: Text(
                           'Confirmar',
-                          style: GoogleFonts.lexend(
-                            color: AppColors.backgroundColorDarkMode,
-                            fontSize: 17,
-                            fontWeight: FontWeight.bold,
-                          ),
+                          style: Theme.of(context).textTheme.bodyMedium,
                         ),
                         onPressed: () => Navigator.of(context).pop(true),
                       ),
@@ -93,13 +83,11 @@ class ReservationService {
       showCustomSnackBar(
         context: context,
         message: 'Reserva eliminada correctamente',
-        backgroundColor: AppColors.successColor,
       );
     } catch (error) {
       showCustomSnackBar(
         context: context,
         message: 'Error al eliminar la reserva}',
-        backgroundColor: AppColors.errorColor,
       );
     }
   }

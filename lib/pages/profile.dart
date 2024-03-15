@@ -96,13 +96,12 @@ class _ProfilePageState extends State<ProfilePage> {
           showCustomSnackBar(
               context: context,
               message: '$field actualizado.',
-              backgroundColor: AppColors.successColor);
+              );
         }).catchError((error) {
           // Error
           showCustomSnackBar(
             context: context,
             message: 'Error al actualizar $field.',
-            backgroundColor: AppColors.errorColor,
           );
         });
       } else {
@@ -110,7 +109,6 @@ class _ProfilePageState extends State<ProfilePage> {
           showCustomSnackBar(
             context: context,
             message: 'Edición de $field cancelada.',
-            backgroundColor: AppColors.errorColor,
           );
         }
       }

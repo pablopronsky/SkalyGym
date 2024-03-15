@@ -76,7 +76,6 @@ class AuthService {
       showCustomSnackBar(
         context: context,
         message: 'Por favor ingresa un email válido',
-        backgroundColor: Colors.red,
       );
       return true;
     }
@@ -121,7 +120,6 @@ class AuthService {
     showCustomSnackBar(
       context: context,
       message: 'Las contraseñas son diferentes',
-      backgroundColor: Colors.red,
     );
   }
 
@@ -129,7 +127,6 @@ class AuthService {
     showCustomSnackBar(
       context: context,
       message: 'Registro exitoso',
-      backgroundColor: Colors.green[400],
     );
   }
 
@@ -149,7 +146,6 @@ class AuthService {
     showCustomSnackBar(
       context: context,
       message: message,
-      backgroundColor: Colors.red[400],
     );
   }
 
@@ -157,7 +153,6 @@ class AuthService {
     showCustomSnackBar(
       context: context,
       message: 'Ocurrió un error',
-      backgroundColor: Colors.red[400],
     );
   }
 

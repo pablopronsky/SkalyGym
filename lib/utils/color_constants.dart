@@ -15,7 +15,7 @@ class AppColors {
   static const fontColorSecondary = Color.fromRGBO(238, 238, 238, 0.8);
   // <------------------------ FeedbackColors ------------------------>
   static const successColor = Color.fromRGBO(0, 128, 0, 1.0); // Green
-  static const errorColor = Color.fromRGBO(255, 0, 0, 1.0); // Red
+  static const errorColor = Color.fromRGBO(150, 0, 0, 0.7); // Red
   // <------------------------ BorderColors ------------------------>
   static const borderTextFieldDarkMode = Color.fromRGBO(51, 57, 66, 1);
   static const borderTextFieldLightMode = Color.fromRGBO(191, 189, 188, 1.0);

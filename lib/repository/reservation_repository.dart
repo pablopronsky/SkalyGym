@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:gym/utils/color_constants.dart';
 
 import '../components/snackbar.dart';
 import '../model/meeting.dart';
@@ -23,25 +22,25 @@ class ReservationRepository {
     final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
 
     try {
-      await _validateAndReserveAppointment(
+      final success = await _validateAndReserveAppointment(
           context, meeting, currentStudentEmail!);
 
-      showCustomSnackBar(
-        context: context,
-        message: 'Reserva creada exitosamente.',
-        backgroundColor: AppColors.accentColor,
-      );
-      if (context.mounted) {
-        Navigator.pop(context);
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => const MyHomePage(),
-        ));
+      if (success) {
+        showCustomSnackBar(
+          context: context,
+          message: 'Reserva creada exitosamente.',
+        );
+        if (context.mounted) {
+          Navigator.pop(context);
+          Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const MyHomePage(),
+          ));
+        }
       }
     } catch (e) {
       showCustomSnackBar(
         context: context,
         message: 'Error al crear reserva: $e.',
-        backgroundColor: AppColors.errorColor,
       );
     }
   }
@@ -72,16 +71,16 @@ class ReservationRepository {
     });
   }
 
-  Future<void> _validateAndReserveAppointment(
+  Future<bool> _validateAndReserveAppointment(
       BuildContext context, Meeting meeting, String currentStudentEmail) async {
     if (await isClassFull(meeting)) {
       _handleError(context, 'Clase llena');
-      return;
+      return false;
     }
 
     if (await _hasExistingReservationInClass(meeting.id, currentStudentEmail)) {
       _handleError(context, 'Ya tenes una reserva en esta clase.');
-      return;
+      return false;
     }
 
     final userDoc = await FirebaseFirestore.instance
@@ -91,10 +90,11 @@ class ReservationRepository {
 
     if (userDoc.get('weeklyCredits') <= 0) {
       _handleError(context, 'No tenes clases disponibles para reservar.');
-      return;
+      return false;
     }
 
     await _createReservation(context, meeting, currentStudentEmail);
+    return true;
   }
 
   Future<void> cancelReservation(String reservationId, String userId) async {
@@ -131,7 +131,6 @@ class ReservationRepository {
     showCustomSnackBar(
       context: context,
       message: message,
-      backgroundColor: AppColors.errorColor,
     );
   }
 
