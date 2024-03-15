@@ -49,8 +49,8 @@ class _ProfilePageState extends State<ProfilePage> {
               ),
               borderRadius: BorderRadius.circular(5),
               color: currentTheme.brightness == Brightness.dark
-                ? Color.fromRGBO(24, 24, 24, 0.5)
-                  : Color.fromRGBO(215, 217, 214, 1),
+                  ? const Color.fromRGBO(24, 24, 24, 0.5)
+                  : const Color.fromRGBO(215, 217, 214, 1),
             ),
             textAlign: TextAlign.center,
             style: currentTheme.textTheme.labelMedium,
@@ -71,7 +71,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: currentTheme.textTheme.titleSmall,
                     ),
                   ),
-                  onPressed: ()  => Navigator.pop(dialogContext),
+                  onPressed: () => Navigator.pop(dialogContext),
                 ),
                 // Guardar
                 TextButton(

@@ -40,11 +40,11 @@ class AppTheme {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
-      contentTextStyle: TextStyle(
+      contentTextStyle: const TextStyle(
         color: Colors.black,
         fontSize: 16.0,
       ),
-      titleTextStyle: TextStyle(
+      titleTextStyle: const TextStyle(
         color: Colors.black,
         fontSize: 18.0,
         fontWeight: FontWeight.bold,
@@ -87,11 +87,11 @@ class AppTheme {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(8.0),
       ),
-      contentTextStyle: TextStyle(
+      contentTextStyle: const TextStyle(
         color: Colors.white,
         fontSize: 16.0,
       ),
-      titleTextStyle: TextStyle(
+      titleTextStyle: const TextStyle(
         color: Colors.white,
         fontSize: 18.0,
         fontWeight: FontWeight.bold,
