@@ -60,22 +60,22 @@ class _CalendarComponentState extends State<CalendarComponent> {
         ),
         content: isClassFull
             ? Center(
-          child: Text(
-            'La clase esta llena',
-            style: GoogleFonts.lexend(
-              color: AppColors.fillGreyAmbiguousColor,
-              fontSize: 17,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        )
+                child: Text(
+                  'La clase esta llena',
+                  style: GoogleFonts.lexend(
+                    color: AppColors.fillGreyAmbiguousColor,
+                    fontSize: 17,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              )
             : Center(
-          child: Text(
-            'Confirmar reserva el día ${DateFormat('dd/MM').format(meeting.startTime)}, ${DateFormat('HH:mm').format(meeting.startTime)}hs',
-            style: currentTheme.textTheme.titleSmall,
-            textAlign: TextAlign.center,
-          ),
-        ),
+                child: Text(
+                  'Confirmar reserva el día ${DateFormat('dd/MM').format(meeting.startTime)}, ${DateFormat('HH:mm').format(meeting.startTime)}hs',
+                  style: currentTheme.textTheme.titleSmall,
+                  textAlign: TextAlign.center,
+                ),
+              ),
         actions: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -265,10 +265,13 @@ class _CalendarComponentState extends State<CalendarComponent> {
                             child: ListTile(
                               leading: SizedBox(
                                 width: 40,
-                                child: Image.asset('lib/assets/logo_ skaly.png',
-                                    color: currentTheme.brightness == Brightness.dark
-                                        ? AppColors.fontColorPrimaryDarkMode
-                                        : AppColors.fontColorPrimaryLightMode,),
+                                child: Image.asset(
+                                  'lib/assets/logo_ skaly.png',
+                                  color:
+                                      currentTheme.brightness == Brightness.dark
+                                          ? AppColors.fontColorPrimaryDarkMode
+                                          : AppColors.fontColorPrimaryLightMode,
+                                ),
                               ),
                               title: Text(
                                 Capitalize.capitalizeFirstLetter(event.subject),
