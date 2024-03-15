@@ -43,5 +43,6 @@ class TextReplace {
   static const String profilePhoneNumber = "Celular";
   static const String hintEditDialog = 'Ingresa nuevo ';
   // Calendar
-  static const String calendarFreeSlot = "Cupos libres: ";
+  static const String calendarFreeSlot = "Cupos: ";
+  static const String calendarFullMeeting = "Lleno";
 }

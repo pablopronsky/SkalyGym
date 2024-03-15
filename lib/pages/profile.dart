@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/components/my_text_box.dart';
@@ -30,31 +31,29 @@ class _ProfilePageState extends State<ProfilePage> {
     await showDialog(
       context: context,
       builder: (dialogContext) {
-        final dialogTheme = Theme.of(dialogContext);
-        return AlertDialog(
-          backgroundColor: dialogTheme.scaffoldBackgroundColor,
-          title: Text(
-            textAlign: TextAlign.center,
-            "Editar $field",
-            style: currentTheme.textTheme.titleMedium,
-          ),
-          content: TextField(
-            cursorHeight: 0,
-            textCapitalization: TextCapitalization.words,
-            autofocus: true,
-            textAlign: TextAlign.center,
-            style:
-                dialogTheme.textTheme.labelSmall?.copyWith(color: Colors.white),
-            decoration: InputDecoration(
-              hintText: "${TextReplace.hintEditDialog}$field",
-              hintStyle: TextStyle(
-                color: dialogTheme.hintColor,
-              ),
-              focusedBorder: const UnderlineInputBorder(
-                borderSide:
-                    BorderSide(color: AppColors.fontColorPrimaryDarkMode),
-              ),
+        return CupertinoAlertDialog(
+          title: Padding(
+            padding: const EdgeInsets.only(bottom: 10.0),
+            child: Text(
+              textAlign: TextAlign.center,
+              "Editar $field",
+              style: currentTheme.textTheme.displayMedium,
             ),
+          ),
+          content: CupertinoTextField(
+            autofocus: true,
+            textCapitalization: TextCapitalization.words,
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: AppColors.fillGreyAmbiguousColor,
+              ),
+              borderRadius: BorderRadius.circular(5),
+              color: currentTheme.brightness == Brightness.dark
+                ? Color.fromRGBO(24, 24, 24, 0.5)
+                  : Color.fromRGBO(215, 217, 214, 1),
+            ),
+            textAlign: TextAlign.center,
+            style: currentTheme.textTheme.labelMedium,
             onChanged: (value) {
               newValue = value;
             },
@@ -65,21 +64,20 @@ class _ProfilePageState extends State<ProfilePage> {
               children: [
                 // Cancelar
                 TextButton(
-                  child: const Text(
-                    'Cancelar',
-                    style: TextStyle(
-                      color: AppColors.fontColorPrimaryDarkMode,
+                  child: Opacity(
+                    opacity: 0.9,
+                    child: Text(
+                      'Cancelar',
+                      style: currentTheme.textTheme.titleSmall,
                     ),
                   ),
-                  onPressed: () => Navigator.pop(dialogContext),
+                  onPressed: ()  => Navigator.pop(dialogContext),
                 ),
                 // Guardar
                 TextButton(
-                  child: const Text(
+                  child: Text(
                     'Guardar',
-                    style: TextStyle(
-                      color: AppColors.fontColorPrimaryDarkMode,
-                    ),
+                    style: currentTheme.textTheme.bodyMedium,
                   ),
                   onPressed: () => Navigator.of(dialogContext).pop(newValue),
                 ),

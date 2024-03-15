@@ -34,6 +34,22 @@ class AppTheme {
         borderRadius: BorderRadius.circular(15.0),
       ),
     ),
+    dialogTheme: DialogTheme(
+      backgroundColor: Colors.grey[200],
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      contentTextStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 16.0,
+      ),
+      titleTextStyle: TextStyle(
+        color: Colors.black,
+        fontSize: 18.0,
+        fontWeight: FontWeight.bold,
+      ),
+    ),
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -63,6 +79,22 @@ class AppTheme {
           color: AppColors.borderTextFieldDarkModeSelected,
         ),
         borderRadius: BorderRadius.circular(15.0),
+      ),
+    ),
+    dialogTheme: DialogTheme(
+      backgroundColor: Colors.grey[200],
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      contentTextStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 16.0,
+      ),
+      titleTextStyle: TextStyle(
+        color: Colors.white,
+        fontSize: 18.0,
+        fontWeight: FontWeight.bold,
       ),
     ),
   );

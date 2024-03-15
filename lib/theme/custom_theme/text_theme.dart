@@ -20,7 +20,7 @@ class TTextTheme {
       fontWeight: FontWeight.bold,
     ),
     titleLarge: fontInter.copyWith(
-        fontSize: 28,
+        fontSize: 24,
         color: AppColors.fontColorPrimaryLightMode,
         fontWeight: FontWeight.bold),
 
@@ -51,6 +51,7 @@ class TTextTheme {
     labelLarge: fontInter.copyWith(
       fontSize: 19,
       color: AppColors.fontColorPrimaryLightMode,
+      fontWeight: FontWeight.bold,
     ),
 
     // <-------------------- HEADLINER LIGHT -------------------->
@@ -68,9 +69,7 @@ class TTextTheme {
       decorationColor: AppColors.textHintColorDarkMode,
     ),
     displayMedium: fontInter.copyWith(
-      fontSize: 18,
-      color: AppColors.fontColorPrimaryLightMode
-    ),
+        fontSize: 18, color: AppColors.fontColorPrimaryLightMode),
   );
 
   /// <-------------------- DARK THEME -------------------->
@@ -86,7 +85,7 @@ class TTextTheme {
       fontWeight: FontWeight.bold,
     ),
     titleLarge: fontInter.copyWith(
-      fontSize: 28,
+      fontSize: 24,
       color: AppColors.fontColorPrimaryDarkMode,
       fontWeight: FontWeight.bold,
     ),
@@ -118,6 +117,7 @@ class TTextTheme {
     labelLarge: fontInter.copyWith(
       fontSize: 19,
       color: AppColors.textHintColorDarkMode,
+      fontWeight: FontWeight.bold,
     ),
 
     // <-------------------- HEADLINER DARK -------------------->
@@ -135,8 +135,8 @@ class TTextTheme {
       decorationColor: AppColors.textHintColorDarkMode,
     ),
     displayMedium: fontInter.copyWith(
-        fontSize: 18,
-        color: AppColors.fontColorPrimaryDarkMode,
+      fontSize: 18,
+      color: AppColors.fontColorPrimaryDarkMode,
     ),
   );
 }

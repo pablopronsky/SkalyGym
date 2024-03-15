@@ -54,45 +54,38 @@ class _CalendarComponentState extends State<CalendarComponent> {
             padding: const EdgeInsets.only(bottom: 18.0),
             child: Text(
               'Reservar clase',
-              style: GoogleFonts.lexend(
-                color: AppColors.backgroundColorDarkMode,
-                fontSize: 22,
-              ),
+              style: currentTheme.textTheme.bodyLarge,
             ),
           ),
         ),
         content: isClassFull
             ? Center(
-                child: Text(
-                  'La clase esta llena',
-                  style: GoogleFonts.lexend(
-                    color: AppColors.backgroundColorDarkMode,
-                    fontSize: 17,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              )
+          child: Text(
+            'La clase esta llena',
+            style: GoogleFonts.lexend(
+              color: AppColors.fillGreyAmbiguousColor,
+              fontSize: 17,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        )
             : Center(
-                child: Text(
-                  'Confirmar reserva el día ${DateFormat('dd/MM').format(meeting.startTime)}, ${DateFormat('HH:mm').format(meeting.startTime)}hs',
-                  style: GoogleFonts.lexend(
-                    color: AppColors.backgroundColorDarkMode,
-                    fontSize: 15,
-                    height: 1.5,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
+          child: Text(
+            'Confirmar reserva el día ${DateFormat('dd/MM').format(meeting.startTime)}, ${DateFormat('HH:mm').format(meeting.startTime)}hs',
+            style: currentTheme.textTheme.titleSmall,
+            textAlign: TextAlign.center,
+          ),
+        ),
         actions: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               TextButton(
-                child: Text(
-                  'Cancelar',
-                  style: GoogleFonts.lexend(
-                    color: AppColors.textFieldColorDarkMode,
-                    fontSize: 17,
+                child: Opacity(
+                  opacity: 0.9,
+                  child: Text(
+                    'Cancelar',
+                    style: currentTheme.textTheme.titleSmall,
                   ),
                 ),
                 onPressed: () {
@@ -103,11 +96,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 TextButton(
                   child: Text(
                     'Reservar',
-                    style: GoogleFonts.lexend(
-                      color: AppColors.backgroundColorDarkMode,
-                      fontSize: 17,
-                      fontWeight: FontWeight.bold,
-                    ),
+                    style: currentTheme.textTheme.bodyMedium,
                   ),
                   onPressed: () async {
                     bookingService.makeAppointment(
@@ -200,38 +189,41 @@ class _CalendarComponentState extends State<CalendarComponent> {
               });
             },
             headerStyle: const HeaderStyle(
+              // DISABLED
               leftChevronIcon: Icon(
                 Icons.arrow_back_ios_new_outlined,
                 color: AppColors.fillGreyAmbiguousColor,
-                size: 20.0,
+                size: 0.0,
               ),
+              // DISABLED
               rightChevronIcon: Icon(
                 Icons.arrow_forward_ios_outlined,
                 color: AppColors.fillGreyAmbiguousColor,
-                size: 20.0,
+                size: 0.0,
               ),
+              headerPadding: EdgeInsets.all(8),
             ),
             calendarStyle: CalendarStyle(
-                defaultTextStyle: (currentTheme.textTheme.bodyMedium) ??
-                     const TextStyle(color: AppColors.dividerGrey),
-                markersMaxCount: 1,
-                markerSize: 4,
-                markerDecoration: BoxDecoration(
-                  color: currentTheme.brightness == Brightness.dark
-                      ? AppColors.fontColorPrimaryDarkMode
-                      : AppColors.fontColorPrimaryLightMode,
-                  shape: BoxShape.circle,
-                ),
-                selectedDecoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: AppColors.accentColor,
-                ),
-                selectedTextStyle: currentTheme.textTheme.titleMedium ?? const TextStyle(color: AppColors.dividerGrey),
-                todayTextStyle: currentTheme.textTheme.bodyMedium ?? const TextStyle(color: AppColors.whiteColor),
-                todayDecoration: const BoxDecoration(
-                  color: AppColors.fillGreyAmbiguousColorLight,
-                  shape: BoxShape.circle,
-                )),
+              defaultTextStyle: (currentTheme.textTheme.bodyMedium) ??
+                  const TextStyle(color: AppColors.dividerGrey),
+              markersMaxCount: 0,
+              selectedTextStyle: GoogleFonts.montserrat(
+                color: AppColors.whiteColor,
+                fontWeight: FontWeight.w500,
+              ),
+              todayTextStyle: GoogleFonts.montserrat(
+                color: AppColors.whiteColor,
+                fontWeight: FontWeight.w500,
+              ),
+              selectedDecoration: const BoxDecoration(
+                color: AppColors.accentColor,
+                shape: BoxShape.circle,
+              ),
+              todayDecoration: const BoxDecoration(
+                color: AppColors.fillGreyAmbiguousColorLight,
+                shape: BoxShape.circle,
+              ),
+            ),
             calendarBuilders: CalendarBuilders(
               headerTitleBuilder: (context, day) {
                 String monthName = Capitalize.capitalizeFirstLetter(
@@ -239,11 +231,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 return Text(
                   monthName,
                   textAlign: TextAlign.center,
-                  style: GoogleFonts.inter(
-                    fontSize: 26,
-                    color: AppColors.fontColorPrimaryDarkMode,
-                    fontWeight: FontWeight.bold,
-                  ),
+                  style: currentTheme.textTheme.labelLarge,
                 );
               },
             ),
@@ -253,71 +241,63 @@ class _CalendarComponentState extends State<CalendarComponent> {
           ),
           // LISTVIEW
           Expanded(
-            flex: 1,
-            child: ListView.separated(
-              scrollDirection: Axis.vertical,
-              shrinkWrap: true,
-              itemCount:
-                  _meetingService.getEventsForTheDay(_selectedDay).length,
-              itemBuilder: (context, index) {
-                final event =
-                    _meetingService.getEventsForTheDay(_selectedDay)[index];
-                return Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: InkWell(
-                        onTap: event.freeSlotsCount > 0
-                            ? () {
-                                _showAppointmentDialog(context, event);
-                              }
-                            : null,
-                        child: Material(
-                          color: currentTheme.scaffoldBackgroundColor,
-                          child: ListTile(
-                            title: Text(
-                              Capitalize.capitalizeFirstLetter(event.subject),
-                              style: currentTheme.textTheme.displayMedium,
-                            ),
-                            trailing: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  DateFormat('dd-MM-yyyy HH:mm')
-                                      .format(event.startTime),
-                                  style: currentTheme.textTheme.titleSmall,
-                                  textAlign: TextAlign.center,
-                                ),
-                                const SizedBox(width: 20.0),
-                                Opacity(
-                                  opacity:
-                                      (event.freeSlotsCount < 1) ? 0.2 : 0.7,
-                                  child: IconTheme(
-                                    data: currentTheme.iconTheme,
-                                    child: const Icon(
-                                      Icons.calendar_month_outlined,
-                                      size: 26,
-                                    ),
+              flex: 1,
+              child: ListView.builder(
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemCount:
+                    _meetingService.getEventsForTheDay(_selectedDay).length,
+                itemBuilder: (context, index) {
+                  final event =
+                      _meetingService.getEventsForTheDay(_selectedDay)[index];
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Expanded(
+                        child: InkWell(
+                          onTap: event.freeSlotsCount > 0
+                              ? () {
+                                  _showAppointmentDialog(context, event);
+                                }
+                              : null,
+                          child: Material(
+                            color: currentTheme.scaffoldBackgroundColor,
+                            child: ListTile(
+                              leading: SizedBox(
+                                width: 40,
+                                child: Image.asset('lib/assets/logo_ skaly.png',
+                                    color: currentTheme.brightness == Brightness.dark
+                                        ? AppColors.fontColorPrimaryDarkMode
+                                        : AppColors.fontColorPrimaryLightMode,),
+                              ),
+                              title: Text(
+                                Capitalize.capitalizeFirstLetter(event.subject),
+                                style: currentTheme.textTheme.displayMedium,
+                              ),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    (event.freeSlotsCount >= 1)
+                                        ? "${TextReplace.calendarFreeSlot}${event.freeSlotsCount}"
+                                        : TextReplace.calendarFullMeeting,
+                                    style: currentTheme.textTheme.titleSmall,
                                   ),
-                                ),
-                              ],
-                            ),
-                            subtitle: Text(
-                              "${TextReplace.calendarFreeSlot}${event.freeSlotsCount}.",
-                              style: currentTheme.textTheme.titleSmall,
+                                ],
+                              ),
+                              subtitle: Text(
+                                DateFormat('dd-MM-yyyy HH:mm')
+                                    .format(event.startTime),
+                                style: currentTheme.textTheme.titleSmall,
+                              ),
                             ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              },
-              separatorBuilder: (context, index) => const Divider(
-                color: AppColors.dividerGrey,
-              ),
-            ),
-          ),
+                    ],
+                  );
+                },
+              )),
           const SizedBox(
             height: 20,
           )
