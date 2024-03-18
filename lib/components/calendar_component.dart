@@ -127,7 +127,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
         _events = events;
       });
     });
-    _repository.calculateFreeSlotsPerMeeting();
+    _repository.calculateFreeSlotsPerMeeting(); //--- this is how im using it
   }
 
   @override
