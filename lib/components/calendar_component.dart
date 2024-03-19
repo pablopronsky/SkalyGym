@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:gym/components/appbar.dart';
 import 'package:gym/repository/reservation_repository.dart';
 import 'package:gym/services/reservation_service.dart';
 import 'package:gym/utils/color_constants.dart';
@@ -146,6 +147,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
     currentTheme = Theme.of(context);
     return Scaffold(
       backgroundColor: currentTheme.scaffoldBackgroundColor,
+      appBar: const AppBarComponent(),
       body: Column(
         children: [
           const SizedBox(
@@ -160,9 +162,11 @@ class _CalendarComponentState extends State<CalendarComponent> {
                   day.isBefore(lastEnabledDate.add(const Duration(days: 1)));
             },
             daysOfWeekStyle: DaysOfWeekStyle(
-              weekdayStyle: (currentTheme.textTheme.bodyMedium) ??
-                  const TextStyle(color: AppColors.fillGreyAmbiguousColor),
-              weekendStyle: (currentTheme.textTheme.bodyMedium) ??
+              weekdayStyle: (currentTheme.textTheme.bodySmall) ??
+                  const TextStyle(
+                    color: AppColors.fillGreyAmbiguousColor,
+                  ),
+              weekendStyle: (currentTheme.textTheme.bodySmall) ??
                   const TextStyle(color: AppColors.fillGreyAmbiguousColor),
             ),
             availableGestures: AvailableGestures.none,
@@ -175,6 +179,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
             lastDay: _lastDay,
             weekendDays: const [DateTime.sunday],
             startingDayOfWeek: StartingDayOfWeek.monday,
+            rowHeight: 48,
             onPageChanged: (focusedDay) {
               setState(() {
                 _focusedDay = focusedDay;
@@ -223,6 +228,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 color: AppColors.fillGreyAmbiguousColorLight,
                 shape: BoxShape.circle,
               ),
+              tablePadding: const EdgeInsets.all(20),
             ),
             calendarBuilders: CalendarBuilders(
               headerTitleBuilder: (context, day) {
@@ -263,16 +269,6 @@ class _CalendarComponentState extends State<CalendarComponent> {
                           child: Material(
                             color: currentTheme.scaffoldBackgroundColor,
                             child: ListTile(
-                              leading: SizedBox(
-                                width: 40,
-                                child: Image.asset(
-                                  'lib/assets/logo_ skaly.png',
-                                  color:
-                                      currentTheme.brightness == Brightness.dark
-                                          ? AppColors.fontColorPrimaryDarkMode
-                                          : AppColors.fontColorPrimaryLightMode,
-                                ),
-                              ),
                               title: Text(
                                 Capitalize.capitalizeFirstLetter(event.subject),
                                 style: currentTheme.textTheme.displayMedium,

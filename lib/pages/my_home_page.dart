@@ -5,12 +5,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/pages/profile.dart';
 import 'package:gym/utils/color_constants.dart';
+import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
 
+import '../components/calendar_component.dart';
 import '../components/drawer.dart';
 import '../components/appointment_list.dart';
 import '../services/user_service.dart';
+import '../utils/app_tour.dart';
 import '../utils/text_constants.dart';
-import 'calendar_page.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
@@ -21,7 +23,40 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
+  final drawer = GlobalKey();
+  final reservationList = GlobalKey();
+  final calendarButton = GlobalKey();
+  final userFreeSlots = GlobalKey();
   late ThemeData currentTheme;
+  late TutorialCoachMark tutorialCoachMark;
+
+  void _initTutorial() {
+    tutorialCoachMark = TutorialCoachMark(
+        targets: addSiteTargetsPage(
+            drawer: drawer,
+            reservationList: reservationList,
+            calendarButton: calendarButton,
+            userFreeSlots: userFreeSlots),
+        colorShadow: AppColors.textFieldColorDarkMode,
+        hideSkip: false,
+        opacityShadow: 0.7,
+        onFinish: () {
+          print('completed');
+        });
+  }
+
+  void showInAppTour() {
+
+      tutorialCoachMark.show(context: context);
+
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _initTutorial();
+    showInAppTour();
+  }
 
   void goToProfilePage() {
     Navigator.pop(context);
@@ -41,6 +76,7 @@ class MyHomePageState extends State<MyHomePage> {
       backgroundColor: currentTheme.scaffoldBackgroundColor,
       appBar: const AppBarComponent(),
       drawer: MyDrawer(
+        key: drawer,
         onProfileTap: goToProfilePage,
       ),
       body: Column(
@@ -90,7 +126,10 @@ class MyHomePageState extends State<MyHomePage> {
             height: 40,
           ),
           // LIST OF APPOINTMENTS
-          const Expanded(child: AppointmentsListComponent()),
+          Expanded(
+            key: reservationList,
+            child: const AppointmentsListComponent(),
+          ),
           // BUTTON TO CALENDAR PAGE
           Flexible(
             flex: 0,
@@ -104,11 +143,12 @@ class MyHomePageState extends State<MyHomePage> {
                     Padding(
                       padding: const EdgeInsets.only(bottom: 50.0, right: 40),
                       child: ElevatedButton(
+                        key: calendarButton,
                         onPressed: () {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const Calendar(),
+                              builder: (context) => const CalendarComponent(),
                             ),
                           );
                         },
@@ -147,6 +187,7 @@ class MyHomePageState extends State<MyHomePage> {
                           return const CircularProgressIndicator();
                         } else {
                           return Padding(
+                            key: userFreeSlots,
                             padding:
                                 const EdgeInsets.only(left: 20, bottom: 15),
                             child: Text(

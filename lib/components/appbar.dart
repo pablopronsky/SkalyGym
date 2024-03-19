@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:gym/utils/text_constants.dart';
 
 class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
-  const AppBarComponent({Key? key}) : super(key: key);
+  const AppBarComponent({super.key});
 
   @override
   Widget build(BuildContext context) {

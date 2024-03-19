@@ -94,9 +94,9 @@ class _ProfilePageState extends State<ProfilePage> {
             .update({field: newValue}).then((_) {
           // Success
           showCustomSnackBar(
-              context: context,
-              message: '$field actualizado.',
-              );
+            context: context,
+            message: '$field actualizado.',
+          );
         }).catchError((error) {
           // Error
           showCustomSnackBar(

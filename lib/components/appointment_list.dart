@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import '../model/meeting.dart';
 
 class AppointmentsListComponent extends StatefulWidget {
-  const AppointmentsListComponent({Key? key}) : super(key: key);
+  const AppointmentsListComponent({super.key});
 
   @override
   AppointmentsListComponentState createState() =>

@@ -370,15 +370,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_lints
-      sha256: a25a15ebbdfc33ab1cd26c63a6ee519df92338a9c10f122adda92938253bef04
+      sha256: e2a421b7e59244faef694ba7b30562e489c2b489866e505074eb005cd7060db7
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.3"
-  flutter_localizations:
-    dependency: "direct main"
-    description: flutter
-    source: sdk
-    version: "0.0.0"
+    version: "3.0.1"
   flutter_riverpod:
     dependency: "direct main"
     description:
@@ -545,10 +540,10 @@ packages:
     dependency: "direct main"
     description:
       name: intl
-      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
+      sha256: d6f56758b7d3014a48af9701c085700aac781a92a87a62b1333b46d8879661cf
       url: "https://pub.dev"
     source: hosted
-    version: "0.18.1"
+    version: "0.19.0"
   io:
     dependency: transitive
     description:
@@ -606,13 +601,13 @@ packages:
     source: hosted
     version: "2.0.1"
   lints:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: lints
-      sha256: "0a217c6c989d21039f1498c3ed9f3ed71b354e69873f13a8dfc3c9fe76f1b452"
+      sha256: cbf8d4b858bb0134ef3ef87841abdf8d63bfc255c266b7bf6b39daa1085c4290
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.1"
+    version: "3.0.0"
   logging:
     dependency: transitive
     description:
@@ -893,14 +888,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.4"
-  showcaseview:
-    dependency: "direct main"
-    description:
-      name: showcaseview
-      sha256: dc62ce38820dead4a27ce39d9e6c98384be89c2f2b4da3255238a59b041c7ccd
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.0.3"
   simple_gesture_detector:
     dependency: transitive
     description:
@@ -990,10 +977,10 @@ packages:
     dependency: "direct main"
     description:
       name: table_calendar
-      sha256: "1e3521a3e6d3fc7f645a58b135ab663d458ab12504f1ea7f9b4b81d47086c478"
+      sha256: "3f7950145168251aad4fa6c0a914b5ef4e9a82fa365bb349c3ac5378f866e771"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.9"
+    version: "3.1.0"
   term_glyph:
     dependency: transitive
     description:
@@ -1018,6 +1005,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.1"
+  tutorial_coach_mark:
+    dependency: "direct main"
+    description:
+      name: tutorial_coach_mark
+      sha256: "1f1fd234790afb929dec7391a4d90aa54ffe8c8e4d278d9283df8e3f5ac5d63e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.2.11"
   typed_data:
     dependency: transitive
     description:

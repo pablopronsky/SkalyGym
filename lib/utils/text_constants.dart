@@ -45,4 +45,14 @@ class TextReplace {
   // Calendar
   static const String calendarFreeSlot = "Cupos: ";
   static const String calendarFullMeeting = "Lleno";
+  // Coach Marks
+  static const String skip = 'Omitir intro';
+  static const String homeDrawer =
+      'Este botón es para cambiar tus datos personales';
+  static const String homeReservationList =
+      'Esta es la lista de tus reservas semanales';
+  static const String homeCalendarButton =
+      'Acá podras reservar clases si las tuvieras disponibles';
+  static const String homeFreeSlots =
+      'Estas son las clases por reservar que te quedan';
 }

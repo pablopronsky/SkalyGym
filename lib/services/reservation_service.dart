@@ -35,12 +35,12 @@ class ReservationService {
               return CupertinoAlertDialog(
                 title: Center(
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 6.0),
-                      child: Text(
-                                        'Cancelar reserva',
-                                        style: Theme.of(context).textTheme.bodyLarge,
-                                      ),
-                    )),
+                  padding: const EdgeInsets.only(bottom: 6.0),
+                  child: Text(
+                    'Cancelar reserva',
+                    style: Theme.of(context).textTheme.bodyLarge,
+                  ),
+                )),
                 content: Padding(
                   padding: const EdgeInsets.only(top: 10),
                   child: Text(
@@ -55,10 +55,8 @@ class ReservationService {
                       TextButton(
                         child: Opacity(
                           opacity: 0.9,
-                          child: Text(
-                            'Cerrar',
-                            style: Theme.of(context).textTheme.titleSmall
-                          ),
+                          child: Text('Cerrar',
+                              style: Theme.of(context).textTheme.titleSmall),
                         ),
                         onPressed: () => Navigator.of(context).pop(false),
                       ),

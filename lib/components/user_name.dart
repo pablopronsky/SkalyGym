@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class UserName extends StatefulWidget {
-  const UserName({Key? key}) : super(key: key);
+  const UserName({super.key});
 
   @override
   State<UserName> createState() => _UserNameState();

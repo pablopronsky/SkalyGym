@@ -6,7 +6,7 @@ import '../login_page.dart';
 import '../my_home_page.dart';
 
 class AuthChecker extends ConsumerWidget {
-  const AuthChecker({Key? key}) : super(key: key);
+  const AuthChecker({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +23,7 @@ class AuthChecker extends ConsumerWidget {
 }
 
 class SplashScreen extends StatelessWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
