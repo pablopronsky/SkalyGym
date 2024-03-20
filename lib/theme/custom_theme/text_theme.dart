@@ -20,9 +20,10 @@ class TTextTheme {
       fontWeight: FontWeight.bold,
     ),
     titleLarge: fontInter.copyWith(
-        fontSize: 24,
-        color: AppColors.fontColorPrimaryLightMode,
-        fontWeight: FontWeight.bold),
+      fontSize: 24,
+      color: AppColors.fontColorPrimaryLightMode,
+      fontWeight: FontWeight.bold,
+    ),
 
     // <-------------------- BODY LIGHT -------------------->
     bodySmall: fontInter.copyWith(
@@ -69,7 +70,9 @@ class TTextTheme {
       decorationColor: AppColors.textHintColorDarkMode,
     ),
     displayMedium: fontInter.copyWith(
-        fontSize: 18, color: AppColors.fontColorPrimaryLightMode),
+      fontSize: 18,
+      color: AppColors.fontColorPrimaryLightMode,
+    ),
   );
 
   /// <-------------------- DARK THEME -------------------->

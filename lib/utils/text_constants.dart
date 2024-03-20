@@ -25,7 +25,7 @@ class TextReplace {
       "Si existe un email asociado, se enviará un link de recuperación.";
   static const String forgotPasswordError = "Error";
   // AppBar
-  static const String appBarTitle = "Skaly Fitness";
+  static const String appBarTitle = "SKALY";
   // Home
   static const String homeTitle = 'Mis reservas';
   static const String homeFooter = 'Clases disponibles para reservar:';

@@ -10,9 +10,13 @@ class AppBarComponent extends StatelessWidget implements PreferredSizeWidget {
 
     return AppBar(
       backgroundColor: theme.scaffoldBackgroundColor,
-      title: Text(
+      title: const Text(
         TextReplace.appBarTitle,
-        style: theme.textTheme.titleLarge,
+        style: TextStyle(
+          fontFamily: 'Airyin',
+          fontSize: 50,
+          letterSpacing: 2,
+        ),
       ),
       centerTitle: true,
       iconTheme: theme.appBarTheme.iconTheme,

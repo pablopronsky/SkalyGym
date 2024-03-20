@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../../providers/auth_provider.dart';
 import '../login_page.dart';
@@ -14,7 +15,15 @@ class AuthChecker extends ConsumerWidget {
 
     return authState.when(
         data: (user) {
-          if (user != null) return const MyHomePage();
+          if (user != null) {
+            return ShowCaseWidget(
+                builder: Builder(
+              builder: (context) => ShowCaseWidget(
+                  builder: Builder(
+                builder: (context) => const MyHomePage(),
+              )),
+            ));
+          }
           return const LoginPage();
         },
         loading: () => const SplashScreen(),

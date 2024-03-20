@@ -5,13 +5,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/pages/profile.dart';
 import 'package:gym/utils/color_constants.dart';
-import 'package:tutorial_coach_mark/tutorial_coach_mark.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import '../components/calendar_component.dart';
 import '../components/drawer.dart';
 import '../components/appointment_list.dart';
 import '../services/user_service.dart';
-import '../utils/app_tour.dart';
 import '../utils/text_constants.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -23,39 +22,25 @@ class MyHomePage extends StatefulWidget {
 
 class MyHomePageState extends State<MyHomePage> {
   final currentStudentEmail = FirebaseAuth.instance.currentUser!.email;
-  final drawer = GlobalKey();
-  final reservationList = GlobalKey();
-  final calendarButton = GlobalKey();
-  final userFreeSlots = GlobalKey();
+  final _reservationList = GlobalKey();
+  final _calendarButton = GlobalKey();
+  final _userFreeSlots = GlobalKey();
   late ThemeData currentTheme;
-  late TutorialCoachMark tutorialCoachMark;
+  final _calendarButton1 = GlobalKey();
+  late List <GlobalKey> keyList;
 
-  void _initTutorial() {
-    tutorialCoachMark = TutorialCoachMark(
-        targets: addSiteTargetsPage(
-            drawer: drawer,
-            reservationList: reservationList,
-            calendarButton: calendarButton,
-            userFreeSlots: userFreeSlots),
-        colorShadow: AppColors.textFieldColorDarkMode,
-        hideSkip: false,
-        opacityShadow: 0.7,
-        onFinish: () {
-          print('completed');
-        });
-  }
-
-  void showInAppTour() {
-
-      tutorialCoachMark.show(context: context);
-
-  }
 
   @override
   void initState() {
+    WidgetsBinding.instance
+        .addPostFrameCallback((_) => ShowCaseWidget.of(context).startShowCase([
+              _reservationList,
+              _calendarButton,
+              _userFreeSlots,
+      _calendarButton1
+            ]));
+
     super.initState();
-    _initTutorial();
-    showInAppTour();
   }
 
   void goToProfilePage() {
@@ -72,11 +57,11 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     currentTheme = Theme.of(context);
+    List <GlobalKey> keyList = [_reservationList, _calendarButton, _calendarButton1, _userFreeSlots];
     return Scaffold(
       backgroundColor: currentTheme.scaffoldBackgroundColor,
       appBar: const AppBarComponent(),
       drawer: MyDrawer(
-        key: drawer,
         onProfileTap: goToProfilePage,
       ),
       body: Column(
@@ -104,6 +89,25 @@ class MyHomePageState extends State<MyHomePage> {
           const SizedBox(
             height: 20,
           ),
+          Showcase.withWidget(
+            key:_calendarButton1,
+            height: 50,
+            width: 50,
+            container: Icon(Icons.add),
+            child: FloatingActionButton(
+              onPressed: (){
+                setState(() {
+                  print("empezo aca hasta aca");
+
+                  ShowCaseWidget.of(context).startShowCase([_reservationList,]);
+                  print(keyList.toString());
+                });
+
+                print("llego hasta aca");
+              },
+              child:  const Text('Showcase'),
+            ),
+          ),
           // TITLE
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -127,7 +131,7 @@ class MyHomePageState extends State<MyHomePage> {
           ),
           // LIST OF APPOINTMENTS
           Expanded(
-            key: reservationList,
+            key: _reservationList,
             child: const AppointmentsListComponent(),
           ),
           // BUTTON TO CALENDAR PAGE
@@ -142,32 +146,36 @@ class MyHomePageState extends State<MyHomePage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(bottom: 50.0, right: 40),
-                      child: ElevatedButton(
-                        key: calendarButton,
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const CalendarComponent(),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          minimumSize: const Size(150, 50),
-                          backgroundColor: AppColors.accentColor,
-                          enableFeedback: true,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Text(
-                              TextReplace.homeGoToButton,
-                              style: GoogleFonts.lexend(
-                                color: Colors.white,
-                                fontSize: 18,
+                      child: Showcase(
+                        key: _calendarButton,
+                        tooltipBackgroundColor: Colors.red,
+                        description: 'Calendario',
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const CalendarComponent(),
                               ),
-                            ),
-                          ],
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            minimumSize: const Size(150, 50),
+                            backgroundColor: AppColors.accentColor,
+                            enableFeedback: true,
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              Text(
+                                TextReplace.homeGoToButton,
+                                style: GoogleFonts.lexend(
+                                  color: Colors.white,
+                                  fontSize: 18,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
@@ -187,9 +195,9 @@ class MyHomePageState extends State<MyHomePage> {
                           return const CircularProgressIndicator();
                         } else {
                           return Padding(
-                            key: userFreeSlots,
+                            key: _userFreeSlots,
                             padding:
-                                const EdgeInsets.only(left: 20, bottom: 15),
+                            const EdgeInsets.only(left: 20, bottom: 15),
                             child: Text(
                               '${TextReplace.homeFooter} ${snapshot.data}',
                               style: currentTheme.textTheme.bodyMedium,

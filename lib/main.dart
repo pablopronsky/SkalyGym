@@ -9,6 +9,7 @@ import 'package:gym/pages/view_model/auth_check.dart';
 import 'package:gym/providers/theme_provider.dart';
 import 'package:gym/theme/theme.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:showcaseview/showcaseview.dart';
 
 import 'components/calendar_component.dart';
 import 'firebase_options.dart';
@@ -28,21 +29,26 @@ class MyApp extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeNotifierProvider).themeMode;
-    return MaterialApp(
-      routes: {
-        '/home_page': (context) => const MyHomePage(),
-        '/profile': (context) => const ProfilePage(),
-        '/calendar': (context) => const CalendarComponent(),
-        '/register_page': (context) => const RegisterPage(),
-        '/login_page': (context) => const LoginPage(),
-        'auth_check': (context) => const AuthChecker(),
-      },
-      debugShowCheckedModeBanner: false,
-      home: const AuthChecker(),
-      theme: themeMode == ThemeMode.light
-          ? AppTheme.lightTheme
-          : AppTheme.darkTheme,
-      themeMode: themeMode,
+    return ShowCaseWidget(
+      builder: Builder(
+        builder: (context) => MaterialApp(
+          routes: {
+            '/home_page': (context) => const MyHomePage(),
+            '/profile': (context) => const ProfilePage(),
+            '/calendar': (context) => const CalendarComponent(),
+            '/register_page': (context) => const RegisterPage(),
+            '/login_page': (context) => const LoginPage(),
+            '/auth_check': (context) => const AuthChecker(),
+          },
+          debugShowCheckedModeBanner: false,
+          home: ShowCaseWidget(builder: Builder(builder: (context) => AuthChecker(),),
+          ),
+          theme: themeMode == ThemeMode.light
+              ? AppTheme.lightTheme
+              : AppTheme.darkTheme,
+          themeMode: themeMode,
+        ),
+      ),
     );
   }
 }
