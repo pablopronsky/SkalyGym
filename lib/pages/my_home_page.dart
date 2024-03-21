@@ -26,9 +26,7 @@ class MyHomePageState extends State<MyHomePage> {
   final _calendarButton = GlobalKey();
   final _userFreeSlots = GlobalKey();
   late ThemeData currentTheme;
-  final _calendarButton1 = GlobalKey();
-  late List <GlobalKey> keyList;
-
+  late List<GlobalKey> keyList;
 
   @override
   void initState() {
@@ -37,9 +35,7 @@ class MyHomePageState extends State<MyHomePage> {
               _reservationList,
               _calendarButton,
               _userFreeSlots,
-      _calendarButton1
             ]));
-
     super.initState();
   }
 
@@ -57,7 +53,6 @@ class MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
     currentTheme = Theme.of(context);
-    List <GlobalKey> keyList = [_reservationList, _calendarButton, _calendarButton1, _userFreeSlots];
     return Scaffold(
       backgroundColor: currentTheme.scaffoldBackgroundColor,
       appBar: const AppBarComponent(),
@@ -89,25 +84,6 @@ class MyHomePageState extends State<MyHomePage> {
           const SizedBox(
             height: 20,
           ),
-          Showcase.withWidget(
-            key:_calendarButton1,
-            height: 50,
-            width: 50,
-            container: Icon(Icons.add),
-            child: FloatingActionButton(
-              onPressed: (){
-                setState(() {
-                  print("empezo aca hasta aca");
-
-                  ShowCaseWidget.of(context).startShowCase([_reservationList,]);
-                  print(keyList.toString());
-                });
-
-                print("llego hasta aca");
-              },
-              child:  const Text('Showcase'),
-            ),
-          ),
           // TITLE
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -131,8 +107,11 @@ class MyHomePageState extends State<MyHomePage> {
           ),
           // LIST OF APPOINTMENTS
           Expanded(
-            key: _reservationList,
-            child: const AppointmentsListComponent(),
+            child: Showcase(
+              key: _reservationList,
+              description: 'Proximas reservas',
+              child: const AppointmentsListComponent(),
+            ),
           ),
           // BUTTON TO CALENDAR PAGE
           Flexible(
@@ -144,12 +123,12 @@ class MyHomePageState extends State<MyHomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 50.0, right: 40),
-                      child: Showcase(
-                        key: _calendarButton,
-                        tooltipBackgroundColor: Colors.red,
-                        description: 'Calendario',
+                    Showcase(
+                      key: _calendarButton,
+                      tooltipBackgroundColor: Colors.red,
+                      description: 'Calendario',
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 50.0, right: 40),
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
@@ -194,13 +173,16 @@ class MyHomePageState extends State<MyHomePage> {
                         } else if (!snapshot.hasData) {
                           return const CircularProgressIndicator();
                         } else {
-                          return Padding(
+                          return Showcase(
                             key: _userFreeSlots,
-                            padding:
-                            const EdgeInsets.only(left: 20, bottom: 15),
-                            child: Text(
-                              '${TextReplace.homeFooter} ${snapshot.data}',
-                              style: currentTheme.textTheme.bodyMedium,
+                            description: 'clases libres',
+                            child: Padding(
+                              padding:
+                                  const EdgeInsets.only(left: 20, bottom: 15),
+                              child: Text(
+                                '${TextReplace.homeFooter} ${snapshot.data}',
+                                style: currentTheme.textTheme.bodyMedium,
+                              ),
                             ),
                           );
                         }

@@ -18,10 +18,7 @@ class AuthChecker extends ConsumerWidget {
           if (user != null) {
             return ShowCaseWidget(
                 builder: Builder(
-              builder: (context) => ShowCaseWidget(
-                  builder: Builder(
-                builder: (context) => const MyHomePage(),
-              )),
+              builder: (context) => const MyHomePage(),
             ));
           }
           return const LoginPage();
