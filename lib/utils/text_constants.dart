@@ -30,6 +30,8 @@ class TextReplace {
   static const String homeTitle = 'Mis reservas';
   static const String homeFooter = 'Clases disponibles para reservar:';
   static const String homeGoToButton = "Ver calendario";
+  static const String homeNoReservations = "No se encontraron reservas";
+  static const String homeErrorLoadingReservations = "Error al cargar reservas: ";
   // Drawer
   static const String drawerFirst = "H O M E";
   static const String drawerSecond = "P E R F I L";
@@ -47,12 +49,17 @@ class TextReplace {
   static const String calendarFullMeeting = "Lleno";
   // Coach Marks
   static const String skip = 'Omitir intro';
-  static const String homeDrawer =
-      'Este botón es para cambiar tus datos personales';
   static const String homeReservationList =
-      'Esta es la lista de tus reservas semanales';
+      'Aquí podrás ver y cancelar tus próximas reservas';
   static const String homeCalendarButton =
-      'Acá podras reservar clases si las tuvieras disponibles';
+      'Tocando acá podes ir al calendario para hacer una nueva reserva';
   static const String homeFreeSlots =
-      'Estas son las clases por reservar que te quedan';
+      'Estos son tus créditos disponibles \n(1 crédito = 1 reserva)';
+  // Buttons
+  static const String buttonCancel = "Cancelar";
+  static const String buttonSave = "Guardar";
+  static const String buttonCreateReservation = "Reservar";
+  // Dialogs
+  static const String dialogCreateReservation = "Reservar clase";
+  static const String dialogMeetingFull = "La clase está llena";
 }

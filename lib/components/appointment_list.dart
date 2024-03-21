@@ -7,6 +7,7 @@ import 'package:gym/utils/capitalize.dart';
 import 'package:intl/intl.dart';
 
 import '../model/meeting.dart';
+import '../utils/text_constants.dart';
 
 class AppointmentsListComponent extends StatefulWidget {
   const AppointmentsListComponent({super.key});
@@ -29,7 +30,7 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(
-            child: Text('Error al cargar reservas: ${snapshot.error}',
+            child: Text("${TextReplace.homeErrorLoadingReservations}${snapshot.error}",
                 style: currentTheme.textTheme.bodyLarge),
           );
         }
@@ -40,6 +41,7 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
 
         if (snapshot.hasData && snapshot.data!.docs.isNotEmpty) {
           return ListView.builder(
+            shrinkWrap: true,
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
               final reservations = snapshot.data!.docs
@@ -81,7 +83,7 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
                               ],
                             ),
                             trailing: IconButton(
-                              tooltip: 'Cancelar',
+                              tooltip: TextReplace.buttonCancel,
                               icon: const Icon(
                                 CupertinoIcons.delete,
                                 size: 20,
@@ -108,9 +110,11 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
             },
           );
         } else {
-          return Text(
-            'No se encontraron reservas',
-            style: currentTheme.textTheme.bodyMedium,
+          return Center(
+            child: Text(
+              TextReplace.homeNoReservations,
+              style: currentTheme.textTheme.bodyMedium,
+            ),
           );
         }
       },

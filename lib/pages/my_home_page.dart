@@ -49,6 +49,8 @@ class MyHomePageState extends State<MyHomePage> {
     );
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
@@ -108,12 +110,13 @@ class MyHomePageState extends State<MyHomePage> {
           // LIST OF APPOINTMENTS
           Expanded(
             child: Showcase(
-              targetBorderRadius: BorderRadius.circular(10),
+              targetBorderRadius: BorderRadius.circular(8),
               key: _reservationList,
-              description: 'Proximas reservas',
-              child: const AppointmentsListComponent(),
-            ),
+                description: TextReplace.homeReservationList,
+                descriptionAlignment: TextAlign.center,
+                child: const AppointmentsListComponent()),
           ),
+          const SizedBox(height: 30),
           // BUTTON TO CALENDAR PAGE
           Flexible(
             flex: 0,
@@ -124,12 +127,13 @@ class MyHomePageState extends State<MyHomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
-                    Showcase(
-                      key: _calendarButton,
-                      tooltipBackgroundColor: Colors.red,
-                      description: 'Calendario',
-                      child: Padding(
-                        padding: const EdgeInsets.only(bottom: 50.0, right: 40),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 50.0, right: 40),
+                      child: Showcase(
+                        key: _calendarButton,
+                        description: TextReplace.homeCalendarButton,
+                        descriptionAlignment: TextAlign.center,
+                        targetBorderRadius: BorderRadius.circular(25),
                         child: ElevatedButton(
                           onPressed: () {
                             Navigator.push(
@@ -174,12 +178,15 @@ class MyHomePageState extends State<MyHomePage> {
                         } else if (!snapshot.hasData) {
                           return const CircularProgressIndicator();
                         } else {
-                          return Showcase(
-                            key: _userFreeSlots,
-                            description: 'clases libres',
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.only(left: 20, bottom: 15),
+                          return Padding(
+                            padding:
+                                const EdgeInsets.only(left: 20, bottom: 15),
+                            child: Showcase(
+                              key: _userFreeSlots,
+                              description: TextReplace.homeFreeSlots,
+                              descriptionAlignment: TextAlign.center,
+                              targetBorderRadius: BorderRadius.circular(15),
+                              targetPadding: const EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 2),
                               child: Text(
                                 '${TextReplace.homeFooter} ${snapshot.data}',
                                 style: currentTheme.textTheme.bodyMedium,

@@ -30,11 +30,11 @@ class _CalendarComponentState extends State<CalendarComponent> {
   late DateTime _selectedDay;
   late Map<DateTime, List<Meeting>> _events;
   late StreamSubscription _subscription;
+  late ThemeData currentTheme;
   final MeetingService _meetingService = MeetingService();
   final ReservationRepository _repository = ReservationRepository();
   ReservationService bookingService = ReservationService();
   DateTime today = DateTime.now();
-  late ThemeData currentTheme;
 
   void _showAppointmentDialog(BuildContext context, Meeting meeting) async {
     /// This is the appointment that is sent to appointmentService.createAppointment
@@ -54,7 +54,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
           child: Padding(
             padding: const EdgeInsets.only(bottom: 18.0),
             child: Text(
-              'Reservar clase',
+              TextReplace.dialogCreateReservation,
               style: currentTheme.textTheme.bodyLarge,
             ),
           ),
@@ -62,7 +62,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
         content: isClassFull
             ? Center(
                 child: Text(
-                  'La clase esta llena',
+                  TextReplace.dialogMeetingFull,
                   style: GoogleFonts.lexend(
                     color: AppColors.fillGreyAmbiguousColor,
                     fontSize: 17,
@@ -85,7 +85,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
                 child: Opacity(
                   opacity: 0.9,
                   child: Text(
-                    'Cancelar',
+                    TextReplace.buttonCancel,
                     style: currentTheme.textTheme.titleSmall,
                   ),
                 ),
@@ -96,7 +96,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
               if (!isClassFull)
                 TextButton(
                   child: Text(
-                    'Reservar',
+                    TextReplace.buttonCreateReservation,
                     style: currentTheme.textTheme.bodyMedium,
                   ),
                   onPressed: () async {
@@ -128,7 +128,7 @@ class _CalendarComponentState extends State<CalendarComponent> {
         _events = events;
       });
     });
-    _repository.calculateFreeSlotsPerMeeting(); //--- this is how im using it
+    _repository.calculateFreeSlotsPerMeeting();
   }
 
   @override

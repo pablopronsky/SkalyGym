@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import '../components/snackbar.dart';
 import '../model/meeting.dart';
 import '../model/reservation.dart';
-import '../pages/my_home_page.dart';
 
 class ReservationRepository {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -32,9 +31,7 @@ class ReservationRepository {
         );
         if (context.mounted) {
           Navigator.pop(context);
-          Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const MyHomePage(),
-          ));
+
         }
       }
     } catch (e) {

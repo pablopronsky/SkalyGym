@@ -62,10 +62,6 @@ class MyDrawer extends ConsumerWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      /* Text(
-                        ref.watch(themeSwitchProvider) ? TextReplace.drawerThemeModeLight : TextReplace.drawerThemeModeDark,
-                        style: TextStyle(fontSize: 15,),
-                      ),*/
                       Transform.scale(
                         scale: 0.95,
                         child: FlutterSwitch(

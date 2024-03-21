@@ -67,7 +67,7 @@ class _ProfilePageState extends State<ProfilePage> {
                   child: Opacity(
                     opacity: 0.9,
                     child: Text(
-                      'Cancelar',
+                      TextReplace.buttonCancel,
                       style: currentTheme.textTheme.titleSmall,
                     ),
                   ),
@@ -76,7 +76,7 @@ class _ProfilePageState extends State<ProfilePage> {
                 // Guardar
                 TextButton(
                   child: Text(
-                    'Guardar',
+                    TextReplace.buttonSave,
                     style: currentTheme.textTheme.bodyMedium,
                   ),
                   onPressed: () => Navigator.of(dialogContext).pop(newValue),
