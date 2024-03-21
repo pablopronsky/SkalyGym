@@ -108,6 +108,7 @@ class MyHomePageState extends State<MyHomePage> {
           // LIST OF APPOINTMENTS
           Expanded(
             child: Showcase(
+              targetBorderRadius: BorderRadius.circular(10),
               key: _reservationList,
               description: 'Proximas reservas',
               child: const AppointmentsListComponent(),
