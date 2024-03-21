@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:gym/components/appbar.dart';
 import 'package:gym/pages/profile.dart';
 import 'package:gym/utils/color_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:showcaseview/showcaseview.dart';
 
 import '../components/calendar_component.dart';
@@ -30,12 +31,19 @@ class MyHomePageState extends State<MyHomePage> {
 
   @override
   void initState() {
-    WidgetsBinding.instance
-        .addPostFrameCallback((_) => ShowCaseWidget.of(context).startShowCase([
-              _reservationList,
-              _calendarButton,
-              _userFreeSlots,
-            ]));
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      bool isFirstTime = prefs.getBool('showcaseViewShown') ?? true;
+
+      if (isFirstTime) {
+        ShowCaseWidget.of(context).startShowCase([
+          _reservationList,
+          _calendarButton,
+          _userFreeSlots,
+        ]);
+        prefs.setBool('showcaseViewShown', false);
+      }
+    });
     super.initState();
   }
 
