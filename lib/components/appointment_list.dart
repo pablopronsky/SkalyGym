@@ -30,7 +30,8 @@ class AppointmentsListComponentState extends State<AppointmentsListComponent> {
       builder: (context, snapshot) {
         if (snapshot.hasError) {
           return Center(
-            child: Text("${TextReplace.homeErrorLoadingReservations}${snapshot.error}",
+            child: Text(
+                "${TextReplace.homeErrorLoadingReservations}${snapshot.error}",
                 style: currentTheme.textTheme.bodyLarge),
           );
         }

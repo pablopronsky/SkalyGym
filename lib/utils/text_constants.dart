@@ -31,7 +31,8 @@ class TextReplace {
   static const String homeFooter = 'Clases disponibles para reservar:';
   static const String homeGoToButton = "Ver calendario";
   static const String homeNoReservations = "No se encontraron reservas";
-  static const String homeErrorLoadingReservations = "Error al cargar reservas: ";
+  static const String homeErrorLoadingReservations =
+      "Error al cargar reservas: ";
   // Drawer
   static const String drawerFirst = "H O M E";
   static const String drawerSecond = "P E R F I L";

@@ -49,8 +49,6 @@ class MyHomePageState extends State<MyHomePage> {
     );
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     SystemChannels.textInput.invokeMethod('TextInput.hide');
@@ -110,8 +108,8 @@ class MyHomePageState extends State<MyHomePage> {
           // LIST OF APPOINTMENTS
           Expanded(
             child: Showcase(
-              targetBorderRadius: BorderRadius.circular(8),
-              key: _reservationList,
+                targetBorderRadius: BorderRadius.circular(8),
+                key: _reservationList,
                 description: TextReplace.homeReservationList,
                 descriptionAlignment: TextAlign.center,
                 child: const AppointmentsListComponent()),
@@ -186,7 +184,8 @@ class MyHomePageState extends State<MyHomePage> {
                               description: TextReplace.homeFreeSlots,
                               descriptionAlignment: TextAlign.center,
                               targetBorderRadius: BorderRadius.circular(15),
-                              targetPadding: const EdgeInsets.only(left: 8, right: 8, top: 2, bottom: 2),
+                              targetPadding: const EdgeInsets.only(
+                                  left: 8, right: 8, top: 2, bottom: 2),
                               child: Text(
                                 '${TextReplace.homeFooter} ${snapshot.data}',
                                 style: currentTheme.textTheme.bodyMedium,
